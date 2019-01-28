@@ -113,17 +113,23 @@ class edwiserbridge_form1 extends moodleform
 
         $count = 1;
         if (!empty($defaultvalues) && !empty($defaultvalues["eb_connection_settings"])) {
+
+// var_dump("DEFAULT VALUES ::: ".print_r($defaultvalues, 1));
+
+
             $count = count($defaultvalues["eb_connection_settings"]);
-            // $mform->setDefault("wp_url", $defaultvalues["eb_connection_settings"]["wp_url"]);
-            // $mform->setDefault("wp_token", $defaultvalues["eb_connection_settings"]["wp_token"]);
-            for ($i = 0; $i < $count; $i++) {
+            /*for ($i = 0; $i < $count; $i++) {
                 $mform->setDefault("wp_url[".$i."]", $defaultvalues["eb_connection_settings"][$i]["wp_url"]);
                 $mform->setDefault("wp_token[".$i."]", $defaultvalues["eb_connection_settings"][$i]["wp_token"]);
                 $mform->setDefault("wp_name[".$i."]", $defaultvalues["eb_connection_settings"][$i]["wp_name"]);
-                // $repeateloptions['wp_url']['default'] = 0;
-                // $repeateloptions['wp_url']['disabledif'] = array('limitanswers', 'eq', 0);
-                // $repeateloptions['option']['helpbutton'] = array('choiceoptions', 'choice');
-                // $repeateloptions['wp_token']['disabledif'] = array('limitanswers', 'eq', 0);
+            }*/
+
+            $siteNo = 0;
+            foreach ($defaultvalues["eb_connection_settings"] as $key => $value) {
+                $mform->setDefault("wp_url[".$siteNo."]", $value["wp_url"]);
+                $mform->setDefault("wp_token[".$siteNo."]", $value["wp_token"]);
+                $mform->setDefault("wp_name[".$siteNo."]", $value["wp_name"]);
+                $siteNo++;
             }
         }
 

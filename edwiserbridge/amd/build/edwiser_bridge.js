@@ -26,6 +26,19 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
 
 
 
+                $('input[name^="wp_name"]').on({
+                    keydown: function(e) {
+                        if (e.which === 32)
+                            return false;
+                    },
+                    change: function() {
+                        this.value = this.value.replace(/\s/g, "");
+                    }
+                });
+
+
+
+
                 $("[id$=_eb_test_connection]").click(function(event){
                     event.preventDefault();
                     var id = $(this).prop("id");

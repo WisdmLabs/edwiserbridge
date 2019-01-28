@@ -53,7 +53,7 @@ function save_form1_settings($form_data)
     $connection_settings = array();
     for ($i=0; $i<count($form_data->wp_url); $i++) {
         if (!empty($form_data->wp_url[$i]) && !empty($form_data->wp_token[$i]) && !empty($form_data->wp_name[$i])) {
-            $connection_settings[$i] = array(
+            $connection_settings[$form_data->wp_name[$i]] = array(
                 "wp_url" => $form_data->wp_url[$i],
                 "wp_token" => $form_data->wp_token[$i],
                 "wp_name" => $form_data->wp_name[$i]
@@ -85,27 +85,31 @@ function save_form2_settings($form_data)
     for ($i=0; $i<count($form_data->wp_url); $i++) {
         $connection_settings[$i] = array("wp_url" => $form_data->wp_url[$i], "wp_token" => $form_data->wp_token[$i]);
     }*/
-
-
+    global $CFG;
     $synch_settings = array();
-    $synch_settings[$form_data->wp_site_list] = array(
-        "course_enrollment"    => $form_data->wp_site_list,
+    $connection_settings = unserialize($CFG->eb_connection_settings);
+    $connection_settings_keys = array_keys($connection_settings);
+
+
+    if (in_array($form_data->wp_site_list, $connection_settings_keys)) {
+        $existing_synch_settings = unserialize($CFG->eb_synch_settings);
+        $synch_settings = $existing_synch_settings;
+        $synch_settings[$form_data->wp_site_list] = array(
+        // "course_enrollment"    => $form_data->wp_site_list,
         "course_enrollment"    => $form_data->course_enrollment,
         "course_un_enrollment" => $form_data->course_un_enrollment,
         "user_creation"        => $form_data->user_creation,
         "user_deletion"        => $form_data->user_deletion
         );
-/*  $synch_settings["course_enrollment"] = $form_data->wp_site_list;
-
-
-
-
-    $synch_settings["course_enrollment"] = $form_data->course_enrollment;
-    $synch_settings["course_un_enrollment"] = $form_data->course_un_enrollment;
-    $synch_settings["user_creation"] = $form_data->user_creation;
-    $synch_settings["user_deletion"] = $form_data->user_deletion;*/
-
-    // set_config("eb_connection_settings", serialize($connection_settings));
+    } else {
+        $synch_settings[$form_data->wp_site_list] = array(
+            // "course_enrollment"    => $form_data->wp_site_list,
+            "course_enrollment"    => $form_data->course_enrollment,
+            "course_un_enrollment" => $form_data->course_un_enrollment,
+            "user_creation"        => $form_data->user_creation,
+            "user_deletion"        => $form_data->user_deletion
+        );
+    }
     set_config("eb_synch_settings", serialize($synch_settings));
 }
 
@@ -168,6 +172,7 @@ function get_site_list()
  */
 function api_handler_instance()
 {
+    error_log("api_handler_instance");
     return api_handler::instance();
 }
 

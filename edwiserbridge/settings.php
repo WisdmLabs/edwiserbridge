@@ -52,7 +52,5 @@ $setting = new admin_setting_configcheckbox($name, $title, $description, $defaul
 $setting->set_updatedcallback('theme_reset_all_caches');
 $page->add($setting);
 
-
-
 $ADMIN->add('edwisersettings', $page);
 */
