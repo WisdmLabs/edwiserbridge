@@ -38,7 +38,7 @@ $ADMIN->add('webservicesettings', $temp);*/
 
 $ADMIN->add('modules', new admin_category('edwisersettings', new lang_string('edwiserbridge', 'local_edwiserbridge')));
 
-$ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php", array('moodle/user:update', 'moodle/user:delete')));
+$ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection", array('moodle/user:update', 'moodle/user:delete')));
 
 /*
 $page = new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'));

@@ -3,13 +3,13 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
         init: function ($params) {
             $(document).ready(function(){
 
-                $(".eb-tabs").click(function(){
+/*                $(".eb-tabs").click(function(){
                     $("#eb-conn-tab").toggleClass("active-tab");
                     $("#eb-synch-tab").toggleClass("active-tab");
-                });
+                });*/
 
 
-                $("body").on("click", "#eb-conn-tab", function(){
+/*                $("body").on("click", "#eb-conn-tab", function(){
                 // $("#eb-conn-tab").click(function(){
                     console.log("CONNECTION");
                     $("#eb_conne_form .form-group").css("display", "flex");
@@ -23,7 +23,7 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     $("#eb_conne_form .form-group").css("display", "none");
                     $("#eb_synch_form").css("display", "block");
                 });
-
+*/
 
 
                 $('input[name^="wp_name"]').on({

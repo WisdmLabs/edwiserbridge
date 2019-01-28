@@ -11,16 +11,18 @@ admin_externalpage_setup('edwiserbridge');
 // Require Login
 require_login();
 $context = context_system::instance();
-$baseurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php';
-$mform1 = new edwiserbridge_form1(null, null, 'post', '', array("id" => "eb_conne_form"), true, null);
-$mform2 = new edwiserbridge_form2(null, null, 'post', '', array("id" => "eb_synch_form"), true, null);
+$baseurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection';
+$mform1 = new edwiserbridge_form1($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
+$mform2 = new edwiserbridge_form2($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=synchronization', null, 'post', '', array("id" => "eb_synch_form"), true, null);
+$mform3 = new edwiserbridge_form3();
+
 
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 $PAGE->set_pagelayout('admin');
 $PAGE->set_context($context);
-$PAGE->set_url('/local/edwiserbridge/edwiserbridge.php');
+$PAGE->set_url('/local/edwiserbridge/edwiserbridge.php?tab=connection');
 $PAGE->set_title(get_string('eb-setting-page-title', 'local_edwiserbridge'));
 $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
 $PAGE->requires->js_call_amd("local_edwiserbridge/edwiser_bridge", "init");
@@ -30,13 +32,27 @@ echo $OUTPUT->header();
 echo $OUTPUT->container_start();
 
 
+
+/******   form 3  *********/
+    $mform3->display();
+
+/******************/
+
+
+
+
+
 /******   form 1  *********/
-$mform1->display();
+if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
+    $mform1->display();
+}
 /******************/
 
 
 /******   form 2    *******/
-$mform2->display();
+if (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
+    $mform2->display();
+}
 /******************/
 
 echo $OUTPUT->container_end();

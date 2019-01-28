@@ -45,7 +45,7 @@ class edwiserbridge_form1 extends moodleform
 */
 
 
-        $mform->addElement(
+        /*$mform->addElement(
             'html',
             '<div class="eb-tabs-cont">
                 <div id="eb-conn-tab" class="eb-tabs active-tab">
@@ -55,7 +55,7 @@ class edwiserbridge_form1 extends moodleform
                     Synchronization settings
                 </div>
             </div>'
-        );
+        );*/
 
 
         $repeatarray = array();
@@ -224,3 +224,59 @@ class edwiserbridge_form2 extends moodleform
         return array();
     }
 }
+
+
+
+
+/**
+*form shown while adding activity.
+*/
+class edwiserbridge_form3 extends moodleform
+{
+    public function definition()
+    {
+        global $CFG;
+        $mform = $this->_form;
+
+        $connection = "";
+        $synch = "";
+
+        if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
+            $connection = "active-tab";
+        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
+            $synch = "active-tab";
+        }
+
+        $mform->addElement(
+            'html',
+            '<div class="eb-tabs-cont">
+                <div id="eb-conn-tab" class="eb-tabs '.$connection.'">
+                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=connection".'">
+                        Connection settings
+                    </a>
+                </div>
+                <div id="eb-synch-tab" class="eb-tabs '.$synch.'">
+                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=synchronization".'">
+                        Synchronization settings
+                    </a>
+                </div>
+            </div>'
+        );
+
+    }
+
+
+    public function data_postprocessing($data)
+    {
+        // var_dump($data->_form);
+        // return $data->_form;
+    }
+
+    public function validation($data, $files)
+    {
+        return array();
+    }
+}
+
+
+

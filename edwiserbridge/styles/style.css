@@ -25,9 +25,20 @@
 }
 
 
-#eb_synch_form{
-	display: none;
+.active-tab.eb-tabs a{
+    color: #2578dd;
+    text-decoration: none;
 }
+
+.eb-tabs a{
+    color: #526069;
+    text-decoration: none;
+}
+
+
+/*#eb_synch_form{
+	display: none;
+}*/
 
 .eb-error-msg{
     padding-bottom: 30px;
