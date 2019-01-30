@@ -172,7 +172,6 @@ function get_site_list()
  */
 function api_handler_instance()
 {
-    error_log("api_handler_instance");
     return api_handler::instance();
 }
 
@@ -198,4 +197,13 @@ function remove_processed_coures($course_id, $courses)
         unset($courses[$key]);
     }
     return $courses;
+}
+
+
+function check_if_request_is_from_wp()
+{
+    if (isset($_POST) && isset($_POST["enrolments"])) {
+        return 1;
+    }
+    return 0;
 }

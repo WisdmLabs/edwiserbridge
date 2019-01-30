@@ -29,7 +29,7 @@ $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization 
 
 $string[""] = "Wordpress Synchronization Settings";
 $string["enrollment_checkbox"] = "Enable user enrollment.";
-$string["enrollment_checkbox_desc"] = "Enroll user from linked wordpress on unenrollment from Moodle Site";
+$string["enrollment_checkbox_desc"] = "Enroll user from linked wordpress on enrollment from Moodle Site";
 $string["unenrollment_checkbox"] = "Enable user un-enrollment.";
 $string["unenrollment_checkbox_desc"] = "Unenroll user from linked wordpress on unenrollment from Moodle Site";
 $string["user_creation"] = "Enable user creation";
@@ -47,6 +47,8 @@ $string["wordpress_site_name"] = "Site Name";
 $string["site-list"] = "Site List";
 
 $string["token_help"] = "Please enter access token used in Wordpress in connection setting";
+$string["wordpress_site_name_help"] = "Please enter unique site name, it should not match with the other sites name";
+
 $string["token"] = "Access Token";
 
 /*********/

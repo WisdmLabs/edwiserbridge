@@ -13,7 +13,7 @@ class local_edwiserbridge_external extends external_api
     {
     }
 
-    public static function get_course_progress()
+    /*public static function get_course_progress()
     {
     }
 
@@ -35,7 +35,7 @@ class local_edwiserbridge_external extends external_api
                 'progress' => new external_value(PARAM_TEXT, 'Parameter to check if the user is moodle user or not'),
             )
         );
-    }
+    }*/
 
 
     public static function eb_test_connection($wp_url, $wp_token)

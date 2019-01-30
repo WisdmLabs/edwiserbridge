@@ -10,7 +10,6 @@ class local_edwiserbridge_observer {
     public static function user_enrolment_created(core\event\user_enrolment_created $event)
     {
         global $CFG;
-
         $user_data = user_get_users_by_id(array($event->relateduserid));
 
         $request_data = array(
@@ -26,6 +25,11 @@ class local_edwiserbridge_observer {
                 )
             )
         );
+
+
+        if (check_if_request_is_from_wp()) {
+            return;
+        }
 
         $api_handler = api_handler_instance();
         // $api_handler = new api_handler();
@@ -58,6 +62,11 @@ class local_edwiserbridge_observer {
             )
         );
 
+
+        if (check_if_request_is_from_wp()) {
+            return;
+        }
+
         $api_handler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
             $sites = unserialize($CFG->eb_connection_settings);
@@ -75,7 +84,6 @@ class local_edwiserbridge_observer {
     public static function user_created(core\event\user_created $event)
     {
         global $CFG;
-
         $user_data = user_get_users_by_id(array($event->relateduserid));
         $request_data = array(
             "action" => "user_creation",
