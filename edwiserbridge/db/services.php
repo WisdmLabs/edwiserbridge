@@ -24,16 +24,6 @@
  */
 
 $functions = array(
-    /*'eb_get_course_completion_data' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'get_course_progress',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Course completion status of the user with the given user id',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-            // 'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
-    ),*/
     'eb_test_connection' => array(
             'classname'     => 'local_edwiserbridge_external',
             'methodname'    => 'eb_test_connection',
@@ -42,7 +32,6 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
-            // 'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
     ),
     'eb_get_site_data' => array(
             'classname'     => 'local_edwiserbridge_external',
@@ -52,7 +41,6 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
-            // 'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
     ),
     'eb_get_course_progress' => array(
             'classname'     => 'local_edwiserbridge_external',
@@ -62,6 +50,5 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
-            // 'services'      => array(MOODLE_OFFICIAL_MOBILE_SERVICE)
     )
 );

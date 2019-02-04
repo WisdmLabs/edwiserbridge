@@ -35,11 +35,7 @@ echo $OUTPUT->container_start();
 
 /******   form 3  *********/
     $mform3->display();
-
 /******************/
-
-
-
 
 
 /******   form 1  *********/

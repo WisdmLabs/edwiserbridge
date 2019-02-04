@@ -5,15 +5,10 @@
 */
 class api_handler
 {
-/*    public function __construct()
-    {
-
-    }
-*/
-
+    //Returns instance of the class if already created
     protected static $instance = null;
 
-
+    //creates insce of the class
     public static function instance()
     {
         if (is_null(self::$instance)) {
@@ -23,9 +18,10 @@ class api_handler
     }
 
 
-
-
-
+    /**
+     * functionality which creates request to connect to the wordpress
+     * @return [type]               [description]
+     */
     public function connect_to_wp_with_args($request_url, $request_data)
     {
         global $CFG;

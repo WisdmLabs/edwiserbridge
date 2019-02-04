@@ -13,31 +13,13 @@ class local_edwiserbridge_external extends external_api
     {
     }
 
-    /*public static function get_course_progress()
-    {
-    }
 
-    public static function get_course_progress_parameters()
-    {
-        return new external_function_parameters(
-            array(
-                'user_id' => new external_value(PARAM_TEXT, ''),
-            )
-        );
-    }
-
-    public static function get_course_progress_returns()
-    {
-        return new external_single_structure(
-            array(
-                'course_id'  => new external_value(PARAM_TEXT, 'Course ID'),
-                'completion'  => new external_value(PARAM_TEXT, 'Course completion status (1 when completed and 0 when not completed)'),
-                'progress' => new external_value(PARAM_TEXT, 'Parameter to check if the user is moodle user or not'),
-            )
-        );
-    }*/
-
-
+    /**
+     * request to test connection
+     * @param  [type] $wp_url   [description]
+     * @param  [type] $wp_token [description]
+     * @return [type]           [description]
+     */
     public static function eb_test_connection($wp_url, $wp_token)
     {
         $params = self::validate_parameters(
@@ -89,6 +71,11 @@ class local_edwiserbridge_external extends external_api
     }
 
 
+    /**
+     * functionality to get all site related data.
+     * @param  [type] $site_index [description]
+     * @return [type]             [description]
+     */
     public static function eb_get_site_data($site_index)
     {
         $params = self::validate_parameters(
@@ -120,7 +107,11 @@ class local_edwiserbridge_external extends external_api
     }
 
 
-
+    /**
+     * functionality to get course progress
+     * @param  [type] $user_id
+     * @return [type]          [description]
+     */
     public static function eb_get_course_progress($user_id)
     {
         global $DB, $CFG;
@@ -157,13 +148,9 @@ class local_edwiserbridge_external extends external_api
                 if ($iscomplete) {
                     array_push($response, array("course_id" => $value->course, "completion" => "100"));
                     $processed_courses = remove_processed_coures($value->course, $processed_courses);
-
-
-
                 } else {
                     array_push($response, array("course_id" => $value->course, "completion" => $value->completed));
                     $processed_courses = remove_processed_coures($value->course, $processed_courses);
-
                 }
                 // }
             }
@@ -173,11 +160,9 @@ class local_edwiserbridge_external extends external_api
                 $cinfo = new completion_info($course);
                 $iscomplete = $cinfo->is_course_complete($params['user_id']);
 
-
                 if ($iscomplete) {
                     array_push($response, array("course_id" => $value, "completion" => "100"));
                     $processed_courses = remove_processed_coures($value, $processed_courses);
-
                 } else {
                     array_push($response, array("course_id" => $value, "completion" => "0"));
                     $processed_courses = remove_processed_coures($value, $processed_courses);
@@ -201,15 +186,7 @@ class local_edwiserbridge_external extends external_api
                 }
             }
         }
-
-
         return $response;
-
-        /*$params = self::validate_parameters(
-            self::eb_get_course_progress_parameters(),
-            array('site_index' => $site_index)
-        );
-        return get_synch_settings($params['site_index']);*/
     }
 
     public static function eb_get_course_progress_parameters()
@@ -232,5 +209,4 @@ class local_edwiserbridge_external extends external_api
             )
         );
     }
-
 }

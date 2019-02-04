@@ -7,6 +7,10 @@ require_once($CFG->dirroot.'/user/lib.php');
 
 class local_edwiserbridge_observer {
 
+    /**
+     * functionality to handle user enrollment event
+     * @return [type]
+     */
     public static function user_enrolment_created(core\event\user_enrolment_created $event)
     {
         global $CFG;
@@ -44,6 +48,11 @@ class local_edwiserbridge_observer {
         }
     }
 
+
+    /**
+     * functionality to handle user un enrollment event
+     * @return [type]
+     */
     public static function user_enrolment_deleted(core\event\user_enrolment_deleted $event)
     {
         global $CFG;
@@ -62,7 +71,7 @@ class local_edwiserbridge_observer {
             )
         );
 
-
+        //checks if the request is from the wordpress site or from te Moodle site itself
         if (check_if_request_is_from_wp()) {
             return;
         }
@@ -81,6 +90,11 @@ class local_edwiserbridge_observer {
         }
     }
 
+
+    /**
+     * functionality to handle user creation event
+     * @return [type]
+     */
     public static function user_created(core\event\user_created $event)
     {
         global $CFG;
@@ -112,6 +126,11 @@ class local_edwiserbridge_observer {
 
     }
 
+
+    /**
+     * functionality to handle user deletion event
+     * @return [type]
+     */
     public static function user_deleted(core\event\user_deleted $event)
     {
         global $CFG;

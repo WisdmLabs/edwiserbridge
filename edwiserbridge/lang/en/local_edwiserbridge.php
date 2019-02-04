@@ -29,13 +29,13 @@ $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization 
 
 $string[""] = "Wordpress Synchronization Settings";
 $string["enrollment_checkbox"] = "Enable user enrollment.";
-$string["enrollment_checkbox_desc"] = "Enroll user from linked wordpress on enrollment from Moodle Site";
+$string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users";
 $string["unenrollment_checkbox"] = "Enable user un-enrollment.";
-$string["unenrollment_checkbox_desc"] = "Unenroll user from linked wordpress on unenrollment from Moodle Site";
+$string["unenrollment_checkbox_desc"] = "Unenroll user from Moodle to Wordpress for linked users";
 $string["user_creation"] = "Enable user creation";
-$string["user_creation_desc"] = "Create user In linked Wordpress site when created on Moodle Site";
+$string["user_creation_desc"] = "Create user In linked Wordpress site when created in Moodle Site";
 $string["user_deletion"] = "Enable user deletion";
-$string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted on Moodle Site";
+$string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted in Moodle Site";
 
 $string["wp_settings_section"] = "Wordpress Connection Settings";
 $string["wordpress_url"] = "Wordpress url {no}";

@@ -3,29 +3,9 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
         init: function ($params) {
             $(document).ready(function(){
 
-/*                $(".eb-tabs").click(function(){
-                    $("#eb-conn-tab").toggleClass("active-tab");
-                    $("#eb-synch-tab").toggleClass("active-tab");
-                });*/
-
-
-/*                $("body").on("click", "#eb-conn-tab", function(){
-                // $("#eb-conn-tab").click(function(){
-                    console.log("CONNECTION");
-                    $("#eb_conne_form .form-group").css("display", "flex");
-                    $("#eb_synch_form").css("display", "none");
-                });
-
-
-                $("body").on("click", "#eb-synch-tab", function(){
-                // $("#eb-synch-tab").click(function(){
-                    console.log("SYNCH");
-                    $("#eb_conne_form .form-group").css("display", "none");
-                    $("#eb_synch_form").css("display", "block");
-                });
-*/
-
-
+                /**
+                 * functionality to avoid space in the site name
+                 */
                 $('input[name^="wp_name"]').on({
                     keydown: function(e) {
                         if (e.which === 32)
@@ -37,8 +17,9 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                 });
 
 
-
-
+                /**
+                 * functionality to test connection
+                 */
                 $("[id$=_eb_test_connection]").click(function(event){
                     event.preventDefault();
                     var id = $(this).prop("id");
@@ -69,11 +50,13 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     }).fail(function(ex) {
                        // do something with the exception
                     });
-
-
                 });
 
 
+
+                /**
+                 * functionality to remove site from the sites list
+                 */
                 $("[id$=_eb_remove_site]").click(function(event){
                     event.preventDefault();
                     var id = $(this).prop("id");
@@ -92,11 +75,11 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     parent = $(this).parent().parent();
                     parent = parent.parent().parent();
                     parent.css("display", "none");
-                    console.log(parent);
-                    console.log(index);
                 });
 
-
+                /**
+                 * functionlaity to get site synch values on the site change
+                 */
                 $("#id_wp_site_list").on("change", function(){
                     var promises = ajax.call([
                         {methodname: 'eb_get_site_data', args: {site_index: $(this).val()}}
@@ -108,7 +91,6 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                         $('#id_user_creation').prop('checked', response.user_creation);
                         $('#id_user_deletion').prop('checked', response.user_deletion);
                     }).fail(function(ex) {
-                       // do something with the exception
                     });
                 });
             });

@@ -24,33 +24,6 @@
 */
 
 defined('MOODLE_INTERNAL') || die();
-/*
-$ADMIN->add('modules', new admin_externalpage('edwiserbridge', new lang_string('edwiserbridge', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/test.php", array('moodle/user:update', 'moodle/user:delete')));
-
-$ADMIN->add('modules', new admin_category('edwisersettings', new lang_string('webservices', 'webservice')));
-
-$ADMIN->add('webservicesettings', new admin_externalpage('edwiserbridge', new lang_string('edwiserbridge', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/test.php", array('moodle/user:update', 'moodle/user:delete'), true));
-
-$temp = new admin_settingpage('edwisersettings', new lang_string('edwiserbridge', 'webservice'));
-
-$ADMIN->add('webservicesettings', $temp);*/
-
 
 $ADMIN->add('modules', new admin_category('edwisersettings', new lang_string('edwiserbridge', 'local_edwiserbridge')));
-
 $ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection", array('moodle/user:update', 'moodle/user:delete')));
-
-/*
-$page = new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'));
-
-// Setting to activate the header buttons in overlay minimal view
-$name = 'local_edwiserbridge/enableheaderbuttons';
-$title = get_string('edwiserbridge', 'local_edwiserbridge');
-$description = get_string('edwiserbridge', 'local_edwiserbridge');
-$default = false;
-$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
-$setting->set_updatedcallback('theme_reset_all_caches');
-$page->add($setting);
-
-$ADMIN->add('edwisersettings', $page);
-*/
