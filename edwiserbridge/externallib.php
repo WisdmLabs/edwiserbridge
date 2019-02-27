@@ -121,7 +121,7 @@ class local_edwiserbridge_external extends external_api
             array('user_id' => $user_id)
         );
 
-        $result = $DB->get_records_sql("SELECT u.id user, ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
+        $result = $DB->get_records_sql("SELECT ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
         FROM mdl_user u
         LEFT JOIN mdl_role_assignments ra ON u.id = ra.userid and u.id = ?
         JOIN mdl_context ctx ON ra.contextid = ctx.id
