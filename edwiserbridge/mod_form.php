@@ -40,6 +40,8 @@ class edwiserbridge_form1 extends moodleform
         $buttonarray = array();
         $buttonarray[] = $mform->createElement('button', 'eb_test_connection', get_string("wp_test_conn_btn", "local_edwiserbridge"), "", "", "class=test_eb");
         $buttonarray[] = $mform->createElement('button', 'eb_remove_site', get_string("wp_test_remove_site", "local_edwiserbridge"));
+        $buttonarray[] = $mform->createElement('html', '<div id="eb_test_conne_response"> </div>');
+
         $repeatarray[] = $mform->createElement("group", "eb_buttons", "", $buttonarray);
 
         $repeateloptions = array();
@@ -65,7 +67,7 @@ class edwiserbridge_form1 extends moodleform
 
         $this->repeat_elements($repeatarray, $count, $repeateloptions, 'option_repeats', 'option_add_fields', 1, get_string("add_more_sites", "local_edwiserbridge"), true);
         //fill form with the existing values
-        $this->add_action_buttons();
+        $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)

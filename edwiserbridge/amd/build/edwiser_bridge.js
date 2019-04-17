@@ -37,15 +37,22 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
 
                     promises[0].done(function(response) {
 
-                        parent.find("#id_error_").html(response.msg);
-                        parent.find("#id_error_").css("display", "block");
+
+
+                        // parent.find("#id_error_").html(response.msg);
+                        // parent.find("#id_error_").css("display", "block");
+
+                        $("#eb_test_conne_response").html(response.msg);
+                        $("#eb_test_conne_response").css("display", "block");
+
+
 
                         if (response.status == 1) {
-                            parent.find("#id_error_").addClass("eb-success-msg");
-                            parent.find("#id_error_").removeClass("eb-error-msg");
+                            parent.find("#eb_test_conne_response").addClass("eb-success-msg");
+                            parent.find("#eb_test_conne_response").removeClass("eb-error-msg");
                         } else {
-                            parent.find("#id_error_").removeClass("eb-success-msg");
-                            parent.find("#id_error_").addClass("eb-error-msg");
+                            parent.find("#eb_test_conne_response").removeClass("eb-success-msg");
+                            parent.find("#eb_test_conne_response").addClass("eb-error-msg");
                         }
                     }).fail(function(ex) {
                        // do something with the exception
