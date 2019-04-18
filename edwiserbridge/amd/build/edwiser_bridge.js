@@ -42,8 +42,8 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                         // parent.find("#id_error_").html(response.msg);
                         // parent.find("#id_error_").css("display", "block");
 
-                        $("#eb_test_conne_response").html(response.msg);
-                        $("#eb_test_conne_response").css("display", "block");
+                        parent.find("#eb_test_conne_response").html(response.msg);
+                        parent.find("#eb_test_conne_response").css("display", "block");
 
 
 
