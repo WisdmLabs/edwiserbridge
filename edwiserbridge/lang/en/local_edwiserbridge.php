@@ -42,13 +42,22 @@ $string["wordpress_url"] = "Wordpress url {no}";
 $string["wp_token"] = "Access Token {no}";
 $string["wp_test_conn_btn"] = "Test Connection";
 $string["wp_test_remove_site"] = "Remove Site";
-$string["add_more_sites"] = "Add More Sites";
-$string["wordpress_site_name"] = "Site Name";
+$string["add_more_sites"] = "Add New Site";
+$string["wordpress_site_name"] = "Site Name {no}";
 $string["site-list"] = "Site List";
 
 $string["token_help"] = "Please enter access token used in Wordpress in connection setting";
-$string["wordpress_site_name_help"] = "Please enter unique site name, it should not match with the other sites name";
+$string["wordpress_site_name_help"] = "Please enter unique site name.";
+$string["wordpress_url_help"] = "Please enter Wordpress site URL.";
+
 
 $string["token"] = "Access Token";
 
 /*********/
+
+
+/******  Form validation.  ******/
+$string['required'] = "- You must supply a value here.";
+$string['sitename-duplicate-value'] = " - Site Name already exists, Please provide a different value.";
+$string['url-duplicate-value'] = " - Wordpress Url already exists, Please provide a different value.";
+/*******/

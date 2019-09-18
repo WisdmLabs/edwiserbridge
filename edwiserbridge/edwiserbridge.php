@@ -38,35 +38,36 @@ echo $OUTPUT->container_start();
 /******************/
 
 
-/******   form 1  *********/
-if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
-    $mform1->display();
-}
-/******************/
 
-
-/******   form 2    *******/
-if (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
-    $mform2->display();
-}
-/******************/
-
-echo $OUTPUT->container_end();
-echo $OUTPUT->footer();
-
-
-//Form processing and displaying is done here
+//Form 1 processing and displaying is done here
 if ($mform1->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } elseif ($form_data = $mform1->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
     save_form1_settings($form_data);
+    print_object($form_data);
+} else {
+    /******  display form 1 for the first time  *********/
+    if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
+        $mform1->display();
+    }
 }
 
 
+//Form 2 processing and displaying is done here
 if ($mform2->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } elseif ($form_data = $mform2->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
     save_form2_settings($form_data);
+    print_object($form_data);
+} else {
+    /******   display form 2 for the first time    *******/
+    if (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
+        $mform2->display();
+    }
 }
+
+
+echo $OUTPUT->container_end();
+echo $OUTPUT->footer();

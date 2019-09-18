@@ -22,6 +22,7 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                  */
                 $("[id$=_eb_test_connection]").click(function(event){
                     event.preventDefault();
+                    $(document.body).css({'cursor' : 'wait'});
                     var id = $(this).prop("id");
                     id = id.replace("eb_test_connection", '');
                     id = id.replace("id_eb_buttons", '');
@@ -30,6 +31,9 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     var token = $("#id_wp_token_" + index).val();
                     var parent = $(this).parent().parent();
                     parent = parent.parent();
+
+                    //display none the error div.
+                    parent.find("#eb_test_conne_response").css("display", "none");
 
                     var promises = ajax.call([
                         {methodname: 'eb_test_connection', args: {wp_url: url, wp_token: token}}
@@ -54,8 +58,10 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                             parent.find("#eb_test_conne_response").removeClass("eb-success-msg");
                             parent.find("#eb_test_conne_response").addClass("eb-error-msg");
                         }
+                        $(document.body).css({'cursor' : 'default'});
                     }).fail(function(ex) {
                        // do something with the exception
+                       $(document.body).css({'cursor' : 'default'});
                     });
                 });
 

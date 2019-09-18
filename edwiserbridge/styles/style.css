@@ -45,6 +45,7 @@
 }
 
 .eb-error-msg{
+    margin: 5px;
     background: #ff00001a;
     box-shadow: 1px 0px 2px #ff000021;
     border-radius: 0px;
@@ -58,6 +59,7 @@
 }
 
 .eb-success-msg{
+    margin: 5px;
     background: #00800030;
     box-shadow: 1px 0px 2px #00800052;
     border-radius: 0px;

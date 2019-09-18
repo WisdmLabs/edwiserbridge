@@ -51,6 +51,11 @@ class edwiserbridge_form1 extends moodleform
 
         $repeateloptions['wp_token']['helpbutton'] = array("token", "local_edwiserbridge");
         $repeateloptions['wp_name']['helpbutton'] = array("wordpress_site_name", "local_edwiserbridge");
+        $repeateloptions['wp_url']['helpbutton'] = array("wordpress_url", "local_edwiserbridge");
+
+        $repeateloptions['wp_name']['rule'] = 'required';
+        $repeateloptions['wp_url']['rule'] = 'required';
+        $repeateloptions['wp_token']['rule'] = 'required';
 
 
         $count = 1;
@@ -67,12 +72,46 @@ class edwiserbridge_form1 extends moodleform
 
         $this->repeat_elements($repeatarray, $count, $repeateloptions, 'option_repeats', 'option_add_fields', 1, get_string("add_more_sites", "local_edwiserbridge"), true);
         //fill form with the existing values
-        $this->add_action_buttons(false);
+        $this->add_action_buttons();
     }
 
     public function validation($data, $files)
     {
-        return array();
+        // $errors = array();
+        $errors = parent::validation($data, $files);
+        /*error_log("data :::: ".print_r($data["wp_name"], 1));
+        error_log("data :::: ".print_r($data, 1));*/
+
+        $processedData = $data;
+        for ($i = 0; $i < count($data["wp_name"]); $i++) {
+
+            //delete the current values from the copy of the data array.
+            unset($processedData["wp_name"][$i]);
+            unset($processedData["wp_url"][$i]);
+
+            if (empty($data["wp_name"][$i])) {
+                $errors['wp_name['.$i.']'] = get_string('required', 'local_edwiserbridge');
+            } elseif (in_array($data["wp_name"][$i], $processedData["wp_name"])) {
+                //checking if the current name value exitsts in array.
+                $errors['wp_name['.$i.']'] = get_string('sitename-duplicate-value', 'local_edwiserbridge');
+            }
+
+
+            if (empty($data["wp_url"][$i])) {
+                $errors['wp_url['.$i.']'] = get_string('required', 'local_edwiserbridge');
+            } elseif (in_array($data["wp_url"][$i], $processedData["wp_url"])) {
+                //checking if the current URL value exitsts in array.
+                $errors['wp_url['.$i.']'] = get_string('url-duplicate-value', 'local_edwiserbridge');
+            }
+
+
+            if (empty($data["wp_token"][$i])) {
+                $errors['wp_token['.$i.']'] = get_string('required', 'local_edwiserbridge');
+
+            }
+        }
+
+        return $errors;
     }
 }
 
@@ -80,7 +119,7 @@ class edwiserbridge_form1 extends moodleform
 
 
 /**
-*form shown while adding activity.
+* form shown while adding activity.
 */
 class edwiserbridge_form2 extends moodleform
 {
