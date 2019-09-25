@@ -9,13 +9,22 @@ function local_edwiserbridge_extend_settings_navigation($settingsnav, $context)
 
 }
 
+/*function local_edwiserbridge_output_fragment_test($args) {
+    global $CFG;
+    // require_once($CFG->dirroot . '/local/edwiserbridge/mod_form.php');
+    // $mform_connection = new edwiserbridge_connection_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
+    // return $mform_connection->render();
+    ob_start();
+    print_r($args);
+    return ob_get_clean();
+}*/
 
 /**
- * [save_form1_settings description]
+ * [save_connection_form_settings description]
  * @param  [type] $form_data [description]
  * @return [type]            [description]
  */
-function save_form1_settings($form_data)
+function save_connection_form_settings($form_data)
 {
     if (count($form_data->wp_url) != count($form_data->wp_token)) {
         return;
@@ -37,7 +46,7 @@ function save_form1_settings($form_data)
 /**
  * save the synch settings for the individual site
  */
-function save_form2_settings($form_data)
+function save_synchronization_form_settings($form_data)
 {
     global $CFG;
     $synch_settings = array();

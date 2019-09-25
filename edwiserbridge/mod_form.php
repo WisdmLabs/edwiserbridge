@@ -25,37 +25,54 @@ require_once("$CFG->libdir/formslib.php");
 /**
 *form shown while adding activity.
 */
-class edwiserbridge_form1 extends moodleform
+class edwiserbridge_connection_form extends moodleform
 {
     public function definition()
     {
         $defaultvalues = get_connection_settings();
         $mform = $this->_form;
         $repeatarray = array();
-        $repeatarray[] = $mform->createElement('text', 'wp_name', get_string('wordpress_site_name', 'local_edwiserbridge'));
-        $repeatarray[] = $mform->createElement('text', 'wp_url', get_string('wordpress_url', 'local_edwiserbridge'));
-        $repeatarray[] = $mform->createElement('text', 'wp_token', get_string('wp_token', 'local_edwiserbridge'));
+
+        $repeatarray[] = $mform->createElement('header', 'wp_static', get_string('wp_site_settings_title', 'local_edwiserbridge'));
+
+        $repeatarray[] = $mform->createElement('text', 'wp_name', get_string('wordpress_site_name', 'local_edwiserbridge'), 'size="35"');
+        $repeatarray[] = $mform->createElement('text', 'wp_url', get_string('wordpress_url', 'local_edwiserbridge'), 'size="35"');
+        $repeatarray[] = $mform->createElement('text', 'wp_token', get_string('wp_token', 'local_edwiserbridge'), 'size="35"');
+        $repeatarray[] = $mform->createElement('hidden', 'wp_remove', 'no');
+
 
 
         $buttonarray = array();
-        $buttonarray[] = $mform->createElement('button', 'eb_test_connection', get_string("wp_test_conn_btn", "local_edwiserbridge"), "", "", "class=test_eb");
+        $buttonarray[] = $mform->createElement('button', 'eb_test_connection', get_string("wp_test_conn_btn", "local_edwiserbridge"), "", "");
         $buttonarray[] = $mform->createElement('button', 'eb_remove_site', get_string("wp_test_remove_site", "local_edwiserbridge"));
         $buttonarray[] = $mform->createElement('html', '<div id="eb_test_conne_response"> </div>');
 
         $repeatarray[] = $mform->createElement("group", "eb_buttons", "", $buttonarray);
 
+
+        /*
+         * Data type of each field.
+         */
         $repeateloptions = array();
-        $repeateloptions['wp_url']['type'] = PARAM_TEXT;
-        $repeateloptions['wp_token']['type'] = PARAM_TEXT;
-        $repeateloptions['wp_name']['type'] = PARAM_TEXT;
+        $repeateloptions['wp_name']['type']    = PARAM_TEXT;
+        $repeateloptions['wp_url']['type']     = PARAM_TEXT;
+        $repeateloptions['wp_token']['type']   = PARAM_TEXT;
+        $repeateloptions['wp_remove']['type']  = PARAM_TEXT;
 
+
+        /*
+         * Name of each field.
+         */
+        $repeateloptions['wp_name']['helpbutton']  = array("wordpress_site_name", "local_edwiserbridge");
         $repeateloptions['wp_token']['helpbutton'] = array("token", "local_edwiserbridge");
-        $repeateloptions['wp_name']['helpbutton'] = array("wordpress_site_name", "local_edwiserbridge");
-        $repeateloptions['wp_url']['helpbutton'] = array("wordpress_url", "local_edwiserbridge");
+        $repeateloptions['wp_url']['helpbutton']   = array("wordpress_url", "local_edwiserbridge");
 
-        $repeateloptions['wp_name']['rule'] = 'required';
-        $repeateloptions['wp_url']['rule'] = 'required';
-        $repeateloptions['wp_token']['rule'] = 'required';
+        /*
+         * Adding rule for each field.
+         */
+        /*$repeateloptions['wp_name']['rule']  = 'required';
+        $repeateloptions['wp_url']['rule']   = 'required';
+        $repeateloptions['wp_token']['rule'] = 'required';*/
 
 
         $count = 1;
@@ -63,29 +80,30 @@ class edwiserbridge_form1 extends moodleform
             $count = count($defaultvalues["eb_connection_settings"]);
             $siteNo = 0;
             foreach ($defaultvalues["eb_connection_settings"] as $key => $value) {
+                $mform->setDefault("wp_name[".$siteNo."]", $value["wp_name"]);
                 $mform->setDefault("wp_url[".$siteNo."]", $value["wp_url"]);
                 $mform->setDefault("wp_token[".$siteNo."]", $value["wp_token"]);
-                $mform->setDefault("wp_name[".$siteNo."]", $value["wp_name"]);
                 $siteNo++;
             }
         }
 
-        $this->repeat_elements($repeatarray, $count, $repeateloptions, 'option_repeats', 'option_add_fields', 1, get_string("add_more_sites", "local_edwiserbridge"), true);
+
+        $this->repeat_elements($repeatarray, $count, $repeateloptions, 'eb_connection_setting_repeats', 'eb_option_add_fields', 1, get_string("add_more_sites", "local_edwiserbridge"), true);
+
+        //closing header section
+        $mform->closeHeaderBefore('eb_option_add_fields');
+
         //fill form with the existing values
         $this->add_action_buttons();
     }
 
     public function validation($data, $files)
     {
-        // $errors = array();
         $errors = parent::validation($data, $files);
-        /*error_log("data :::: ".print_r($data["wp_name"], 1));
-        error_log("data :::: ".print_r($data, 1));*/
 
         $processedData = $data;
-        for ($i = 0; $i < count($data["wp_name"]); $i++) {
-
-            //delete the current values from the copy of the data array.
+        for ($i = count($data["wp_name"]) - 1 ; $i >= 0; $i--) {
+            //Delete the current values from the copy of the data array.
             unset($processedData["wp_name"][$i]);
             unset($processedData["wp_url"][$i]);
 
@@ -107,12 +125,59 @@ class edwiserbridge_form1 extends moodleform
 
             if (empty($data["wp_token"][$i])) {
                 $errors['wp_token['.$i.']'] = get_string('required', 'local_edwiserbridge');
+            }
+
+            //if the site settings is removed then remove the validation errors also.
+            if (isset($errors['wp_name['.$i.']']) && isset($errors['wp_url['.$i.']']) && isset($errors['wp_token['.$i.']']) && isset($data['wp_remove'][$i]) && 'yes' == $data['wp_remove'][$i]) {
+                unset($errors['wp_name['.$i.']']);
+                unset($errors['wp_url['.$i.']']);
+                unset($errors['wp_token['.$i.']']);
+
+                /*unset($errors['wp_name['.$i.']']);
+                unset($errors['wp_url['.$i.']']);
+                unset($errors['wp_token['.$i.']']);*/
 
             }
         }
 
+        //check 1
+        /*$mform = &$this->_form;
+        $config_name = &$mform->getElement('wp_name[0]');
+        $config_name->attributes['value'] = "The checkbox is checked";*/
+
+        //check 2
+        // $mform->setDefault('wp_name[0]', 'test');
+
+
+
+        // if (isset($config_checkbox->_attributes[‘checked’])) {
+        // }
+
+/*$data["eb_connection_setting_repeats"] = 22;
+$this->set_data($data);
+var_dump($data);
+
+var_dump($errors);*/
+
         return $errors;
     }
+
+
+/*    public function definition_after_data()
+    {
+        parent::definition_after_data();
+
+        $mform = &$this->_form;
+        $config_name = &$mform->getElement('wp_name[0]');
+
+        // if (isset($config_checkbox->_attributes[‘checked’])) {
+        $config_name->attributes['value'] = "The checkbox is checked";
+        // }
+
+    }
+*/
+
+
 }
 
 
@@ -121,7 +186,7 @@ class edwiserbridge_form1 extends moodleform
 /**
 * form shown while adding activity.
 */
-class edwiserbridge_form2 extends moodleform
+class edwiserbridge_synchronization_form extends moodleform
 {
     public function definition()
     {
@@ -159,7 +224,7 @@ class edwiserbridge_form2 extends moodleform
 /**
 *form shown while adding activity.
 */
-class edwiserbridge_form3 extends moodleform
+class edwiserbridge_navigation_form extends moodleform
 {
     public function definition()
     {

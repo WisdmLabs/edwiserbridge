@@ -81,14 +81,54 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     $("#id_wp_token_" + index).val("");
                     $("#id_wp_name_" + index).val("");
 
+                    //Hiding elemnts
+                    onRemoveHideElemnts(index);
+                    $("input[name='wp_remove["+ index +"]']").val("yes");
 
-                    $("#id_wp_url_" + index).parent().parent().css("display", "none");
-                    $("#id_wp_token_" + index).parent().parent().css("display", "none");
-                    $("#id_wp_name_" + index).parent().parent().css("display", "none");
-                    parent = $(this).parent().parent();
-                    parent = parent.parent().parent();
-                    parent.css("display", "none");
+                    //setting the repeat elemnts quantity.
+                    // setRepeatedElementsQuantityOnRemove();
                 });
+
+
+                //Hide the elements removed from the remove button.
+                function onRemoveHideElemnts(index)
+                {
+                    /*$("#id_wp_url_" + index).parent().parent().css("display", "none");
+                    $("#id_wp_token_" + index).parent().parent().css("display", "none");
+                    $("#id_wp_name_" + index).parent().parent().css("display", "none");*/
+
+                    $("#id_wp_name_" + index).closest('fieldset').css("display", "none");
+                }
+
+
+                /*function setRepeatedElementsQuantityOnRemove()
+                {
+                    var qty = $("input[name='eb_connection_setting_repeats']").val();
+                    // $("input[name='eb_connection_setting_repeats']").val(qty - 1);
+                }*/
+
+
+                //Hiding js elements which are already removed.
+                if ($("input[name='wp_remove[0]']").length) {
+                    var repeatQty = $("input[name='eb_connection_setting_repeats']").val();
+                    for (var i = 0; i < repeatQty; i++) {
+                        if ("yes" == $("input[name='wp_remove["+ i +"]']").val()) {
+                            onRemoveHideElemnts(i);
+                        }
+                        // $("input[name='wp_remove["+ i +"]']").val("no");
+                    }
+                }
+
+                /*if ($("input[name='wp_remove["+ index +"]']").length) {
+                    var repeatQty = $("input[name='eb_connection_setting_repeats']").val();
+                    for (var i = 0; i <= repeatQty; i++) {
+                        onRemoveHideElemnts(i);
+                    }
+                }*/
+
+
+
+
 
                 /**
                  * functionlaity to get site synch values on the site change

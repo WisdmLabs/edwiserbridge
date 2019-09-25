@@ -22,6 +22,8 @@ $string['modulename_help'] = '';
 
 /******* navigation menu and settings page   ********/
 
+$string["wp_site_settings_title"] = "Site Settings ";
+
 $string["nav_name"] = "Edwiser Bridge Settings";
 $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
@@ -38,12 +40,12 @@ $string["user_deletion"] = "Enable user deletion";
 $string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted in Moodle Site";
 
 $string["wp_settings_section"] = "Wordpress Connection Settings";
-$string["wordpress_url"] = "Wordpress url {no}";
-$string["wp_token"] = "Access Token {no}";
+$string["wordpress_url"] = "Wordpress url";
+$string["wp_token"] = "Access Token";
 $string["wp_test_conn_btn"] = "Test Connection";
 $string["wp_test_remove_site"] = "Remove Site";
 $string["add_more_sites"] = "Add New Site";
-$string["wordpress_site_name"] = "Site Name {no}";
+$string["wordpress_site_name"] = "Site Name";
 $string["site-list"] = "Site List";
 
 $string["token_help"] = "Please enter access token used in Wordpress in connection setting";

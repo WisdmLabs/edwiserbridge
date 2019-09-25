@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * File displays the edwiser bridge settings.
+ */
 
 require('../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
@@ -12,11 +14,14 @@ admin_externalpage_setup('edwiserbridge');
 require_login();
 $context = context_system::instance();
 $baseurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection';
-$mform1 = new edwiserbridge_form1($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
-$mform2 = new edwiserbridge_form2($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=synchronization', null, 'post', '', array("id" => "eb_synch_form"), true, null);
-$mform3 = new edwiserbridge_form3();
 
+$mform_connection      = new edwiserbridge_connection_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
+$mform_synchronization = new edwiserbridge_synchronization_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=synchronization', null, 'post', '', array("id" => "eb_synch_form"), true, null);
+$mform_navigation      = new edwiserbridge_navigation_form();
 
+/*
+ * Necessary page requirements.
+ */
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
@@ -32,39 +37,42 @@ echo $OUTPUT->header();
 echo $OUTPUT->container_start();
 
 
+/*
+ * Navigation form
+ */
+$mform_navigation->display();
 
-/******   form 3  *********/
-    $mform3->display();
-/******************/
 
 
-
-//Form 1 processing and displaying is done here
-if ($mform1->is_cancelled()) {
+//Connection form processing and displaying.
+if ($mform_connection->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
-} elseif ($form_data = $mform1->get_data()) {
+} elseif ($form_data = $mform_connection->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
-    save_form1_settings($form_data);
-    print_object($form_data);
+    save_connection_form_settings($form_data);
+
+    // print_object($form_data);
+    $mform_connection->display();
 } else {
-    /******  display form 1 for the first time  *********/
+    //Display connection form  for the first time.
     if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
-        $mform1->display();
+        $mform_connection->display();
     }
 }
 
 
-//Form 2 processing and displaying is done here
-if ($mform2->is_cancelled()) {
+//synchronization form processing and displaying.
+if ($mform_synchronization->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
-} elseif ($form_data = $mform2->get_data()) {
+} elseif ($form_data = $mform_synchronization->get_data()) {
     //In this case you process validated data. $mform->get_data() returns data posted in form.
-    save_form2_settings($form_data);
-    print_object($form_data);
+    save_synchronization_form_settings($form_data);
+    //print_object($form_data);
+    $mform_synchronization->display();
 } else {
-    /******   display form 2 for the first time    *******/
+    // Display synchronization form for the first time.
     if (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
-        $mform2->display();
+        $mform_synchronization->display();
     }
 }
 
