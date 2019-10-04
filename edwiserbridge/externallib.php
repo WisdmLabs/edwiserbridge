@@ -54,8 +54,8 @@ class local_edwiserbridge_external extends external_api
     {
         return new external_function_parameters(
             array(
-                'wp_url' => new external_value(PARAM_TEXT, ''),
-                'wp_token' => new external_value(PARAM_TEXT, '')
+                'wp_url' => new external_value(PARAM_TEXT, get_string('web_service_wp_url', 'local_edwiserbridge')),
+                'wp_token' => new external_value(PARAM_TEXT, get_string('web_service_wp_token', 'local_edwiserbridge'))
             )
         );
     }
@@ -64,8 +64,8 @@ class local_edwiserbridge_external extends external_api
     {
         return new external_single_structure(
             array(
-                'status'  => new external_value(PARAM_TEXT, '1 if successful connection and 0 on failure'),
-                'msg'  => new external_value(PARAM_TEXT, 'Success or error message')
+                'status'  => new external_value(PARAM_TEXT, get_string('web_service_test_conn_status', 'local_edwiserbridge')),
+                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_test_conn_msg', 'local_edwiserbridge'))
             )
         );
     }
@@ -89,7 +89,7 @@ class local_edwiserbridge_external extends external_api
     {
         return new external_function_parameters(
             array(
-                'site_index' => new external_value(PARAM_TEXT, '')
+                'site_index' => new external_value(PARAM_TEXT, get_string('web_service_site_index', 'local_edwiserbridge'))
             )
         );
     }
@@ -98,10 +98,10 @@ class local_edwiserbridge_external extends external_api
     {
         return new external_single_structure(
             array(
-                'course_enrollment'  => new external_value(PARAM_INT, ''),
-                'course_un_enrollment'  => new external_value(PARAM_INT, ''),
-                'user_creation'  => new external_value(PARAM_INT, ''),
-                'user_deletion'  => new external_value(PARAM_INT, '')
+                'course_enrollment'  => new external_value(PARAM_INT, get_string('web_service_course_enrollment', 'local_edwiserbridge')),
+                'course_un_enrollment'  => new external_value(PARAM_INT,  get_string('web_service_course_un_enrollment', 'local_edwiserbridge')),
+                'user_creation'  => new external_value(PARAM_INT,  get_string('web_service_user_creation', 'local_edwiserbridge')),
+                'user_deletion'  => new external_value(PARAM_INT, get_string('web_service_user_deletion', 'local_edwiserbridge'))
             )
         );
     }
@@ -122,11 +122,11 @@ class local_edwiserbridge_external extends external_api
         );
 
         $result = $DB->get_records_sql("SELECT ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
-        FROM mdl_user u
+        FROM {user} u
         LEFT JOIN mdl_role_assignments ra ON u.id = ra.userid and u.id = ?
-        JOIN mdl_context ctx ON ra.contextid = ctx.id
-        JOIN mdl_course_modules cm ON ctx.instanceid = cm.course AND cm.completion > 0
-        LEFT JOIN mdl_course_modules_completion cmc ON cm.id = cmc.coursemoduleid AND u.id = cmc.userid AND cmc.completionstate > 0
+        JOIN {context} ctx ON ra.contextid = ctx.id
+        JOIN {course_modules} cm ON ctx.instanceid = cm.course AND cm.completion > 0
+        LEFT JOIN {course_modules_completion} cmc ON cm.id = cmc.coursemoduleid AND u.id = cmc.userid AND cmc.completionstate > 0
         GROUP BY ctx.instanceid, u.id
         HAVING completed = 30 OR completed > 30
         ORDER BY u.id", array($params['user_id']));
@@ -205,6 +205,84 @@ class local_edwiserbridge_external extends external_api
                 array(
                     'course_id'   => new external_value(PARAM_TEXT, ''),
                     'completion'  => new external_value(PARAM_TEXT, '')
+                )
+            )
+        );
+    }
+
+
+
+
+    /**
+     * functionality to get users in chunk.
+     * @param  [type] $user_id
+     * @return [type]          [description]
+     */
+    public static function eb_get_users($offset, $limit, $search_string, $total_users)
+    {
+        global $DB;
+
+        $params = self::validate_parameters(
+            self::eb_get_users_parameters(),
+            array('offset' => $offset, "limit" => $limit, "search_string" => $search_string, "total_users" => $total_users)
+        );
+
+        $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE  deleted = 0 AND confirmed = 1 ";
+
+        if (!empty($params['search_string'])) {
+            $search_string = "%" . $params['search_string'] . "%";
+            $query .= " AND (firstname LIKE '$search_string' OR lastname LIKE '$search_string' OR username LIKE '$search_string')";
+        }
+
+        if (!empty($params['limit'])) {
+            $query .= " LIMIT $limit";
+        }
+
+        if (!empty($params['offset'])) {
+            $query .= " OFFSET $offset";
+        }
+
+
+        $users = $DB->get_records_sql($query);
+        $users = json_decode(json_encode($users), true);
+
+
+        $user_count = 0;
+        if (!empty($params['total_users'])) {
+            $user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user}");
+            $user_count = $user_count->total_count;
+        }
+
+        return array("total_users" => $user_count, "users" => $users);
+    }
+
+    public static function eb_get_users_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                'offset' => new external_value(PARAM_INT, get_string('web_service_offset', 'local_edwiserbridge')),
+                'limit' => new external_value(PARAM_INT, get_string('web_service_limit', 'local_edwiserbridge')),
+                'search_string' => new external_value(PARAM_TEXT, get_string('web_service_search_string', 'local_edwiserbridge')),
+                'total_users' => new external_value(PARAM_INT, get_string('web_service_total_users', 'local_edwiserbridge')),
+            )
+        );
+    }
+
+    public static function eb_get_users_returns()
+    {
+        return new external_function_parameters(
+            array(
+                'total_users' => new external_value(PARAM_INT, ''),
+                'users' => new external_multiple_structure(
+                    new external_single_structure(
+                        array(
+                            'id'        => new external_value(PARAM_INT, get_string('web_service_id', 'local_edwiserbridge')),
+                            'username'  => new external_value(PARAM_TEXT, get_string('web_service_username', 'local_edwiserbridge')),
+                            'firstname' => new external_value(PARAM_TEXT, get_string('web_service_firstname', 'local_edwiserbridge')),
+                            'lastname'  => new external_value(PARAM_TEXT, get_string('web_service_lastname', 'local_edwiserbridge')),
+                            'email'     => new external_value(PARAM_TEXT, get_string('web_service_email', 'local_edwiserbridge'))
+                        )
+                    )
                 )
             )
         );

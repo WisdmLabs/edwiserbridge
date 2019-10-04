@@ -50,5 +50,14 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_get_users' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_get_users',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Get Users',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
     )
 );
