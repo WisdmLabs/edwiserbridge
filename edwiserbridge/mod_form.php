@@ -94,7 +94,7 @@ class edwiserbridge_connection_form extends moodleform
         $mform->closeHeaderBefore('eb_option_add_fields');
 
         //fill form with the existing values
-        $this->add_action_buttons();
+        $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)

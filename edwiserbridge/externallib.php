@@ -65,7 +65,7 @@ class local_edwiserbridge_external extends external_api
         return new external_single_structure(
             array(
                 'status'  => new external_value(PARAM_TEXT, get_string('web_service_test_conn_status', 'local_edwiserbridge')),
-                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_test_conn_msg', 'local_edwiserbridge'))
+                'msg'  => new external_value(PARAM_RAW, get_string('web_service_test_conn_msg', 'local_edwiserbridge'))
             )
         );
     }

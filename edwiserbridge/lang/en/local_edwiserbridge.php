@@ -93,3 +93,9 @@ $string["web_service_firstname"] = "Firstname of the user.";
 $string["web_service_lastname"] = "Lastname of the user.";
 $string["web_service_email"] = "Email of the user.";
 /******/
+
+
+/****  error handling  ***/
+$string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://knowledgebase.edwiser.org/'  target='_blank'> click here </a>";
+
+/**/
