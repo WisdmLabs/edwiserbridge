@@ -123,7 +123,7 @@ class local_edwiserbridge_external extends external_api
 
         $result = $DB->get_records_sql("SELECT ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
         FROM {user} u
-        LEFT JOIN mdl_role_assignments ra ON u.id = ra.userid and u.id = ?
+        LEFT JOIN {role_assignments} ra ON u.id = ra.userid and u.id = ?
         JOIN {context} ctx ON ra.contextid = ctx.id
         JOIN {course_modules} cm ON ctx.instanceid = cm.course AND cm.completion > 0
         LEFT JOIN {course_modules_completion} cmc ON cm.id = cmc.coursemoduleid AND u.id = cmc.userid AND cmc.completionstate > 0
