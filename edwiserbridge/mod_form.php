@@ -33,7 +33,7 @@ class edwiserbridge_connection_form extends moodleform
         $mform = $this->_form;
         $repeatarray = array();
 
-        $repeatarray[] = $mform->createElement('header', 'wp_static', get_string('wp_site_settings_title', 'local_edwiserbridge'));
+        $repeatarray[] = $mform->createElement('header', 'wp_header', get_string('wp_site_settings_title', 'local_edwiserbridge'). "<div class ='test'> </div>");
 
         $repeatarray[] = $mform->createElement('text', 'wp_name', get_string('wordpress_site_name', 'local_edwiserbridge'), 'size="35"');
         $repeatarray[] = $mform->createElement('text', 'wp_url', get_string('wordpress_url', 'local_edwiserbridge'), 'size="35"');
@@ -94,7 +94,7 @@ class edwiserbridge_connection_form extends moodleform
         $mform->closeHeaderBefore('eb_option_add_fields');
 
         //fill form with the existing values
-        $this->add_action_buttons();
+        $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)
@@ -132,52 +132,10 @@ class edwiserbridge_connection_form extends moodleform
                 unset($errors['wp_name['.$i.']']);
                 unset($errors['wp_url['.$i.']']);
                 unset($errors['wp_token['.$i.']']);
-
-                /*unset($errors['wp_name['.$i.']']);
-                unset($errors['wp_url['.$i.']']);
-                unset($errors['wp_token['.$i.']']);*/
-
             }
         }
-
-        //check 1
-        /*$mform = &$this->_form;
-        $config_name = &$mform->getElement('wp_name[0]');
-        $config_name->attributes['value'] = "The checkbox is checked";*/
-
-        //check 2
-        // $mform->setDefault('wp_name[0]', 'test');
-
-
-
-        // if (isset($config_checkbox->_attributes[‘checked’])) {
-        // }
-
-/*$data["eb_connection_setting_repeats"] = 22;
-$this->set_data($data);
-var_dump($data);
-
-var_dump($errors);*/
-
         return $errors;
     }
-
-
-/*    public function definition_after_data()
-    {
-        parent::definition_after_data();
-
-        $mform = &$this->_form;
-        $config_name = &$mform->getElement('wp_name[0]');
-
-        // if (isset($config_checkbox->_attributes[‘checked’])) {
-        $config_name->attributes['value'] = "The checkbox is checked";
-        // }
-
-    }
-*/
-
-
 }
 
 

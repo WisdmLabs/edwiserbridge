@@ -40,16 +40,8 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     ]);
 
                     promises[0].done(function(response) {
-
-
-
-                        // parent.find("#id_error_").html(response.msg);
-                        // parent.find("#id_error_").css("display", "block");
-
                         parent.find("#eb_test_conne_response").html(response.msg);
                         parent.find("#eb_test_conne_response").css("display", "block");
-
-
 
                         if (response.status == 1) {
                             parent.find("#eb_test_conne_response").addClass("eb-success-msg");
@@ -84,28 +76,14 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                     //Hiding elemnts
                     onRemoveHideElemnts(index);
                     $("input[name='wp_remove["+ index +"]']").val("yes");
-
-                    //setting the repeat elemnts quantity.
-                    // setRepeatedElementsQuantityOnRemove();
                 });
 
 
                 //Hide the elements removed from the remove button.
                 function onRemoveHideElemnts(index)
                 {
-                    /*$("#id_wp_url_" + index).parent().parent().css("display", "none");
-                    $("#id_wp_token_" + index).parent().parent().css("display", "none");
-                    $("#id_wp_name_" + index).parent().parent().css("display", "none");*/
-
                     $("#id_wp_name_" + index).closest('fieldset').css("display", "none");
                 }
-
-
-                /*function setRepeatedElementsQuantityOnRemove()
-                {
-                    var qty = $("input[name='eb_connection_setting_repeats']").val();
-                    // $("input[name='eb_connection_setting_repeats']").val(qty - 1);
-                }*/
 
 
                 //Hiding js elements which are already removed.
@@ -118,16 +96,6 @@ define(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
                         // $("input[name='wp_remove["+ i +"]']").val("no");
                     }
                 }
-
-                /*if ($("input[name='wp_remove["+ index +"]']").length) {
-                    var repeatQty = $("input[name='eb_connection_setting_repeats']").val();
-                    for (var i = 0; i <= repeatQty; i++) {
-                        onRemoveHideElemnts(i);
-                    }
-                }*/
-
-
-
 
 
                 /**

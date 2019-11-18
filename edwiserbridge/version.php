@@ -21,7 +21,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019041800;
+$plugin->version = 2019111800;
 $plugin->component = 'local_edwiserbridge';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.4.0';
+$plugin->release = '1.4.2';

@@ -42,13 +42,21 @@ class api_handler
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
         $response = curl_exec($curl);
+        $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
         if (curl_error($curl)) {
             $error_msg = curl_error($curl);
             curl_close($curl);
             return array("error"=> 1, "msg" => $error_msg );
         } else {
             curl_close($curl);
-            return array("error"=> 0, "data" => json_decode($response));
+
+            if ("200" == $status_code) {
+                return array("error"=> 0, "data" => json_decode($response));
+            } else {
+                $msg = get_string("default_error", "local_edwiserbridge");
+                return array("error"=> 1, "msg" => $msg);
+            }
         }
     }
 }
