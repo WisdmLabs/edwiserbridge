@@ -1,7 +1,11 @@
 <?php
 
 require_once(dirname(__FILE__)."/classes/class-api-handler.php");
+require_once(dirname(__FILE__)."/classes/class-settings-handler.php");
 require_once("{$CFG->libdir}/completionlib.php");
+
+
+
 
 
 function local_edwiserbridge_extend_settings_navigation($settingsnav, $context)
@@ -186,3 +190,45 @@ function check_if_request_is_from_wp()
     }
     return 0;
 }
+
+
+
+
+
+
+/*-----------------------------------------------------------
+ *   Functions used in Settings page  
+ *----------------------------------------------------------*/
+
+
+function eb_get_administrators()
+{
+
+    $admins = get_admins(); 
+    $settings_arr[''] = get_string('new_serivce_user_lbl', 'local_edwiserbridge');
+
+    foreach ($admins as $value) {
+        $settings_arr[$value->id] = $value->email;
+    }
+    return $settings_arr;
+}
+
+
+
+
+function eb_get_existing_services()
+{
+    global $DB, $CFG;
+    $result = $DB->get_records("external_services", null, '','id, name');
+    $settings_arr[''] = get_string('existing_serice_lbl', 'local_edwiserbridge'); 
+
+    foreach ($result as $value) {
+        $settings_arr[$value->id] = $value->name;
+    }
+
+    return $settings_arr;
+}
+
+
+
+

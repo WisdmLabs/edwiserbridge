@@ -287,4 +287,53 @@ class local_edwiserbridge_external extends external_api
             )
         );
     }
+
+
+
+
+
+
+
+    /**
+     * functionality to get users in chunk.
+     * @param  [type] $user_id
+     * @return [type]          [description]
+     */
+    public static function eb_create_service($web_service_name, $user_id)
+    {
+        global $DB;
+        $settings_handler = new eb_settings_handler();
+        $settings_handler->eb_create_externle_service($web_service_name, $user_id);
+
+    }
+
+    public static function eb_create_service_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                'web_service_name' => new external_value(PARAM_TEXT, get_string('web_service_name', 'local_edwiserbridge')),
+                'user_id' => new external_value(PARAM_TEXT, get_string('web_service_auth_user', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+    public static function eb_create_service_returns()
+    {
+        return new external_single_structure(
+            array(
+                'token'  => new external_value(PARAM_RAW, get_string('web_service_token', 'local_edwiserbridge')),
+                'site_url'  => new external_value(PARAM_TEXT, get_string('moodle_url', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+
+
+
+
+
+
+
+
+
 }

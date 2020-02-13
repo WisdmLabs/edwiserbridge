@@ -8,7 +8,7 @@ require_once($CFG->libdir.'/adminlib.php');
 require_once('mod_form.php');
 
 // Restrict normal user to access this page
-admin_externalpage_setup('edwiserbridge');
+admin_externalpage_setup('edwiserbridge_conn_synch_settings');
 
 // Require Login
 require_login();

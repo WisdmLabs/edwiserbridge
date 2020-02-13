@@ -59,5 +59,14 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_create_service' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_create_service',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Create web service',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
     )
 );

@@ -16,6 +16,7 @@ $string['modulenameplural'] = "Edwiser Bridge";
 $string['pluginname'] = 'Edwiser Bridge';
 $string['pluginadministration'] = "Edwiser Bridge administrator";
 $string['modulename_help'] = '';
+$string['blank'] = '';
 
 /**************  end of the strings used by default by the moodle  ****************/
 
@@ -24,7 +25,11 @@ $string['modulename_help'] = '';
 
 $string["wp_site_settings_title"] = "Site Settings :";
 
-$string["nav_name"] = "Edwiser Bridge Settings";
+// $string["nav_name"] = "Edwiser Bridge Settings";
+$string["nav_name"] = "Connection / Synchronization Settings";
+$string["default_settings_nav"] = "Settings";
+
+
 $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
 $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization Settings";
@@ -55,6 +60,21 @@ $string["wordpress_url_help"] = "Please enter Wordpress site URL.";
 
 $string["token"] = "Access Token";
 
+
+$string['existing_web_service_desc'] = 'Select existing web service if you have created already.';
+$string['new_web_service_desc'] = 'Create new web service.';
+
+$string['new_service_inp_lbl'] = 'Web service name';
+$string['new_serivce_user_lbl'] = 'Select User';
+$string['existing_serice_lbl'] = 'Select existing web service';
+
+$string['web_service_token'] = 'Token generated after creating service';
+$string['moodle_url'] = 'Moodle site url.';
+$string['web_service_name'] = 'Web service Name';
+$string['web_service_auth_user'] = 'Authorized user.';
+
+
+
 /*********/
 
 
@@ -62,7 +82,7 @@ $string["token"] = "Access Token";
 $string['required'] = "- You must supply a value here.";
 $string['sitename-duplicate-value'] = " - Site Name already exists, Please provide a different value.";
 $string['url-duplicate-value'] = " - Wordpress Url already exists, Please provide a different value.";
-/*******/
+/************/
 
 
 /*****  web service  *******/
@@ -99,3 +119,16 @@ $string["web_service_email"] = "Email of the user.";
 $string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://knowledgebase.edwiser.org/'  target='_blank'> click here </a>";
 
 /**/
+
+
+
+
+/*****************************  ADDED FOR SETTINGS PAGE   *****************************/
+
+
+$string["manual_notification"] = "MANUAL NOTIFICATION";
+
+
+
+
+
