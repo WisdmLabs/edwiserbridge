@@ -290,10 +290,6 @@ class local_edwiserbridge_external extends external_api
 
 
 
-
-
-
-
     /**
      * functionality to get users in chunk.
      * @param  [type] $user_id
@@ -303,8 +299,8 @@ class local_edwiserbridge_external extends external_api
     {
         global $DB;
         $settings_handler = new eb_settings_handler();
-        $settings_handler->eb_create_externle_service($web_service_name, $user_id);
-
+        $response = $settings_handler->eb_create_externle_service($web_service_name, $user_id);
+        return $response;
     }
 
     public static function eb_create_service_parameters()
@@ -312,7 +308,7 @@ class local_edwiserbridge_external extends external_api
         return new external_function_parameters(
             array(
                 'web_service_name' => new external_value(PARAM_TEXT, get_string('web_service_name', 'local_edwiserbridge')),
-                'user_id' => new external_value(PARAM_TEXT, get_string('web_service_auth_user', 'local_edwiserbridge'))
+                'user_id'          => new external_value(PARAM_TEXT, get_string('web_service_auth_user', 'local_edwiserbridge'))
             )
         );
     }
@@ -321,15 +317,13 @@ class local_edwiserbridge_external extends external_api
     {
         return new external_single_structure(
             array(
-                'token'  => new external_value(PARAM_RAW, get_string('web_service_token', 'local_edwiserbridge')),
-                'site_url'  => new external_value(PARAM_TEXT, get_string('moodle_url', 'local_edwiserbridge'))
+                'token'     => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge')),
+                'site_url'  => new external_value(PARAM_TEXT, get_string('moodle_url', 'local_edwiserbridge')),
+                'status'  => new external_value(PARAM_INT, get_string('web_service_creation_status', 'local_edwiserbridge')),
+                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_creation_msg', 'local_edwiserbridge'))
             )
         );
     }
-
-
-
-
 
 
 

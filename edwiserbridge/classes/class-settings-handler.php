@@ -19,8 +19,14 @@ class eb_settings_handler
 
 	public function eb_create_externle_service($name, $userid)
 	{
-		global $DB;
-		//create service
+		global $DB, $CFG;
+		//response initializations.
+		$response['status']            = 1;
+		$response['msg']               = '';
+		$response['token']             = 0;
+		$response['site_url']          = $CFG->wwwroot;
+
+		//service creation data
     	$servicedata                   = array();
    		$service['name']               = $name;
    		$service['enabled']            = 1;
@@ -31,29 +37,50 @@ class eb_settings_handler
    		$service['timemodified']       = NULL;
 
    		$service['shortname']          = $this->eb_generate_service_shortname();
-   		var_dump($service['shortname']);
+
+
+   		//User id validation. 
+   		if (empty($userid)) {
+   			$response['status'] = 0;
+			$response['msg']    = get_string('empty_userid_err', 'local_edwiserbridge');
+			return $response;
+   		}
+
+
+   		//creates unique shortname
    		if (empty($service['shortname'])) {
-   			return 'error';
+   			$response['status'] = 0;
+			$response['msg']    = get_string('create_service_shortname_err', 'local_edwiserbridge');
+			return $response;
+   		}
+
+   		//checks if the name is avaialble.
+   		if (!$this->eb_check_if_service_name_available($name)) {
+   			$response['status'] = 0;
+			$response['msg']    = get_string('create_service_name_err', 'local_edwiserbridge');
+			return $response;
    		}
 
    		$service['downloadfiles'] = 0;
    		$service['uploadfiles']   = 0;
+
         $serviceid = $DB->insert_record('external_services', $service);
 
-
-
-        //Validation for name and shortname duplication
-
-
-
-
-
-
         if ($serviceid) {
+        	//Adding functions in web service
         	$this->eb_add_web_service_functions($serviceid);
-        	$this->eb_create_token($serviceid, $userid);
+
+        	//Creating token iwith service id.
+        	$token = $this->eb_create_token($serviceid, $userid);
+
+        	$response['token'] = $token;
+        } else {
+        	$response['status'] = 0;
+			$response['msg']    = get_string('create_service_creation_err', 'local_edwiserbridge');
+			return $response;
         }
 
+        return $response;
 	}
 
 
@@ -65,13 +92,25 @@ class eb_settings_handler
 	    do {
 	        $numtries ++;
 	        $newshortname = $shortname . $numtries;
-	        if ($numtries > 40) {
+	        if ($numtries > 100) {
 	        	return 0;
 	            break;
 	        }
 	    } while ($DB->record_exists('external_services', array('shortname' => $newshortname)));
 
 	    return $newshortname;
+	}
+
+
+
+	public function eb_check_if_service_name_available($servicename)
+	{
+		global $DB;
+		if($DB->record_exists('external_services', array('name' => $servicename)))
+		{
+			return 0;
+		}
+		return 1;
 	}
 
 
@@ -99,6 +138,36 @@ class eb_settings_handler
 
 
 
+	public function eb_extensions_web_service_function($serviceid)
+	{
+
+		$ssofunctions = array(
+			array('externalserviceid' => $serviceid, 'functionname' => 'wdm_sso_verify_token'),
+		);
+
+		$selectivesynchfunctions = array(
+			array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_users'),
+		);
+
+		$bulk_purchase = array(
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_add_cohort_members'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_create_cohorts'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_role_assign_roles'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_role_unassign_roles'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_delete_cohort_members'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_get_cohorts'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_cohort_enrollment'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'eb_delete_cohort'),
+			array('externalserviceid' => $serviceid, 'functionname' => 'wdm_manage_cohort_enrollment')
+		);
+
+
+	}
+
+
+
+
+
 
 	public function eb_create_token($serviceid, $userid)
 	{
@@ -108,10 +177,8 @@ class eb_settings_handler
 		$contextorid = 1;
 		
 		$token = external_generate_token($tokentype, $serviceorid, $userid, $contextorid);
-
-		var_dump($token);
-		// external_generate_token($tokentype, $serviceorid, $userid, $contextorid, $validuntil=0, $iprestriction='');
-
+    	set_config("edwiser_bridge_last_created_token", $token);
+		return $token;
 	}
 
 

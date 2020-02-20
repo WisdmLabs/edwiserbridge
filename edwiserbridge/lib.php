@@ -205,7 +205,7 @@ function eb_get_administrators()
 {
 
     $admins = get_admins(); 
-    $settings_arr[''] = get_string('new_serivce_user_lbl', 'local_edwiserbridge');
+    $settings_arr['']       = get_string('new_serivce_user_lbl', 'local_edwiserbridge');
 
     foreach ($admins as $value) {
         $settings_arr[$value->id] = $value->email;
@@ -220,7 +220,9 @@ function eb_get_existing_services()
 {
     global $DB, $CFG;
     $result = $DB->get_records("external_services", null, '','id, name');
-    $settings_arr[''] = get_string('existing_serice_lbl', 'local_edwiserbridge'); 
+    $settings_arr[''] = get_string('existing_serice_lbl', 'local_edwiserbridge');
+    $settings_arr['create'] = ' - ' . get_string('new_web_new_service', 'local_edwiserbridge') . ' - ';
+
 
     foreach ($result as $value) {
         $settings_arr[$value->id] = $value->name;

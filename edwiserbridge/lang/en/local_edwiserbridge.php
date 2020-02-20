@@ -20,6 +20,13 @@ $string['blank'] = '';
 
 /**************  end of the strings used by default by the moodle  ****************/
 
+/*** TABS  ***/
+
+$string['tab_conn'] = 'Connection Settings';
+$string['tab_synch'] = 'Synchronization Settings';
+$string['tab_service'] = 'Service Settings';
+
+/*******/
 
 /******* navigation menu and settings page   ********/
 
@@ -57,16 +64,15 @@ $string["token_help"] = "Please enter access token used in Wordpress in connecti
 $string["wordpress_site_name_help"] = "Please enter unique site name.";
 $string["wordpress_url_help"] = "Please enter Wordpress site URL.";
 
-
 $string["token"] = "Access Token";
 
-
 $string['existing_web_service_desc'] = 'Select existing web service if you have created already.';
-$string['new_web_service_desc'] = 'Create new web service.';
+$string['new_web_service_desc'] = 'Create new web service';
+$string['new_web_new_service'] = 'Create new web service';
 
 $string['new_service_inp_lbl'] = 'Web service name';
 $string['new_serivce_user_lbl'] = 'Select User';
-$string['existing_serice_lbl'] = 'Select existing web service';
+$string['existing_serice_lbl'] = 'Select web service';
 
 $string['web_service_token'] = 'Token generated after creating service';
 $string['moodle_url'] = 'Moodle site url.';
@@ -74,8 +80,35 @@ $string['web_service_name'] = 'Web service Name';
 $string['web_service_auth_user'] = 'Authorized user.';
 
 
+$string['existing_service_desc'] = 'Edwiser web-service functions will get added into it and also be used as reference for upcoming updates.';
+$string['auth_user_desc'] = 'All admin users used as Authorized User while creating token.';
 
-/*********/
+$string['eb_mform_service_desc'] = 'Service desc';
+$string['eb_mform_service_desc_help'] = 'Edwiser web-service functions will get added into it and also be used as reference for upcoming updates.';
+
+$string['eb_mform_token_desc'] = 'Token';
+$string['eb_mform_token_desc_help'] = 'This is your last created token used in wp for site integration.';
+
+
+/*********************************/
+
+
+
+/*********** Settings page validation and Modal strings************/
+$string['create_service_shortname_err'] = 'Unable to create the webservice please contact plugin owner.';
+$string['create_service_name_err'] =   'This name is already in use please use different name.';
+$string['create_service_creation_err'] = 'Unable to create the webservice please contact plugin owner.';
+$string['empty_userid_err'] = 'Please select the user.';
+
+$string['dailog_title'] = 'Token And Url';
+$string['site_url'] = 'Site Url ';
+$string['token'] = 'Token ';
+$string['copy'] = 'Copy';
+$string['copied'] = 'Copied !!!';
+$string['process'] = 'Process';
+
+/**********************************/
+
 
 
 /******  Form validation.  ******/
@@ -117,6 +150,9 @@ $string["web_service_email"] = "Email of the user.";
 
 /****  error handling  ***/
 $string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://knowledgebase.edwiser.org/'  target='_blank'> click here </a>";
+
+$string['eb_empty_name_err'] = 'Please enter valid service name.';
+$string['eb_empty_user_err'] = 'Please select user.';
 
 /**/
 

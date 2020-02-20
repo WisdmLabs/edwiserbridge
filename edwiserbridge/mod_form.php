@@ -191,26 +191,35 @@ class edwiserbridge_navigation_form extends moodleform
 
         $connection = "";
         $synch = "";
+        $sevice = '';
 
         if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
             $connection = "active-tab";
         } elseif (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
             $synch = "active-tab";
+        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "service") {
+            $sevice = "active-tab";
         }
 
         $mform->addElement(
             'html',
             '<div class="eb-tabs-cont">
+                <div id="eb-synch-tab" class="eb-tabs '.$sevice.'">
+                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service".'">
+                        '. get_string('tab_service', 'local_edwiserbridge') .'
+                    </a>
+                </div>
                 <div id="eb-conn-tab" class="eb-tabs '.$connection.'">
                     <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=connection".'">
-                        Connection settings
+                        ' . get_string('tab_conn', 'local_edwiserbridge') . '
                     </a>
                 </div>
                 <div id="eb-synch-tab" class="eb-tabs '.$synch.'">
                     <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=synchronization".'">
-                        Synchronization settings
+                        '. get_string('tab_synch', 'local_edwiserbridge') .'
                     </a>
                 </div>
+                
             </div>'
         );
 
@@ -221,3 +230,66 @@ class edwiserbridge_navigation_form extends moodleform
         return array();
     }
 }
+
+
+
+
+/**
+*form shown while adding activity.
+*/
+class edwiserbridge_service_form extends moodleform
+{
+    public function definition()
+    {
+        global $CFG;
+        
+        $mform            = $this->_form;
+        $existingservices = eb_get_existing_services();
+        $authusers        = eb_get_administrators();
+        $token = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
+        /*$sites = get_site_list();
+        $site_keys = array_keys($sites);
+        $defaultvalues = get_synch_settings($site_keys[0]);*/
+
+        // $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
+
+
+        $mform->addElement('static', 'eb_mform_token_wrap', get_string('token', 'local_edwiserbridge'), '<b id="eb_mform_token">' . $token . '</b>');
+        $mform->addHelpButton('eb_mform_token_wrap', 'eb_mform_token_desc', 'local_edwiserbridge');
+
+
+        $select = $mform->addElement('select', 'eb_sevice_list', get_string('existing_serice_lbl', 'local_edwiserbridge'), $existingservices);
+        $mform->addHelpButton('eb_sevice_list', 'eb_mform_service_desc', 'local_edwiserbridge');
+        $select->setMultiple(false);
+
+        // $repeateloptions['wp_name']['helpbutton']  = array("wordpress_site_name", "local_edwiserbridge");
+
+        $mform->addElement('text', 'eb_service_inp', get_string('new_service_inp_lbl', 'local_edwiserbridge'), array('class'=>'eb_service_field'));
+
+        $select = $mform->addElement('select', 'eb_auth_users_list', get_string('new_serivce_user_lbl', 'local_edwiserbridge'), $authusers, array('class'=>'eb_service_field'));
+        $select->setMultiple(false);
+
+        $mform->addElement('static', 'eb_mform_common_error', '', '<span id="eb_common_err"></span>');
+
+        $mform->addElement('button', 'eb_mform_create_service', get_string("process", 'local_edwiserbridge'));
+
+
+        //fill form with the existing values
+        /*if (!empty($defaultvalues)) {
+            $mform->setDefault("course_enrollment", $defaultvalues["course_enrollment"]);
+            $mform->setDefault("course_un_enrollment", $defaultvalues["course_un_enrollment"]);
+            $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
+            $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
+        }*/
+        // $this->add_action_buttons();
+    }
+
+    public function validation($data, $files)
+    {
+        return array();
+    }
+}
+
+
+
+

@@ -40,7 +40,7 @@ $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 $ADMIN->add(
     'modules',
     new admin_category(
-        'edwiserconnsettings',
+        'edwisersettings',
         new lang_string(
             'edwiserbridge',
             'local_edwiserbridge'
@@ -49,14 +49,14 @@ $ADMIN->add(
 );
 
 $ADMIN->add(
-    'edwiserconnsettings',
+    'edwisersettings',
     new admin_externalpage(
         'edwiserbridge_conn_synch_settings',
         new lang_string(
             'nav_name',
             'local_edwiserbridge'
         ),
-        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection", // use Moodle url function eg. new moodle_url("/admin/settings.php?section=ed_notifications_settings")
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=service", // use Moodle url function eg. new moodle_url("/admin/settings.php?section=ed_notifications_settings")
         array(
             'moodle/user:update',
             'moodle/user:delete'
@@ -84,28 +84,32 @@ $ADMIN->add(
 $settings = new admin_settingpage('edwiserbridge_settings', new lang_string('pluginname', 'local_edwiserbridge'));
 $ADMIN->add('localplugins', $settings);
 
-$settings->add(new admin_setting_heading('local_edwiserbridge/existing_service_description', '', '<b>' . new lang_string('existing_web_service_desc', 'local_edwiserbridge') . '</b>' ));
+
+//DESCRIPTION
+// $settings->add(new admin_setting_heading('local_edwiserbridge/existing_service_description', '', '<b>' . new lang_string('existing_web_service_desc', 'local_edwiserbridge') . '</b>' ));
 
 $existing_services = eb_get_existing_services();
 
 
 //$name, $visiblename, $description, $defaultsetting, $choices
 $settings->add(new admin_setting_configselect(
-    "local_edwiserbridge/existingserviceselect",
+    "local_edwiserbridge/ebexistingserviceselect",
     new lang_string('existing_serice_lbl', 'local_edwiserbridge'),
-    '', //new lang_string('web_service_id', 'local_edwiserbridge'),
-    270,
+    get_string('existing_service_desc', 'local_edwiserbridge'), //new lang_string('web_service_id', 'local_edwiserbridge'),
+    '',
     $existing_services
 ));
 
 
-$settings->add(new admin_setting_heading('local_edwiserbridge/new_service_description', '', '<b>' . new lang_string('new_web_service_desc', 'local_edwiserbridge') . '</b>' ));
+
+
+// $settings->add(new admin_setting_heading('local_edwiserbridge/new_service_description', '', '<b>' . new lang_string('new_web_service_desc', 'local_edwiserbridge') . '</b>' ));
 
 
 $settings->add(new admin_setting_configtext(
-    'local_edwiserbridge/newserviceinp',
+    'local_edwiserbridge/ebnewserviceinp',
     get_string('new_service_inp_lbl', 'local_edwiserbridge'),
-    '', //desc
+    get_string('auth_user_desc', 'local_edwiserbridge'), //desc
     '',
     PARAM_RAW
 ));
@@ -116,7 +120,7 @@ $admin_users = eb_get_administrators();
 
 //$name, $visiblename, $description, $defaultsetting, $choices
 $settings->add(new admin_setting_configselect(
-    "local_edwiserbridge/newserviceuserselect",
+    "local_edwiserbridge/ebnewserviceuserselect",
     new lang_string('new_serivce_user_lbl', 'local_edwiserbridge'),
     '', //new lang_string('web_service_id', 'local_edwiserbridge'),
     '',
