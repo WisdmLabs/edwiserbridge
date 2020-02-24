@@ -56,7 +56,7 @@ $ADMIN->add(
             'nav_name',
             'local_edwiserbridge'
         ),
-        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=service", // use Moodle url function eg. new moodle_url("/admin/settings.php?section=ed_notifications_settings")
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection", // use Moodle url function eg. new moodle_url("/admin/settings.php?section=ed_notifications_settings")
         array(
             'moodle/user:update',
             'moodle/user:delete'

@@ -99,13 +99,19 @@ $string['create_service_shortname_err'] = 'Unable to create the webservice pleas
 $string['create_service_name_err'] =   'This name is already in use please use different name.';
 $string['create_service_creation_err'] = 'Unable to create the webservice please contact plugin owner.';
 $string['empty_userid_err'] = 'Please select the user.';
+$string['eb_link_success'] = 'Web service sucessfully linked.';
+$string['eb_link_err'] = 'Unable to link the web service.';
+$string['eb_service_select_err'] = 'Please select valid external web service.';
+
+
 
 $string['dailog_title'] = 'Token And Url';
 $string['site_url'] = 'Site Url ';
 $string['token'] = 'Token ';
 $string['copy'] = 'Copy';
 $string['copied'] = 'Copied !!!';
-$string['process'] = 'Process';
+$string['create'] = 'Create';
+$string['link'] = 'Link';
 
 /**********************************/
 

@@ -64,5 +64,11 @@
 
 .eb_settings_err, #eb_common_err{
     color: red;
-    padding: 10px;
+    padding: 5px;
 }
+
+#eb_common_success{
+    color: green;
+    padding: 5px;
+}
+
