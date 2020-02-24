@@ -33,7 +33,7 @@ $string['tab_service'] = 'Service Settings';
 $string["wp_site_settings_title"] = "Site Settings :";
 
 // $string["nav_name"] = "Edwiser Bridge Settings";
-$string["nav_name"] = "Connection / Synchronization Settings";
+$string["nav_name"] = "Settings";
 $string["default_settings_nav"] = "Settings";
 
 

@@ -33,7 +33,7 @@ $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
 $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
-$PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
+// $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 
 
 
@@ -65,7 +65,7 @@ $ADMIN->add(
 );
 
 
-$ADMIN->add(
+/*$ADMIN->add(
     'edwisersettings',
     new admin_externalpage(
         'edwiserbridge_default_settings', // Shows the default settings
@@ -77,7 +77,7 @@ $ADMIN->add(
             "/admin/settings.php?section=edwiserbridge_settings"
         )
     )
-);
+);*/
 
 
 // In every plugin there is one if condition added please check it.

@@ -1,5 +1,5 @@
-require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], function ($, ajax, url, modalFactory, str) {
-/*    return {
+define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], function ($, ajax, url, modalFactory, str) {
+    /*return {
         init: function() {*/
 
             var translation = str.get_strings([
@@ -7,12 +7,13 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
                {key: 'site_url', component: 'local_edwiserbridge'},
                {key: 'token', component: 'local_edwiserbridge'},
                {key: 'copy', component: 'local_edwiserbridge'},
-               {key: 'copied', component: 'local_edwiserbridge'},  
+               {key: 'copied', component: 'local_edwiserbridge'},
                {key: 'process', component: 'local_edwiserbridge'},
                {key: 'eb_empty_name_err', component: 'local_edwiserbridge'},
-               {key: 'eb_empty_user_err', component: 'local_edwiserbridge'}   
+               {key: 'eb_empty_user_err', component: 'local_edwiserbridge'}
                // {key: 'manualsuccessuser', component: 'local_notifications'}
             ]);
+
 
             $(document).ready(function () {
 
@@ -211,10 +212,10 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
 
 
 
-                function add_new_service_in_select(element, name, id)
+                function add_new_service_in_select(element, name)
                 {
                     $(element +"option:selected").removeAttr("selected");
-                    $(element).append('<option value="'+id+'" selected> '+ name +' </option>');
+                    $(element).append('<option selected> '+ name +' </option>');
                 }
 
 
@@ -365,5 +366,4 @@ console.log(copy_btn_div);
 /*        }
     }*/
 });
-
 

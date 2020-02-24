@@ -25,6 +25,8 @@ class eb_settings_handler
 		$response['msg']               = '';
 		$response['token']             = 0;
 		$response['site_url']          = $CFG->wwwroot;
+		$response['service_id']        = 0;
+
 
 		//service creation data
     	$servicedata                   = array();
@@ -39,7 +41,7 @@ class eb_settings_handler
    		$service['shortname']          = $this->eb_generate_service_shortname();
 
 
-   		//User id validation. 
+   		//User id validation.
    		if (empty($userid)) {
    			$response['status'] = 0;
 			$response['msg']    = get_string('empty_userid_err', 'local_edwiserbridge');
@@ -72,7 +74,7 @@ class eb_settings_handler
 
         	//Creating token iwith service id.
         	$token = $this->eb_create_token($serviceid, $userid);
-
+        	$response['service_id'] = $serviceid;
         	$response['token'] = $token;
         } else {
         	$response['status'] = 0;
@@ -172,12 +174,13 @@ class eb_settings_handler
 	public function eb_create_token($serviceid, $userid)
 	{
 		$tokentype = EXTERNAL_TOKEN_PERMANENT; // check this add for testing purpose
-		$serviceorid = $serviceid;
-		$userid = $userid;
+		// $serviceorid = $serviceid;
+		// $userid = $userid;
 		$contextorid = 1;
-		
-		$token = external_generate_token($tokentype, $serviceorid, $userid, $contextorid);
+
+		$token = external_generate_token($tokentype, $serviceid, $userid, $contextorid);
     	set_config("edwiser_bridge_last_created_token", $token);
+    	set_config('ebexistingserviceselect', $serviceid);
 		return $token;
 	}
 

@@ -319,6 +319,7 @@ class local_edwiserbridge_external extends external_api
             array(
                 'token'     => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge')),
                 'site_url'  => new external_value(PARAM_TEXT, get_string('moodle_url', 'local_edwiserbridge')),
+                'service_id'  => new external_value(PARAM_INT, get_string('web_service_id', 'local_edwiserbridge')),
                 'status'  => new external_value(PARAM_INT, get_string('web_service_creation_status', 'local_edwiserbridge')),
                 'msg'  => new external_value(PARAM_TEXT, get_string('web_service_creation_msg', 'local_edwiserbridge'))
             )
