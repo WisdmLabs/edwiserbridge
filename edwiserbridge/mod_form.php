@@ -41,7 +41,6 @@ class edwiserbridge_connection_form extends moodleform
         $repeatarray[] = $mform->createElement('hidden', 'wp_remove', 'no');
 
 
-
         $buttonarray = array();
         $buttonarray[] = $mform->createElement('button', 'eb_test_connection', get_string("wp_test_conn_btn", "local_edwiserbridge"), "", "");
         $buttonarray[] = $mform->createElement('button', 'eb_remove_site', get_string("wp_test_remove_site", "local_edwiserbridge"));
@@ -102,7 +101,7 @@ class edwiserbridge_connection_form extends moodleform
         $errors = parent::validation($data, $files);
 
         $processedData = $data;
-        for ($i = count($data["wp_name"]) - 1 ; $i >= 0; $i--) {
+        for ($i = count($data["wp_name"]) - 1; $i >= 0; $i--) {
             //Delete the current values from the copy of the data array.
             unset($processedData["wp_name"][$i]);
             unset($processedData["wp_url"][$i]);
@@ -204,11 +203,6 @@ class edwiserbridge_navigation_form extends moodleform
         $mform->addElement(
             'html',
             '<div class="eb-tabs-cont">
-                <div id="eb-synch-tab" class="eb-tabs '.$sevice.'">
-                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service".'">
-                        '. get_string('tab_service', 'local_edwiserbridge') .'
-                    </a>
-                </div>
                 <div id="eb-conn-tab" class="eb-tabs '.$connection.'">
                     <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=connection".'">
                         ' . get_string('tab_conn', 'local_edwiserbridge') . '
@@ -219,7 +213,11 @@ class edwiserbridge_navigation_form extends moodleform
                         '. get_string('tab_synch', 'local_edwiserbridge') .'
                     </a>
                 </div>
-                
+                <div id="eb-synch-tab" class="eb-tabs '.$sevice.'">
+                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service".'">
+                        '. get_string('tab_service', 'local_edwiserbridge') .'
+                    </a>
+                </div>
             </div>'
         );
 
@@ -242,11 +240,14 @@ class edwiserbridge_service_form extends moodleform
     public function definition()
     {
         global $CFG;
-        
+
         $mform            = $this->_form;
         $existingservices = eb_get_existing_services();
         $authusers        = eb_get_administrators();
-        $token = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
+
+        $token  = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
+        $service = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
+
         /*$sites = get_site_list();
         $site_keys = array_keys($sites);
         $defaultvalues = get_synch_settings($site_keys[0]);*/
@@ -265,23 +266,21 @@ class edwiserbridge_service_form extends moodleform
         // $repeateloptions['wp_name']['helpbutton']  = array("wordpress_site_name", "local_edwiserbridge");
 
         $mform->addElement('text', 'eb_service_inp', get_string('new_service_inp_lbl', 'local_edwiserbridge'), array('class'=>'eb_service_field'));
+        $mform->setType('eb_service_inp', PARAM_TEXT);
+
 
         $select = $mform->addElement('select', 'eb_auth_users_list', get_string('new_serivce_user_lbl', 'local_edwiserbridge'), $authusers, array('class'=>'eb_service_field'));
         $select->setMultiple(false);
 
-        $mform->addElement('static', 'eb_mform_common_error', '', '<span id="eb_common_err"></span>');
+        $mform->addElement('static', 'eb_mform_common_error', '', '<span id="eb_common_err"></span><span id="eb_common_success"></span>');
 
-        $mform->addElement('button', 'eb_mform_create_service', get_string("process", 'local_edwiserbridge'));
+        $mform->addElement('button', 'eb_mform_create_service', get_string("link", 'local_edwiserbridge'));
 
 
-        //fill form with the existing values
-        /*if (!empty($defaultvalues)) {
-            $mform->setDefault("course_enrollment", $defaultvalues["course_enrollment"]);
-            $mform->setDefault("course_un_enrollment", $defaultvalues["course_un_enrollment"]);
-            $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
-            $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
-        }*/
-        // $this->add_action_buttons();
+        //set default values
+        if (!empty($service)) {
+            $mform->setDefault("eb_sevice_list", $service);
+        }
     }
 
     public function validation($data, $files)
@@ -289,7 +288,3 @@ class edwiserbridge_service_form extends moodleform
         return array();
     }
 }
-
-
-
-
