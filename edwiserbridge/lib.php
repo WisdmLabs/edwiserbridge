@@ -5,23 +5,11 @@ require_once(dirname(__FILE__)."/classes/class-settings-handler.php");
 require_once("{$CFG->libdir}/completionlib.php");
 
 
-
-
-
 function local_edwiserbridge_extend_settings_navigation($settingsnav, $context)
 {
 
 }
 
-/*function local_edwiserbridge_output_fragment_test($args) {
-    global $CFG;
-    // require_once($CFG->dirroot . '/local/edwiserbridge/mod_form.php');
-    // $mform_connection = new edwiserbridge_connection_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
-    // return $mform_connection->render();
-    ob_start();
-    print_r($args);
-    return ob_get_clean();
-}*/
 
 /**
  * [save_connection_form_settings description]

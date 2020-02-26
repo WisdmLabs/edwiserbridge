@@ -112,6 +112,8 @@ $string['copy'] = 'Copy';
 $string['copied'] = 'Copied !!!';
 $string['create'] = 'Create';
 $string['link'] = 'Link';
+$string['click_to_copy'] = 'Click to copy.';
+$string['pop_up_info'] = 'Copy Moodle site URL and the token to your Wordpress site Edwiser Bridge connection settings.';
 
 /**********************************/
 
