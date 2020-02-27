@@ -233,7 +233,7 @@ class edwiserbridge_navigation_form extends moodleform
 
 
 /**
-*form shown while adding activity.
+* Used to create web service.
 */
 class edwiserbridge_service_form extends moodleform
 {

@@ -1,22 +1,21 @@
 <?php
 
 /**
-* 
+* File responsible to perform all actions of the set-up wizard.
 */
-
 
 require_once($CFG->libdir . "/externallib.php");
 
 
 class eb_settings_handler
 {
-    
-    public function __construct()
-    {
 
-    }
-
-
+    /**
+     * Create external service with the provided name and the user id
+     * @param  [type] $name   [description]
+     * @param  [type] $userid [description]
+     * @return [type]         [description]
+     */
     public function eb_create_externle_service($name, $userid)
     {
         global $DB, $CFG;
@@ -28,7 +27,7 @@ class eb_settings_handler
         $response['service_id']        = 0;
 
 
-        //service creation data
+        //service creation default data
         $servicedata                   = array();
         $service['name']               = $name;
         $service['enabled']            = 1;
@@ -87,7 +86,10 @@ class eb_settings_handler
         return $response;
     }
 
-
+    /**
+     * auto generates service shortname
+     * @return [type] [description]
+     */
     public function eb_generate_service_shortname()
     {
         global $DB;
@@ -106,7 +108,11 @@ class eb_settings_handler
     }
 
 
-
+    /**
+     * checked if the provided service name is already regisered.
+     * @param  [type] $servicename [description]
+     * @return [type]              [description]
+     */
     public function eb_check_if_service_name_available($servicename)
     {
         global $DB;
@@ -117,7 +123,11 @@ class eb_settings_handler
         return 1;
     }
 
-
+    /**
+     * Adds authorized user for the external service.
+     * @param  [type] $serviceid 
+     * @param  [type] $userid    
+     */
     public function eb_add_auth_user($serviceid, $userid)
     {
         global $DB;
@@ -131,8 +141,10 @@ class eb_settings_handler
     }
 
 
-
-
+    /**
+     * This function adds default web services which registered with the edwiser-bridge only
+     * @param  [type] $serviceid 
+     */
     public function eb_add_default_web_service_functions($serviceid)
     {
         global $DB;
@@ -160,6 +172,10 @@ class eb_settings_handler
         $this->eb_extensions_web_service_function($serviceid);
     }
 
+    /**
+     * This function adds extensions web services which are registered with the edwiser-bridge only
+     * @param  [type] $serviceid 
+     */
     public function eb_extensions_web_service_function($serviceid)
     {
         global $DB;
@@ -193,7 +209,12 @@ class eb_settings_handler
     }
 
 
-
+    /**
+     * This links the existing web service i.e it adds all the missing functions top the web-service
+     * This does not add ayuth user.
+     * @param  [type] $serviceid [description]
+     * @return [type]            [description]
+     */
     public function eb_link_exitsing_service($serviceid)
     {
         $this->eb_add_default_web_service_functions($serviceid);
@@ -202,27 +223,22 @@ class eb_settings_handler
         return 1;
     }
 
+
+    /**
+     * This function creates the token by calling Moodles inbuilt function
+     * @param  [type] $serviceid [description]
+     * @param  [type] $userid    [description]
+     * @return [type]            [description]
+     */
     public function eb_create_token($serviceid, $userid)
     {
         $tokentype = EXTERNAL_TOKEN_PERMANENT; // check this add for testing purpose
-        // $serviceorid = $serviceid;
-        // $userid = $userid;
         $contextorid = 1;
 
+        //Default function of Moodle to create the token.
         $token = external_generate_token($tokentype, $serviceid, $userid, $contextorid);
         set_config("edwiser_bridge_last_created_token", $token);
         set_config('ebexistingserviceselect', $serviceid);
         return $token;
     }
-
-
-
-    //add function to handle the ajax call.
-
-
-
 }
-
-
-
-

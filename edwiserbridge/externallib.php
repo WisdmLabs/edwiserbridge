@@ -227,7 +227,7 @@ class local_edwiserbridge_external extends external_api
             array('offset' => $offset, "limit" => $limit, "search_string" => $search_string, "total_users" => $total_users)
         );
 
-        $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE  deleted = 0 AND confirmed = 1 ";
+        $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE  deleted = 0 AND confirmed = 1 AND username != 'guest' ";
 
         if (!empty($params['search_string'])) {
             $search_string = "%" . $params['search_string'] . "%";
@@ -249,7 +249,7 @@ class local_edwiserbridge_external extends external_api
 
         $user_count = 0;
         if (!empty($params['total_users'])) {
-            $user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user}");
+            $user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user} WHERE  deleted = 0 AND confirmed = 1 AND username != 'guest' ");
             $user_count = $user_count->total_count;
         }
 
@@ -291,9 +291,9 @@ class local_edwiserbridge_external extends external_api
 
 
     /**
-     * functionality to get users in chunk.
+     * functionality to create new external service 
      * @param  [type] $user_id
-     * @return [type]          [description]
+     * @return [type]          
      */
     public static function eb_create_service($web_service_name, $user_id)
     {
@@ -331,7 +331,7 @@ class local_edwiserbridge_external extends external_api
     /**
      * functionality to link existing services.
      * @param  [type] $user_id
-     * @return [type]          [description]
+     * @return [type]          
      */
     public static function eb_link_service($web_service_name)
     {
@@ -367,6 +367,4 @@ class local_edwiserbridge_external extends external_api
             )
         );
     }
-
-
 }
