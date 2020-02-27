@@ -11,7 +11,8 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
        {key: 'eb_empty_name_err', component: 'local_edwiserbridge'},
        {key: 'eb_empty_user_err', component: 'local_edwiserbridge'},
        {key: 'eb_service_select_err', component: 'local_edwiserbridge'},
-       {key: 'click_to_copy', component: 'local_edwiserbridge'}
+       {key: 'click_to_copy', component: 'local_edwiserbridge'},
+       {key: 'pop_up_info', component: 'local_edwiserbridge'}  
        // {key: 'manualsuccessuser', component: 'local_notifications'}
     ]);
 
@@ -316,12 +317,12 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
                                             +'<table class="eb_toke_detail_tbl">'
                                             +'  <tr>'
                                             +'     <th width="17%">'+ M.util.get_string('site_url', 'local_edwiserbridge') +'</th>'
-                                            +'     <td> : <span class="eb_copy_text" class="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.site_url +'</span>'
+                                            +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.site_url +'</span>'
                                             +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
                                             +'  </tr>'
                                             +'  <tr>'
                                             +'     <th width="17%">'+ M.util.get_string('token', 'local_edwiserbridge') +'</th>'
-                                            +'     <td> : <span class="eb_copy_text" class="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.token +'</span>'
+                                            +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.token +'</span>'
                                             +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
                                             +'  </tr>'
                                             +'</table>';
