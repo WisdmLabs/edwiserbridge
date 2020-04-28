@@ -173,7 +173,7 @@ function remove_processed_coures($course_id, $courses)
  */
 function check_if_request_is_from_wp()
 {
-    if (isset($_POST) && isset($_POST["enrolments"])) {
+    if (isset($_POST) && (isset($_POST["enrolments"]) || isset($_POST["members"]))) {
         return 1;
     }
     return 0;
