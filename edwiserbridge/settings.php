@@ -24,6 +24,78 @@
 */
 
 defined('MOODLE_INTERNAL') || die();
+require_once(dirname(__FILE__).'/lib.php');
 
-$ADMIN->add('modules', new admin_category('edwisersettings', new lang_string('edwiserbridge', 'local_edwiserbridge')));
-$ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge', new lang_string('nav_name', 'local_edwiserbridge'), "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection", array('moodle/user:update', 'moodle/user:delete')));
+global $CFG, $COURSE, $DB, $PAGE;
+
+$PAGE->requires->jquery();
+$PAGE->requires->jquery_plugin('ui');
+$PAGE->requires->jquery_plugin('ui-css');
+
+$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
+// $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
+
+
+
+$ADMIN->add('modules', new admin_category('edwisersettings',
+    new lang_string(
+            'edwiserbridge',
+            'local_edwiserbridge'
+        )
+    )
+);
+
+$ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge_conn_synch_settings',
+        new lang_string(
+            'nav_name',
+            'local_edwiserbridge'
+        ),
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection",
+        array(
+            'moodle/user:update',
+            'moodle/user:delete'
+        )
+    )
+);
+
+
+// In every plugin there is one if condition added please check it.
+$settings = new admin_settingpage('edwiserbridge_settings', new lang_string('pluginname', 'local_edwiserbridge'));
+$ADMIN->add('localplugins', $settings);
+
+
+$existing_services = eb_get_existing_services();
+
+
+//$name, $visiblename, $description, $defaultsetting, $choices
+$settings->add(new admin_setting_configselect(
+    "local_edwiserbridge/ebexistingserviceselect",
+    new lang_string('existing_serice_lbl', 'local_edwiserbridge'),
+    get_string('existing_service_desc', 'local_edwiserbridge'),
+    '',
+    $existing_services
+));
+
+
+
+$settings->add(new admin_setting_configtext(
+    'local_edwiserbridge/ebnewserviceinp',
+    get_string('new_service_inp_lbl', 'local_edwiserbridge'),
+    get_string('auth_user_desc', 'local_edwiserbridge'), //desc
+    '',
+    PARAM_RAW
+));
+
+
+$admin_users = eb_get_administrators();
+
+
+//$name, $visiblename, $description, $defaultsetting, $choices
+$settings->add(new admin_setting_configselect(
+    "local_edwiserbridge/ebnewserviceuserselect",
+    new lang_string('new_serivce_user_lbl', 'local_edwiserbridge'),
+    '', //new lang_string('web_service_id', 'local_edwiserbridge'),
+    '',
+    $admin_users
+));
+

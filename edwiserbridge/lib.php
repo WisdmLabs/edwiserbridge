@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__)."/classes/class-api-handler.php");
+require_once(dirname(__FILE__)."/classes/class-settings-handler.php");
 require_once("{$CFG->libdir}/completionlib.php");
 
 
@@ -9,15 +10,6 @@ function local_edwiserbridge_extend_settings_navigation($settingsnav, $context)
 
 }
 
-/*function local_edwiserbridge_output_fragment_test($args) {
-    global $CFG;
-    // require_once($CFG->dirroot . '/local/edwiserbridge/mod_form.php');
-    // $mform_connection = new edwiserbridge_connection_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
-    // return $mform_connection->render();
-    ob_start();
-    print_r($args);
-    return ob_get_clean();
-}*/
 
 /**
  * [save_connection_form_settings description]
@@ -181,8 +173,52 @@ function remove_processed_coures($course_id, $courses)
  */
 function check_if_request_is_from_wp()
 {
-    if (isset($_POST) && isset($_POST["enrolments"])) {
+    if (isset($_POST) && (isset($_POST["enrolments"]) || isset($_POST["members"]))) {
         return 1;
     }
     return 0;
 }
+
+
+
+
+
+
+/*-----------------------------------------------------------
+ *   Functions used in Settings page  
+ *----------------------------------------------------------*/
+
+
+function eb_get_administrators()
+{
+
+    $admins = get_admins(); 
+    $settings_arr['']       = get_string('new_serivce_user_lbl', 'local_edwiserbridge');
+
+    foreach ($admins as $value) {
+        $settings_arr[$value->id] = $value->email;
+    }
+    return $settings_arr;
+}
+
+
+
+
+function eb_get_existing_services()
+{
+    global $DB, $CFG;
+    $result = $DB->get_records("external_services", null, '','id, name');
+    $settings_arr[''] = get_string('existing_serice_lbl', 'local_edwiserbridge');
+    $settings_arr['create'] = ' - ' . get_string('new_web_new_service', 'local_edwiserbridge') . ' - ';
+
+
+    foreach ($result as $value) {
+        $settings_arr[$value->id] = $value->name;
+    }
+
+    return $settings_arr;
+}
+
+
+
+

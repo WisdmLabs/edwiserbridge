@@ -8,13 +8,14 @@ require_once($CFG->libdir.'/adminlib.php');
 require_once('mod_form.php');
 
 // Restrict normal user to access this page
-admin_externalpage_setup('edwiserbridge');
+admin_externalpage_setup('edwiserbridge_conn_synch_settings');
 
 // Require Login
 require_login();
 $context = context_system::instance();
 $baseurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection';
 
+$mform_service        = new edwiserbridge_service_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service', null, 'post', '', array("id" => "eb_service_form"), true, null);
 $mform_connection      = new edwiserbridge_connection_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection', null, 'post', '', array("id" => "eb_conne_form"), true, null);
 $mform_synchronization = new edwiserbridge_synchronization_form($CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=synchronization', null, 'post', '', array("id" => "eb_synch_form"), true, null);
 $mform_navigation      = new edwiserbridge_navigation_form();
@@ -75,6 +76,23 @@ if ($mform_synchronization->is_cancelled()) {
         $mform_synchronization->display();
     }
 }
+
+
+//synchronization form processing and displaying.
+if ($mform_service->is_cancelled()) {
+    //Handle form cancel operation, if cancel button is present on form
+} elseif ($form_data = $mform_service->get_data()) {
+    //In this case you process validated data. $mform->get_data() returns data posted in form.
+    save_synchronization_form_settings($form_data);
+    //print_object($form_data);
+    $mform_service->display();
+} else {
+    // Display synchronization form for the first time.
+    if (isset($_GET["tab"]) && $_GET["tab"] == "service") {
+        $mform_service->display();
+    }
+}
+
 
 
 echo $OUTPUT->container_end();

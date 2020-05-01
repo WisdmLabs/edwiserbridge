@@ -16,15 +16,27 @@ $string['modulenameplural'] = "Edwiser Bridge";
 $string['pluginname'] = 'Edwiser Bridge';
 $string['pluginadministration'] = "Edwiser Bridge administrator";
 $string['modulename_help'] = '';
+$string['blank'] = '';
 
 /**************  end of the strings used by default by the moodle  ****************/
 
+/*** TABS  ***/
+
+$string['tab_conn'] = 'Connection Settings';
+$string['tab_synch'] = 'Synchronization Settings';
+$string['tab_service'] = 'Service Settings';
+
+/*******/
 
 /******* navigation menu and settings page   ********/
 
 $string["wp_site_settings_title"] = "Site Settings :";
 
-$string["nav_name"] = "Edwiser Bridge Settings";
+// $string["nav_name"] = "Edwiser Bridge Settings";
+$string["nav_name"] = "Settings";
+$string["default_settings_nav"] = "Settings";
+
+
 $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
 $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization Settings";
@@ -52,17 +64,66 @@ $string["token_help"] = "Please enter access token used in Wordpress in connecti
 $string["wordpress_site_name_help"] = "Please enter unique site name.";
 $string["wordpress_url_help"] = "Please enter Wordpress site URL.";
 
-
 $string["token"] = "Access Token";
 
-/*********/
+$string['existing_web_service_desc'] = 'Select existing web service if you have created already.';
+$string['new_web_service_desc'] = 'Create new web service';
+$string['new_web_new_service'] = 'Create new web service';
+
+$string['new_service_inp_lbl'] = 'Web service name';
+$string['new_serivce_user_lbl'] = 'Select User';
+$string['existing_serice_lbl'] = 'Select web service';
+
+$string['web_service_token'] = 'Token generated after creating service';
+$string['moodle_url'] = 'Moodle site url.';
+$string['web_service_name'] = 'Web service Name';
+$string['web_service_auth_user'] = 'Authorized user.';
+
+
+$string['existing_service_desc'] = 'Edwiser web-service functions will get added into it and also be used as reference for upcoming updates.';
+$string['auth_user_desc'] = 'All admin users used as Authorized User while creating token.';
+
+$string['eb_mform_service_desc'] = 'Service desc';
+$string['eb_mform_service_desc_help'] = 'Edwiser web-service functions will get added into it and also be used as reference for upcoming updates.';
+
+$string['eb_mform_token_desc'] = 'Token';
+$string['eb_mform_token_desc_help'] = 'This is your last created token used in wp for site integration.';
+
+
+/*********************************/
+
+
+
+/*********** Settings page validation and Modal strings************/
+$string['create_service_shortname_err'] = 'Unable to create the webservice please contact plugin owner.';
+$string['create_service_name_err'] =   'This name is already in use please use different name.';
+$string['create_service_creation_err'] = 'Unable to create the webservice please contact plugin owner.';
+$string['empty_userid_err'] = 'Please select the user.';
+$string['eb_link_success'] = 'Web service sucessfully linked.';
+$string['eb_link_err'] = 'Unable to link the web service.';
+$string['eb_service_select_err'] = 'Please select valid external web service.';
+
+
+
+$string['dailog_title'] = 'Token And Url';
+$string['site_url'] = 'Site Url ';
+$string['token'] = 'Token ';
+$string['copy'] = 'Copy';
+$string['copied'] = 'Copied !!!';
+$string['create'] = 'Create';
+$string['link'] = 'Link';
+$string['click_to_copy'] = 'Click to copy.';
+$string['pop_up_info'] = 'Copy Moodle site URL and the token to your Wordpress site Edwiser Bridge connection settings.';
+
+/**********************************/
+
 
 
 /******  Form validation.  ******/
 $string['required'] = "- You must supply a value here.";
 $string['sitename-duplicate-value'] = " - Site Name already exists, Please provide a different value.";
 $string['url-duplicate-value'] = " - Wordpress Url already exists, Please provide a different value.";
-/*******/
+/************/
 
 
 /*****  web service  *******/
@@ -98,4 +159,20 @@ $string["web_service_email"] = "Email of the user.";
 /****  error handling  ***/
 $string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://knowledgebase.edwiser.org/'  target='_blank'> click here </a>";
 
+$string['eb_empty_name_err'] = 'Please enter valid service name.';
+$string['eb_empty_user_err'] = 'Please select user.';
+
 /**/
+
+
+
+
+/*****************************  ADDED FOR SETTINGS PAGE   *****************************/
+
+
+$string["manual_notification"] = "MANUAL NOTIFICATION";
+
+
+
+
+
