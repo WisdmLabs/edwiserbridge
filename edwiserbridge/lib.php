@@ -69,6 +69,39 @@ function save_synchronization_form_settings($form_data)
 }
 
 
+
+function save_required_settings_form($form_data)
+{
+    // echo $CFG->extendedusernamechars;
+
+    if (isset($form_data->web_service) && isset($form_data->pass_policy) && isset($form_data->extended_username)) {
+
+        set_config("enablewebservices", $form_data->web_service);
+        set_config("extendedusernamechars", $form_data->extended_username);
+        set_config("passwordpolicy", $form_data->pass_policy);
+
+    }
+
+}
+
+
+
+function get_required_settings()
+{
+    // echo $CFG->extendedusernamechars;
+    global $CFG;
+
+    $required_settings = array();
+
+    $required_settings['web_service'] = isset($CFG->enablewebservices) ? $CFG->enablewebservices : false;
+    $required_settings['extended_username'] = isset($CFG->extendedusernamechars) ? $CFG->extendedusernamechars : false;
+    $required_settings['pass_policy'] = isset($CFG->passwordpolicy) ? $CFG->passwordpolicy : false;
+
+    return $required_settings;
+}
+
+
+
 /**
  * returns connection settings saved in the settings form.
  */
@@ -173,7 +206,7 @@ function remove_processed_coures($course_id, $courses)
  */
 function check_if_request_is_from_wp()
 {
-    if (isset($_POST) && (isset($_POST["enrolments"]) || isset($_POST["members"]))) {
+    if (isset($_POST) && isset($_POST["enrolments"])) {
         return 1;
     }
     return 0;

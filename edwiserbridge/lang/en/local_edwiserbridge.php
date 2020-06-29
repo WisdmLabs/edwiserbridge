@@ -22,9 +22,11 @@ $string['blank'] = '';
 
 /*** TABS  ***/
 
-$string['tab_conn'] = 'Connection Settings';
-$string['tab_synch'] = 'Synchronization Settings';
-$string['tab_service'] = 'Service Settings';
+$string['tab_service'] = '1. Service Settings';
+$string['tab_conn'] = '2. Connection Settings';
+$string['tab_synch'] = '3. Sync Settings';
+$string['tab_mdl_required_settings'] = '4. Required Settings';
+
 
 /*******/
 
@@ -41,7 +43,7 @@ $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
 $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization Settings";
 
-$string[""] = "Wordpress Synchronization Settings";
+// $string[""] = "Wordpress Synchronization Settings";
 $string["enrollment_checkbox"] = "Enable user enrollment.";
 $string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users";
 $string["unenrollment_checkbox"] = "Enable user un-enrollment.";
@@ -59,6 +61,12 @@ $string["wp_test_remove_site"] = "Remove Site";
 $string["add_more_sites"] = "Add New Site";
 $string["wordpress_site_name"] = "Site Name";
 $string["site-list"] = "Site List";
+
+
+$string['next'] = 'Next';
+$string['save'] = 'Save';
+$string['save_cont'] = 'Save and Continue';
+
 
 $string["token_help"] = "Please enter access token used in Wordpress in connection setting";
 $string["wordpress_site_name_help"] = "Please enter unique site name.";
@@ -163,6 +171,24 @@ $string['eb_empty_name_err'] = 'Please enter valid service name.';
 $string['eb_empty_user_err'] = 'Please select user.';
 
 /**/
+
+
+
+
+/*****************  Set up Moodle Settings  *****************/
+
+$string["password_policy_cb"] = "Password policy.";
+$string["password_policy_cb_desc"] = "If enabled, user passwords will be checked against the password policy as specified in the settings below. Enabling the password policy will not affect existing users until they decide to, or are required to, change their password.";
+
+$string["extended_char_username_cb"] = "Allow extended characters in usernames.";
+$string["extended_char_username_cb_desc"] = 'Enable this setting to allow students to use any characters in their usernames (note this does not affect their actual names). The default is "false" which restricts usernames to be alphanumeric lowercase characters, underscore (_), hyphen (-), period (.) or at symbol (@).';
+
+$string["web_service_cb"] = "Enable web services.";
+$string["web_service_cb_desc"] = "Recomended:yes";
+
+
+/**********************************/
+
 
 
 

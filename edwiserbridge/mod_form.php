@@ -22,6 +22,152 @@
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
+
+
+
+
+
+/**
+*form shown while adding activity.
+*/
+class edwiserbridge_navigation_form extends moodleform
+{
+    public function definition()
+    {
+        global $CFG;
+        $mform = $this->_form;
+
+        $connection = "";
+        $synch = "";
+        $sevice = '';
+
+        if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
+            $connection = "active-tab";
+        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
+            $synch = "active-tab";
+        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "service") {
+            $sevice = "active-tab";
+        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "settings") {
+            $settings = "active-tab";
+        }
+
+        $mform->addElement(
+            'html',
+            '<div class="eb-tabs-cont">
+                
+                <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service".'" class="eb-tabs '.$sevice.'">
+                    <div id="eb-service-tab" >
+                        '. get_string('tab_service', 'local_edwiserbridge') .'
+                    </div>
+                </a>
+
+                <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=connection".'" class="eb-tabs '.$connection.'">
+                    <div id="eb-conn-tab" >
+                        ' . get_string('tab_conn', 'local_edwiserbridge') . '
+                    </div>
+                </a>
+                
+                <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=synchronization".'" class="eb-tabs '.$synch.'">
+                    <div id="eb-synch-tab" >
+                        '. get_string('tab_synch', 'local_edwiserbridge') .'
+                    </div>
+                </a>                
+                
+                <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings".'" class="eb-tabs '.$settings.'">
+                    <div id="eb-setting-tab" >
+                        '. get_string('tab_mdl_required_settings', 'local_edwiserbridge') .'
+                    </div>
+                </a>
+            </div>'
+        );
+
+    }
+
+    public function validation($data, $files)
+    {
+        return array();
+    }
+}
+
+
+
+
+
+/**
+* Used to create web service.
+*/
+class edwiserbridge_service_form extends moodleform
+{
+    public function definition()
+    {
+        global $CFG;
+
+        $mform            = $this->_form;
+        $existingservices = eb_get_existing_services();
+        $authusers        = eb_get_administrators();
+
+        $token  = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
+        $service = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
+
+        /*$sites = get_site_list();
+        $site_keys = array_keys($sites);
+        $defaultvalues = get_synch_settings($site_keys[0]);*/
+
+        // $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
+
+
+        $mform->addElement('static', 'eb_mform_token_wrap', get_string('token', 'local_edwiserbridge'), '<b id="eb_mform_token">' . $token . '</b>');
+        $mform->addHelpButton('eb_mform_token_wrap', 'eb_mform_token_desc', 'local_edwiserbridge');
+
+
+        $select = $mform->addElement('select', 'eb_sevice_list', get_string('existing_serice_lbl', 'local_edwiserbridge'), $existingservices);
+        $mform->addHelpButton('eb_sevice_list', 'eb_mform_service_desc', 'local_edwiserbridge');
+        $select->setMultiple(false);
+
+        // $repeateloptions['wp_name']['helpbutton']  = array("wordpress_site_name", "local_edwiserbridge");
+
+        $mform->addElement('text', 'eb_service_inp', get_string('new_service_inp_lbl', 'local_edwiserbridge'), array('class'=>'eb_service_field'));
+        $mform->setType('eb_service_inp', PARAM_TEXT);
+
+
+        $select = $mform->addElement('select', 'eb_auth_users_list', get_string('new_serivce_user_lbl', 'local_edwiserbridge'), $authusers, array('class'=>'eb_service_field'));
+        $select->setMultiple(false);
+
+        $mform->addElement('static', 'eb_mform_common_error', '', '<span id="eb_common_err"></span><span id="eb_common_success"></span>');
+
+        $mform->addElement('button', 'eb_mform_create_service', get_string("link", 'local_edwiserbridge'));
+
+
+        //set default values
+        if (!empty($service)) {
+            $mform->setDefault("eb_sevice_list", $service);
+        }
+
+
+        $mform->addElement(
+            'html',
+            '<div class="eb_connection_btns">
+                
+                <a href="'.$CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection'.'" class="btn btn-primary eb_setting_btn" > '.get_string("next", 'local_edwiserbridge').'</a>
+
+            </div>');
+
+
+
+
+    }
+
+    public function validation($data, $files)
+    {
+        return array();
+    }
+}
+
+
+
+
+
+
 /**
 *form shown while adding activity.
 */
@@ -92,8 +238,18 @@ class edwiserbridge_connection_form extends moodleform
         //closing header section
         $mform->closeHeaderBefore('eb_option_add_fields');
 
+
+        $mform->addElement(
+            'html',
+            '<div class="eb_connection_btns">
+                <input type="submit" class="btn btn-primary eb_setting_btn" name="submit" value="'.get_string("save", "local_edwiserbridge").'">
+                <input type="submit" class="btn btn-primary eb_setting_btn" name="submit_cont" value="'.get_string("save_cont", "local_edwiserbridge").'">
+            </div>');
+
+
+
         //fill form with the existing values
-        $this->add_action_buttons(false);
+        // $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)
@@ -166,61 +322,19 @@ class edwiserbridge_synchronization_form extends moodleform
             $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
             $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
         }
-        $this->add_action_buttons();
-    }
-
-    public function validation($data, $files)
-    {
-        return array();
-    }
-}
 
 
 
-
-/**
-*form shown while adding activity.
-*/
-class edwiserbridge_navigation_form extends moodleform
-{
-    public function definition()
-    {
-        global $CFG;
-        $mform = $this->_form;
-
-        $connection = "";
-        $synch = "";
-        $sevice = '';
-
-        if (isset($_GET["tab"]) && $_GET["tab"] == "connection") {
-            $connection = "active-tab";
-        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "synchronization") {
-            $synch = "active-tab";
-        } elseif (isset($_GET["tab"]) && $_GET["tab"] == "service") {
-            $sevice = "active-tab";
-        }
-
-        $mform->addElement(
+         $mform->addElement(
             'html',
-            '<div class="eb-tabs-cont">
-                <div id="eb-conn-tab" class="eb-tabs '.$connection.'">
-                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=connection".'">
-                        ' . get_string('tab_conn', 'local_edwiserbridge') . '
-                    </a>
-                </div>
-                <div id="eb-synch-tab" class="eb-tabs '.$synch.'">
-                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=synchronization".'">
-                        '. get_string('tab_synch', 'local_edwiserbridge') .'
-                    </a>
-                </div>
-                <div id="eb-synch-tab" class="eb-tabs '.$sevice.'">
-                    <a href="'.$CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service".'">
-                        '. get_string('tab_service', 'local_edwiserbridge') .'
-                    </a>
-                </div>
-            </div>'
-        );
+            '<div class="eb_connection_btns">
+                <input type="submit" class="btn btn-primary eb_setting_btn" name="submit" value="'.get_string("save", "local_edwiserbridge").'">
+                <input type="submit" class="btn btn-primary eb_setting_btn" name="submit_cont" value="'.get_string("save_cont", "local_edwiserbridge").'">
+            </div>');
 
+
+
+        // $this->add_action_buttons();
     }
 
     public function validation($data, $files)
@@ -228,6 +342,8 @@ class edwiserbridge_navigation_form extends moodleform
         return array();
     }
 }
+
+
 
 
 
@@ -235,52 +351,41 @@ class edwiserbridge_navigation_form extends moodleform
 /**
 * Used to create web service.
 */
-class edwiserbridge_service_form extends moodleform
+
+
+class edwiserbridge_required_settings_form extends moodleform
 {
     public function definition()
     {
         global $CFG;
 
         $mform            = $this->_form;
-        $existingservices = eb_get_existing_services();
-        $authusers        = eb_get_administrators();
+        // $existingservices = eb_get_existing_services();
+        // $authusers        = eb_get_administrators();
+        $defaultvalues = get_required_settings();
 
-        $token  = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
-        $service = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
+        $mform->addElement('advcheckbox', 'web_service', get_string('web_service_cb', 'local_edwiserbridge'), get_string("web_service_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
 
-        /*$sites = get_site_list();
-        $site_keys = array_keys($sites);
-        $defaultvalues = get_synch_settings($site_keys[0]);*/
+        $mform->addElement('advcheckbox', 'pass_policy', get_string('password_policy_cb', 'local_edwiserbridge'), get_string("password_policy_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
 
-        // $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
+        $mform->addElement('advcheckbox', 'extended_username', get_string('extended_char_username_cb', 'local_edwiserbridge'), get_string("extended_char_username_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
 
-
-        $mform->addElement('static', 'eb_mform_token_wrap', get_string('token', 'local_edwiserbridge'), '<b id="eb_mform_token">' . $token . '</b>');
-        $mform->addHelpButton('eb_mform_token_wrap', 'eb_mform_token_desc', 'local_edwiserbridge');
-
-
-        $select = $mform->addElement('select', 'eb_sevice_list', get_string('existing_serice_lbl', 'local_edwiserbridge'), $existingservices);
-        $mform->addHelpButton('eb_sevice_list', 'eb_mform_service_desc', 'local_edwiserbridge');
-        $select->setMultiple(false);
-
-        // $repeateloptions['wp_name']['helpbutton']  = array("wordpress_site_name", "local_edwiserbridge");
-
-        $mform->addElement('text', 'eb_service_inp', get_string('new_service_inp_lbl', 'local_edwiserbridge'), array('class'=>'eb_service_field'));
-        $mform->setType('eb_service_inp', PARAM_TEXT);
-
-
-        $select = $mform->addElement('select', 'eb_auth_users_list', get_string('new_serivce_user_lbl', 'local_edwiserbridge'), $authusers, array('class'=>'eb_service_field'));
-        $select->setMultiple(false);
-
-        $mform->addElement('static', 'eb_mform_common_error', '', '<span id="eb_common_err"></span><span id="eb_common_success"></span>');
-
-        $mform->addElement('button', 'eb_mform_create_service', get_string("link", 'local_edwiserbridge'));
-
-
-        //set default values
-        if (!empty($service)) {
-            $mform->setDefault("eb_sevice_list", $service);
+        //fill form with the existing values
+        if (!empty($defaultvalues)) {
+            $mform->setDefault("web_service", $defaultvalues["web_service"]);
+            $mform->setDefault("pass_policy", $defaultvalues["pass_policy"]);
+            $mform->setDefault("extended_username", $defaultvalues["extended_username"]);
         }
+
+
+        $mform->addElement(
+            'html',
+            '<div class="eb_connection_btns">
+                <input type="submit" class="btn btn-primary eb_setting_btn" name="submit" value="'.get_string("save", "local_edwiserbridge").'">
+            </div>');
+
+
+        // $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)
@@ -288,3 +393,5 @@ class edwiserbridge_service_form extends moodleform
         return array();
     }
 }
+
+

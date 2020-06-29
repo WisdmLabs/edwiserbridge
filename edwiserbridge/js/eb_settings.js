@@ -1,6 +1,6 @@
 require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], function ($, ajax, url, modalFactory, str) {
 
-    var translation = str.get_strings([
+/*    var translation = str.get_strings([
        {key: 'dailog_title', component: 'local_edwiserbridge'},
        {key: 'site_url', component: 'local_edwiserbridge'},
        {key: 'token', component: 'local_edwiserbridge'},
@@ -16,7 +16,31 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
        // {key: 'manualsuccessuser', component: 'local_notifications'}
     ]);
 
+
+    translation.then(function (results) {
+        console.log(results);
+    });*/
+
+
+
+
+console.log('loaded');
+
+
+
     $(document).ready(function () {
+
+        // translation.then(function(){
+
+
+
+
+
+
+
+
+
+
 
         //Adds the link and create button on the set-up wizard
         if ($('#admin-ebnewserviceuserselect').length) {
@@ -159,6 +183,9 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
          * On settings page.
          */
         $('#id_eb_sevice_list').change(function(event){
+
+console.log('CHANGED :::: ');
+
             var eb_service_val = $(this).val();
             handlefieldsdisplay('create', eb_service_val, '.eb_service_field', '#id_eb_mform_create_service');
         });
@@ -364,6 +391,10 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
 
 
         /************************  FUnctions END  ****************************/
+
+
+        // });
+
 
 
     });

@@ -50,7 +50,8 @@ $ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge_conn_synch_
             'nav_name',
             'local_edwiserbridge'
         ),
-        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection",
+        // "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection",
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=service",
         array(
             'moodle/user:update',
             'moodle/user:delete'
