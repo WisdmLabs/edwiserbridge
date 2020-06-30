@@ -3,6 +3,22 @@
  */
 
 
+.eb_settings_btn{
+    padding: 7px 18px;
+    border-radius: 4px;
+    color: white;
+    background-color: #2578dd;
+    margin-left: 5px;
+}
+
+
+.eb_settings_btn_cont{
+    padding: 30px;
+}
+
+
+
+
 .eb-tabs-cont{
 	display: flex;
     padding-bottom: 40px;
@@ -140,4 +156,5 @@
     padding: 7px 18px;
     border-radius: 4px;
 }
+
 

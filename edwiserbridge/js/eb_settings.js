@@ -24,20 +24,14 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
 
 
 
-console.log('loaded');
-
-
-
     $(document).ready(function () {
 
         // translation.then(function(){
 
 
+        $( "#admin-ebexistingserviceselect" ).before( '<div class="eb_settings_btn_cont" style="padding: 30px;"> '+  M.util.get_string('eb_settings_msg', 'local_edwiserbridge') +' <a target="_blank" class="eb_settings_btn" href="'+ M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service"> '+ M.util.get_string('click_here', 'local_edwiserbridge') +' </a></div>' );
 
-
-
-
-
+        $('#admin-ebexistingserviceselect').css('display', 'none');
 
 
 
@@ -71,7 +65,7 @@ console.log('loaded');
          *  Web service creation click handlers
          *----------------------------------------------*/
 
-        $('#eb_create_service').click(function(event){
+/*        $('#eb_create_service').click(function(event){
             event.preventDefault();
             var error = 0;
 
@@ -113,7 +107,7 @@ console.log('loaded');
 
             }
 
-        }); // event end
+        }); */// event end
 
 
 
@@ -172,11 +166,11 @@ console.log('loaded');
          * Capyuring the drop down values for the further actions
          * On Installation page
          */
-        $('#admin-ebexistingserviceselect select').change(function(event){
+        /*$('#admin-ebexistingserviceselect select').change(function(event){
             var eb_service_val = $(this).val();
             handlefieldsdisplay('create', eb_service_val, '#admin-ebnewserviceinp', '#eb_create_service');
             handlefieldsdisplay('create', eb_service_val, '#admin-ebnewserviceuserselect', '#eb_create_service');
-        });
+        });*/
 
          /**
          * Capturing the drop down values for the further actions

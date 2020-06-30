@@ -65,7 +65,9 @@ $settings = new admin_settingpage('edwiserbridge_settings', new lang_string('plu
 $ADMIN->add('localplugins', $settings);
 
 
-$existing_services = eb_get_existing_services();
+
+
+/*$existing_services = eb_get_existing_services();
 
 
 //$name, $visiblename, $description, $defaultsetting, $choices
@@ -91,6 +93,7 @@ $settings->add(new admin_setting_configtext(
 $admin_users = eb_get_administrators();
 
 
+
 //$name, $visiblename, $description, $defaultsetting, $choices
 $settings->add(new admin_setting_configselect(
     "local_edwiserbridge/ebnewserviceuserselect",
@@ -98,5 +101,33 @@ $settings->add(new admin_setting_configselect(
     '', //new lang_string('web_service_id', 'local_edwiserbridge'),
     '',
     $admin_users
+));*/
+
+// $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
+
+
+
+
+/*$settings->add(
+    new admin_setting_heading(
+        'local_edwiserbridge/eb_settings_msg',
+        '',
+        '<div class="eb_settings_btn_cont">'.get_string('eb_settings_msg', 'local_edwiserbridge') . '<a target="_blank" class="eb_settings_btn" href="'.$CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service'.'" >'. get_string('click_here', 'local_edwiserbridge') . '</a></div>'
+    )
+);*/
+
+
+
+$existing_services = eb_get_existing_services();
+
+
+//$name, $visiblename, $description, $defaultsetting, $choices
+$settings->add(new admin_setting_configselect(
+    "local_edwiserbridge/ebexistingserviceselect",
+    new lang_string('existing_serice_lbl', 'local_edwiserbridge'),
+    get_string('existing_service_desc', 'local_edwiserbridge'),
+    '',
+    $existing_services
 ));
+
 
