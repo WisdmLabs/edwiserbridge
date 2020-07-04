@@ -51,7 +51,7 @@ $ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge_conn_synch_
             'local_edwiserbridge'
         ),
         // "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=connection",
-        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=service",
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=settings",
         array(
             'moodle/user:update',
             'moodle/user:delete'
@@ -65,10 +65,7 @@ $settings = new admin_settingpage('edwiserbridge_settings', new lang_string('plu
 $ADMIN->add('localplugins', $settings);
 
 
-
-
-/*$existing_services = eb_get_existing_services();
-
+// $existing_services = eb_get_existing_services();
 
 //$name, $visiblename, $description, $defaultsetting, $choices
 $settings->add(new admin_setting_configselect(
@@ -76,58 +73,5 @@ $settings->add(new admin_setting_configselect(
     new lang_string('existing_serice_lbl', 'local_edwiserbridge'),
     get_string('existing_service_desc', 'local_edwiserbridge'),
     '',
-    $existing_services
+    array()
 ));
-
-
-
-$settings->add(new admin_setting_configtext(
-    'local_edwiserbridge/ebnewserviceinp',
-    get_string('new_service_inp_lbl', 'local_edwiserbridge'),
-    get_string('auth_user_desc', 'local_edwiserbridge'), //desc
-    '',
-    PARAM_RAW
-));
-
-
-$admin_users = eb_get_administrators();
-
-
-
-//$name, $visiblename, $description, $defaultsetting, $choices
-$settings->add(new admin_setting_configselect(
-    "local_edwiserbridge/ebnewserviceuserselect",
-    new lang_string('new_serivce_user_lbl', 'local_edwiserbridge'),
-    '', //new lang_string('web_service_id', 'local_edwiserbridge'),
-    '',
-    $admin_users
-));*/
-
-// $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
-
-
-
-
-/*$settings->add(
-    new admin_setting_heading(
-        'local_edwiserbridge/eb_settings_msg',
-        '',
-        '<div class="eb_settings_btn_cont">'.get_string('eb_settings_msg', 'local_edwiserbridge') . '<a target="_blank" class="eb_settings_btn" href="'.$CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service'.'" >'. get_string('click_here', 'local_edwiserbridge') . '</a></div>'
-    )
-);*/
-
-
-
-$existing_services = eb_get_existing_services();
-
-
-//$name, $visiblename, $description, $defaultsetting, $choices
-$settings->add(new admin_setting_configselect(
-    "local_edwiserbridge/ebexistingserviceselect",
-    new lang_string('existing_serice_lbl', 'local_edwiserbridge'),
-    get_string('existing_service_desc', 'local_edwiserbridge'),
-    '',
-    $existing_services
-));
-
-

@@ -4,10 +4,9 @@
 }
 
 
-#admin-ebnewserviceinp, #admin-ebnewserviceuserselect, #eb_service_form .eb_service_field{
+/*#admin-ebnewserviceinp, #admin-ebnewserviceuserselect, #eb_service_form .eb_service_field{
 	display: none;
-}
-
+}*/
 
 
 .eb_toke_detail_tbl{
@@ -64,11 +63,26 @@
 
 .eb_settings_err, #eb_common_err{
     color: red;
-    padding: 5px;
+    display: none;
+    border: 1px solid #ff00001f;
+    padding: 12px;
+    background-color: #ff000008;
 }
 
 #eb_common_success{
     color: green;
-    padding: 5px;
+    display: none;
+    
+    /*padding: 5px;*/
+    border: 1px solid #b3ffb3;
+    padding: 12px;
+    background-color: #f1f6f1;
 }
+
+
+#admin-ebexistingserviceselect{
+    display: none;
+}
+
+
 

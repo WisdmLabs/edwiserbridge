@@ -1,6 +1,6 @@
-require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], function ($, ajax, url, modalFactory, str) {
+require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url, str) {
 
-/*    var translation = str.get_strings([
+    var translation = str.get_strings([
        {key: 'dailog_title', component: 'local_edwiserbridge'},
        {key: 'site_url', component: 'local_edwiserbridge'},
        {key: 'token', component: 'local_edwiserbridge'},
@@ -12,12 +12,14 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
        {key: 'eb_empty_user_err', component: 'local_edwiserbridge'},
        {key: 'eb_service_select_err', component: 'local_edwiserbridge'},
        {key: 'click_to_copy', component: 'local_edwiserbridge'},
-       {key: 'pop_up_info', component: 'local_edwiserbridge'}  
+       {key: 'pop_up_info', component: 'local_edwiserbridge'},
+       {key: 'eb_settings_msg', component: 'local_edwiserbridge'},
+       {key: 'click_here', component: 'local_edwiserbridge'}
        // {key: 'manualsuccessuser', component: 'local_notifications'}
     ]);
 
 
-    translation.then(function (results) {
+    /*translation.then(function (results) {
         console.log(results);
     });*/
 
@@ -26,13 +28,98 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
 
     $(document).ready(function () {
 
+
+        /*
+        * Functionality to show only tokens which are asscoiated with the service. 
+        */
+        $("#id_eb_sevice_list").change(function () {
+
+            $("body").css("cursor", "progress");
+            var service_id = $(this).val();
+            $('#eb_common_success').css('display', 'none');
+            $('#eb_common_err').css('display', 'none');
+
+            $("#id_eb_token option:selected").removeAttr("selected");
+
+            $('#id_eb_token option[value=""]').attr("selected",true);
+            $("#id_eb_token").children('option').hide();
+            $("#id_eb_token").children("option[data-id^=" + $(this).val() + "]").show();
+            handlefieldsdisplay('create', $(this).val(), '.eb_service_field', '#id_eb_mform_create_service');
+
+            var promises = ajax.call([
+                {methodname: 'eb_get_service_info', args: {service_id: service_id}}
+            ]);
+
+            promises[0].done(function(response) {
+                $("body").css("cursor", "default");
+                if (!response.status) {
+                    $('#eb_common_err').text(response.msg);
+                    $('#eb_common_err').css('display', 'block');
+
+                    // $('#eb_common_success').text(response.msg);
+                }/* else {
+                }*/
+
+                return response;
+
+            }).fail(function(response) {
+                $("body").css("cursor", "default");
+                return 0;
+            }); //promise end
+        // }
+
+
+
+        });
+
+
+
+         /**---------------------------------------------
+          * Web service drop down selection handler
+          *----------------------------------------------*/
+
+         /**
+         * Capturing the drop down values for the further actions
+         * On settings page.
+         */
+        /*$('#id_eb_sevice_list').change(function(event){
+
+            var eb_service_val = $(this).val();
+            handlefieldsdisplay('create', eb_service_val, '.eb_service_field', '#id_eb_mform_create_service');
+        });
+*/
+
+        /****************   Web service drop down selection handler   ****************/
+
+
+
+
+
+
+
         // translation.then(function(){
 
+        /*****************    Change Form Action URL   *******************/
 
-        $( "#admin-ebexistingserviceselect" ).before( '<div class="eb_settings_btn_cont" style="padding: 30px;"> '+  M.util.get_string('eb_settings_msg', 'local_edwiserbridge') +' <a target="_blank" class="eb_settings_btn" href="'+ M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service"> '+ M.util.get_string('click_here', 'local_edwiserbridge') +' </a></div>' );
+        $("#conne_submit_continue").click(function() {
+            $(this).closest("form").attr("action", M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=synchronization');
+        });
 
+        $("#sync_submit_continue").click(function() {
+            $(this).closest("form").attr("action", M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=summary');
+        });
+
+
+        $("#settings_submit_continue").click(function() {
+            $(this).closest("form").attr("action", M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service');
+        });
+
+        
+
+        /*********** END *********/
+
+        $( "#admin-ebexistingserviceselect" ).before( '<div class="eb_settings_btn_cont" style="padding: 30px;"> '+  M.util.get_string('eb_settings_msg', 'local_edwiserbridge') +' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="'+ M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service"> '+ M.util.get_string('click_here', 'local_edwiserbridge') +' </a></div>' );
         $('#admin-ebexistingserviceselect').css('display', 'none');
-
 
 
 
@@ -61,55 +148,6 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
             );
         }
 
-        /**--------------------------------------------
-         *  Web service creation click handlers
-         *----------------------------------------------*/
-
-/*        $('#eb_create_service').click(function(event){
-            event.preventDefault();
-            var error = 0;
-
-            var web_service_name = $('#admin-ebnewserviceinp input').val();
-            var user_id = $('#admin-ebnewserviceuserselect select').val();
-
-            var service_id = $('#admin-ebexistingserviceselect select').val();
-
-            $('.eb_settings_err').remove();
-            $('#eb_common_err').text('');
-            $('#eb_common_success').text('');
-
-
-            //If the select box has a value to create the web service the create web service else
-            if (service_id == 'create') {
-                if (web_service_name == "") {
-                    $('#admin-ebnewserviceinp input').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_name_err', 'local_edwiserbridge') +'</span>');
-                    error = 1;
-                }
-
-                if (user_id == "") {
-                    $('#admin-ebnewserviceuserselect select').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_user_err', 'local_edwiserbridge') +'</span>');
-                    error = 1;
-                }
-
-                if (error) {
-                    return;
-                }
-
-                create_web_service(web_service_name, user_id, '#admin-ebexistingserviceselect select', '#eb_common_err', 1);
-            } else {
-                //If select has selected existing web service
-                if (service_id != '') {
-                    link_web_service(service_id, '#eb_common_err', '#eb_common_success');
-                } else {
-                //If the select box has been selected with the placeholder
-                    $('#eb_common_err').text(M.util.get_string('eb_service_select_err', 'local_edwiserbridge'))
-                }
-
-            }
-
-        }); */// event end
-
-
 
         $('#id_eb_mform_create_service').click(function(event){
             event.preventDefault();
@@ -120,6 +158,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
             var user_id = $('#id_eb_auth_users_list').val();
 
             var service_id = $('#id_eb_sevice_list').val();
+            var token = $('#id_eb_token').val();
 
             $('.eb_settings_err').remove();
             $('#eb_common_err').text('');
@@ -145,7 +184,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
             } else {
                 //If select has selected existing web service
                 if (service_id != '') {
-                    link_web_service(service_id, '#eb_common_err', '#eb_common_success');
+                    link_web_service(service_id, token, '#eb_common_err', '#eb_common_success');
                 } else {
                 //If the select box has been selected with the placeholder
                     $('#eb_common_err').text(M.util.get_string('eb_service_select_err', 'local_edwiserbridge'))
@@ -158,34 +197,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/modal_factory', 'core/str'], f
 
 
 
-         /**---------------------------------------------
-          * Web service drop down selection handler
-          *----------------------------------------------*/
 
-        /**
-         * Capyuring the drop down values for the further actions
-         * On Installation page
-         */
-        /*$('#admin-ebexistingserviceselect select').change(function(event){
-            var eb_service_val = $(this).val();
-            handlefieldsdisplay('create', eb_service_val, '#admin-ebnewserviceinp', '#eb_create_service');
-            handlefieldsdisplay('create', eb_service_val, '#admin-ebnewserviceuserselect', '#eb_create_service');
-        });*/
-
-         /**
-         * Capturing the drop down values for the further actions
-         * On settings page.
-         */
-        $('#id_eb_sevice_list').change(function(event){
-
-console.log('CHANGED :::: ');
-
-            var eb_service_val = $(this).val();
-            handlefieldsdisplay('create', eb_service_val, '.eb_service_field', '#id_eb_mform_create_service');
-        });
-
-
-        /****************   Web service drop down selection handler   ****************/
 
 
 
@@ -235,6 +247,44 @@ console.log('CHANGED :::: ');
        });
 
 
+
+        $(document).on('click', '.eb_primary_copy_btn', function(event) {
+           event.preventDefault();
+
+            // var copyText     = $(this).html();
+
+            var parent     = $(this).parent().parent();
+
+            parent        = parent.find('.eb_copy')
+
+            if (parent.attr('id') == 'id_eb_token') {
+                var copyText   = parent.val();
+            } else {
+
+                var copyText   = parent.text();
+            }
+
+            var temp         = document.createElement('textarea');
+            temp.textContent = copyText;
+                               
+            document.body.appendChild(temp);
+            var selection    = document.getSelection();
+            var range        = document.createRange();
+            //  range.selectNodeContents(textarea);
+            range.selectNode(temp);
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            document.execCommand('copy');
+
+            temp.remove();
+            toaster('Title', 200);
+       });
+
+
+
+
+
         /*************   Copy to clipboard functionality handler  **************/
 
 
@@ -274,16 +324,27 @@ console.log('CHANGED :::: ');
             $(element).append('<option value="'+id+'" selected> '+ name +' </option>');
         }
 
+
+
+        /**
+         * This function adds newly created web service in the drop down 
+         */
+        function add_new_token_in_select(element, token, id)
+        {
+            $(element +"option:selected").removeAttr("selected");
+            $(element).append('<option data-id="'+ id +'" value="'+ token +'" selected> '+ token +' </option>');
+        }
+
         /**
          * This function handles the display of the service creation form depending on the drop down value.
          */
         function handlefieldsdisplay(condition, condition_var, element, btn = '')
         {
             if (condition == condition_var) {
-                $(btn).text(M.util.get_string('create', 'local_edwiserbridge'));
+                // $(btn).text(M.util.get_string('create', 'local_edwiserbridge'));
                 $(element).css('display', 'flex');
             } else {
-                $(btn).text(M.util.get_string('link', 'local_edwiserbridge'));
+                // $(btn).text(M.util.get_string('link', 'local_edwiserbridge'));
                 $(element).css('display', 'none');
             }
 
@@ -293,19 +354,22 @@ console.log('CHANGED :::: ');
         /**
          * This functions link the existing wervices
          */
-        function link_web_service(service_id, common_errr_fld, common_success_fld)
+        function link_web_service(service_id, token, common_errr_fld, common_success_fld)
         {
             $("body").css("cursor", "progress");
             var promises = ajax.call([
-                {methodname: 'eb_link_service', args: {service_id: service_id}}
+                {methodname: 'eb_link_service', args: {service_id: service_id, token: token}}
             ]);
 
             promises[0].done(function(response) {
                 $("body").css("cursor", "default");
                 if (response.status) {
                     $(common_success_fld).text(response.msg);
+                    $(common_success_fld).css('display', 'block');
                 } else {
                     $(common_errr_fld).text(response.msg);
+                    $(common_success_fld).css('display', 'block');
+
                 }
 
                 return response;
@@ -315,6 +379,14 @@ console.log('CHANGED :::: ');
                 return 0;
             }); //promise end
         }
+
+
+
+
+        $(document).on('click', '.eb_service_pop_up_close', function(){
+            console.log('CLICKED ::: ');
+            $(".eb_service_pop_up").hide();
+        });
 
 
         /**
@@ -348,7 +420,23 @@ console.log('CHANGED :::: ');
                                             +'  </tr>'
                                             +'</table>';
 
-                    modalFactory.create({
+
+                    $('body').append('<div class="eb_service_pop_up_cont">'
+                                        +'<div class="eb_service_pop_up">'
+                                        +'<span class="helper"></span>'
+                                        +'<div>'
+                                            +'<div class="eb_service_pop_up_close">&times;</div>'
+                                            +'<div>'
+                                                +'<div class="eb_service_pop_up_title"></div>'
+                                                +'<div class="eb_service_pop_up_content"></div>'
+                                            +'</div>'
+                                        +'</div>'
+                                    +'</div>'
+                                +'</div>');
+
+
+
+                   /* modalFactory.create({
                         title: M.util.get_string('dailog_title', 'local_edwiserbridge'),
                         body: eb_dialog_content,
                         footer: '',
@@ -357,13 +445,24 @@ console.log('CHANGED :::: ');
                     }).done(function(modal) {
                         // Do what you want with your new modal.
                         modal.show();
-                    });
+                    });*/
+
+                    $('.eb_service_pop_up_content').html(eb_dialog_content);
+                    $('.eb_service_pop_up').show();
+
+
+
+
+                    // $('<div />').html(eb_dialog_content).dialog();
+
+
 
                     add_new_service_in_select(service_select_fld, web_service_name, response.service_id);
+                    add_new_token_in_select('#id_eb_token', response.token, response.service_id);
 
-                    if (is_mform) {
+                    /*if (is_mform) {
                         $('#eb_mform_token').text(response.token);
-                    }
+                    }*/
 
 
                 } else {
@@ -388,8 +487,6 @@ console.log('CHANGED :::: ');
 
 
         // });
-
-
 
     });
 

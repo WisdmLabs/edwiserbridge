@@ -215,11 +215,13 @@ class eb_settings_handler
      * @param  [type] $serviceid [description]
      * @return [type]            [description]
      */
-    public function eb_link_exitsing_service($serviceid)
+    public function eb_link_exitsing_service($serviceid, $token)
     {
         $this->eb_add_default_web_service_functions($serviceid);
         $this->eb_extensions_web_service_function($serviceid);
         set_config('ebexistingserviceselect', $serviceid);
+        set_config("edwiser_bridge_last_created_token", $token);
+        
         return 1;
     }
 
