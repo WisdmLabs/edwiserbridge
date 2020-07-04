@@ -471,26 +471,7 @@ class edwiserbridge_summary_form extends moodleform
     {
         global $DB, $CFG;
 
-        $mform            = $this->_form;
-        // $existingservices = eb_get_existing_services();
-        // $authusers        = eb_get_administrators();
-/*        $defaultvalues = get_required_settings();
-
-        $mform->addElement('advcheckbox', 'web_service', get_string('web_service_cb', 'local_edwiserbridge'), get_string("web_service_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-        $mform->addElement('advcheckbox', 'pass_policy', get_string('password_policy_cb', 'local_edwiserbridge'), get_string("password_policy_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-        $mform->addElement('advcheckbox', 'extended_username', get_string('extended_char_username_cb', 'local_edwiserbridge'), get_string("extended_char_username_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-        //fill form with the existing values
-        if (!empty($defaultvalues)) {
-            $mform->setDefault("web_service", $defaultvalues["web_service"]);
-            $mform->setDefault("pass_policy", $defaultvalues["pass_policy"]);
-            $mform->setDefault("extended_username", $defaultvalues["extended_username"]);
-        }
-*/
-
-
+        $mform        = $this->_form;
         $token        = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
         $service      = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
         $token_field  = '';
@@ -509,9 +490,6 @@ class edwiserbridge_summary_form extends moodleform
         }
 
 
-
-
-
         if (!empty($service)) {
             //If the token available then show the token
             $token_field = eb_create_token_field($service, $token);
@@ -520,18 +498,9 @@ class edwiserbridge_summary_form extends moodleform
             $token_field = $token;
         }
 
-
-
-
-
+        //Below is the array of the fields which we are showing on summary page.
         $summary_array = array(
             'summary_setting_section' => array(
-                /*'rest_protocol'       => array(
-                    'label'          => get_string('sum_rest_proctocol', 'local_edwiserbridge'),
-                    'expected_value' => 1
-                    'error_msg'      =>  get_string('sum_error_rest_proctocol', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
-                ),*/
                 'enablewebservices'   => array(
                     'expected_value' => 1,
                     'label'          => get_string('sum_web_services', 'local_edwiserbridge'),
@@ -555,7 +524,6 @@ class edwiserbridge_summary_form extends moodleform
                 'url' => array(
                     'label'          => get_string('mdl_url', 'local_edwiserbridge'),
                     'expected_value' => 'static',
-                    // 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_site_url">' . $CFG->wwwroot . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
                     'value'          => '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->wwwroot .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
                 ),
@@ -575,36 +543,14 @@ class edwiserbridge_summary_form extends moodleform
                 'lang_code' => array(
                     'label'          => get_string('lang_label', 'local_edwiserbridge'),
                     'expected_value' => 'static',
-                    // 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_lang">' . $CFG->lang . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
                     'value'         => '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
-               ),
-
-
-
-
-                /*'ebexistingserviceselect' => array(
-                    'label'          => get_string('sum_service_link', 'local_edwiserbridge'),
-                    'expected_value' => 'isset',
-                    'error_msg'      => get_string('sum_error_service_link', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service"
-
-                ),
-                'edwiser_bridge_last_created_token' => array(
-                    'label'          => get_string('sum_token_link', 'local_edwiserbridge'),
-                    'expected_value' => 'isset',
-                    'error_msg'      => get_string('sum_error_token_link', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service"
-
-                )*/
+               )
             )
         );
 
 
 
-
-
         $error   = 0;
-        $warning = 0;
         $html    = '';
 
         foreach ($summary_array as $section_key => $section) {
@@ -621,9 +567,6 @@ class edwiserbridge_summary_form extends moodleform
 
 
                 if ($value['expected_value'] === 'static') {
-
-                    // $html .= '<td class="sum_status"> <span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></td>';
-
                     $html .= '<td class="sum_status">' . $value['value'] . '<td>';
 
                 } elseif (isset($CFG->$key) && $value['expected_value'] == $CFG->$key) {
@@ -639,9 +582,6 @@ class edwiserbridge_summary_form extends moodleform
                                 <span style="color: #7ad03a;"> '. $success_msg .' </span>
                             </td>';
                 } else {
-
-                    // $html .= '<td class="sum_status"><span class="summ_error">&#9888; '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span></td>';
-
                      $html .= '<td class="sum_status">
                                 <span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
                             </td>';       
@@ -659,9 +599,6 @@ class edwiserbridge_summary_form extends moodleform
             'html',
             $html
         );
-
-
-        // $this->add_action_buttons(false);
     }
 
     public function validation($data, $files)

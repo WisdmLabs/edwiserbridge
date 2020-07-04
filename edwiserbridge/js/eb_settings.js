@@ -384,7 +384,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
 
         $(document).on('click', '.eb_service_pop_up_close', function(){
-            console.log('CLICKED ::: ');
+            // console.log('CLICKED ::: ');
             $(".eb_service_pop_up").hide();
         });
 
