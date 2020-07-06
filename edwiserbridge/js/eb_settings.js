@@ -367,6 +367,8 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         function link_web_service(service_id, token, common_errr_fld, common_success_fld)
         {
             $("body").css("cursor", "progress");
+            $('#eb_common_err').css('display', 'none');
+            
             var promises = ajax.call([
                 {methodname: 'eb_link_service', args: {service_id: service_id, token: token}}
             ]);
