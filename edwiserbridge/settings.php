@@ -28,21 +28,18 @@ require_once(dirname(__FILE__).'/lib.php');
 
 global $CFG, $COURSE, $DB, $PAGE;
 
+/*
+$PAGE->requires->jquery();
+$PAGE->requires->jquery_plugin('ui');
+$PAGE->requires->jquery_plugin('ui-css');*/
 
+$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 
 $stringmanager = get_string_manager();
 $strings = $stringmanager->load_component_strings('local_edwiserbridge', 'en');
 $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 
 
-
-
-
-$PAGE->requires->jquery();
-$PAGE->requires->jquery_plugin('ui');
-$PAGE->requires->jquery_plugin('ui-css');
-
-$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 // $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 
 
