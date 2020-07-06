@@ -169,21 +169,39 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
             var token = $('#id_eb_token').val();
 
             $('.eb_settings_err').remove();
-            $('#eb_common_err').text('');
-            $('#eb_common_success').text('');
+            // $('#eb_common_err').text('');
+            // $('#eb_common_success').text('');
+
+            $('#eb_common_success').css('display', 'none');
+            $('#eb_common_err').css('display', 'none');
+
+            if (user_id == "") {
+                // $('#id_eb_auth_users_list').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_user_err', 'local_edwiserbridge') +'</span>');
+                
+                $('#eb_common_err').text(M.util.get_string('eb_empty_user_err', 'local_edwiserbridge'));
+
+                $('#eb_common_err').css('display', 'block');
+
+
+                error = 1;
+            }
+
+
+
+
 
             //If the select box has a value to create the web service the create web service else
             if (service_id == 'create') {
 
                 if (web_service_name == "") {
-                    $('#id_eb_service_inp').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_name_err', 'local_edwiserbridge') +'</span>');
+                    $('#eb_common_err').css('display', 'block');
+
+                    // $('#id_eb_service_inp').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_name_err', 'local_edwiserbridge') +'</span>');
+                    $('#eb_common_err').text(M.util.get_string('eb_empty_name_err', 'local_edwiserbridge'));
                     error = 1;
                 }
 
-                if (user_id == "") {
-                    $('#id_eb_auth_users_list').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_user_err', 'local_edwiserbridge') +'</span>');
-                    error = 1;
-                }
+                
 
                 if (error) {
                     return;
@@ -191,6 +209,20 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
                 create_web_service(web_service_name, user_id, '#id_eb_sevice_list', '#eb_common_err', 1);
             } else {
+
+
+                if ($('#id_eb_token').val() == '') {
+
+                    $('#eb_common_err').css('display', 'block');
+                    $('#eb_common_err').text(M.util.get_string('token_empty', 'local_edwiserbridge'));
+                    error = 1;
+                    return 0;
+                }
+
+
+                if (error) {
+                    return;
+                }
 
                 //If select has selected existing web service
                 if (service_id != '') {
@@ -368,7 +400,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         {
             $("body").css("cursor", "progress");
             $('#eb_common_err').css('display', 'none');
-            
+
             var promises = ajax.call([
                 {methodname: 'eb_link_service', args: {service_id: service_id, token: token}}
             ]);
@@ -408,86 +440,97 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
             $("body").css("cursor", "progress");
             $('#eb_common_err').css('display', 'none');
 
+            $("#id_eb_token option:selected").removeAttr("selected");
+
+            $('#id_eb_token option[value=""]').attr("selected",true);
+
+
             var promises = ajax.call([
                 {methodname: 'eb_create_service', args: {web_service_name: web_service_name, user_id: user_id}}
             ]);
 
-            promises[0].done(function(response) {
-                $("body").css("cursor", "default");
-                if (response.status) {
-
-                    //Dialog box content.
-                    var eb_dialog_content = '<div> '+ M.util.get_string('pop_up_info', 'local_edwiserbridge') +' </div>'
-                                            +'<table class="eb_toke_detail_tbl">'
-                                            +'  <tr>'
-                                            +'     <th width="17%">'+ M.util.get_string('site_url', 'local_edwiserbridge') +'</th>'
-                                            +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.site_url +'</span>'
-                                            +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
-                                            +'  </tr>'
-                                            +'  <tr>'
-                                            +'     <th width="17%">'+ M.util.get_string('token', 'local_edwiserbridge') +'</th>'
-                                            +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.token +'</span>'
-                                            +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
-                                            +'  </tr>'
-                                            +'</table>';
+            var validation_error = 0;
 
 
-                    $('body').append('<div class="eb_service_pop_up_cont">'
-                                        +'<div class="eb_service_pop_up">'
-                                        +'<span class="helper"></span>'
-                                        +'<div>'
-                                            +'<div class="eb_service_pop_up_close">&times;</div>'
+            if (!validation_error) {
+
+                promises[0].done(function(response) {
+                    $("body").css("cursor", "default");
+                    if (response.status) {
+
+                        //Dialog box content.
+                        var eb_dialog_content = '<div> '+ M.util.get_string('pop_up_info', 'local_edwiserbridge') +' </div>'
+                                                +'<table class="eb_toke_detail_tbl">'
+                                                +'  <tr>'
+                                                +'     <th width="17%">'+ M.util.get_string('site_url', 'local_edwiserbridge') +'</th>'
+                                                +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.site_url +'</span>'
+                                                +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
+                                                +'  </tr>'
+                                                +'  <tr>'
+                                                +'     <th width="17%">'+ M.util.get_string('token', 'local_edwiserbridge') +'</th>'
+                                                +'     <td> : <span class="eb_copy_text" title="'+ M.util.get_string('click_to_copy', 'local_edwiserbridge') +'">'+ response.token +'</span>'
+                                                +'        <span class="eb_copy_btn">'+ M.util.get_string('copy', 'local_edwiserbridge') +'</span></td>'
+                                                +'  </tr>'
+                                                +'</table>';
+
+
+                        $('body').append('<div class="eb_service_pop_up_cont">'
+                                            +'<div class="eb_service_pop_up">'
+                                            +'<span class="helper"></span>'
                                             +'<div>'
-                                                +'<div class="eb_service_pop_up_title"></div>'
-                                                +'<div class="eb_service_pop_up_content"></div>'
+                                                +'<div class="eb_service_pop_up_close">&times;</div>'
+                                                +'<div>'
+                                                    +'<div class="eb_service_pop_up_title"></div>'
+                                                    +'<div class="eb_service_pop_up_content"></div>'
+                                                +'</div>'
                                             +'</div>'
                                         +'</div>'
-                                    +'</div>'
-                                +'</div>');
+                                    +'</div>');
 
 
 
-                   /* modalFactory.create({
-                        title: M.util.get_string('dailog_title', 'local_edwiserbridge'),
-                        body: eb_dialog_content,
-                        footer: '',
-                        keyboard: false,
-                        backdrop: 'static'
-                    }).done(function(modal) {
-                        // Do what you want with your new modal.
-                        modal.show();
-                    });*/
+                       /* modalFactory.create({
+                            title: M.util.get_string('dailog_title', 'local_edwiserbridge'),
+                            body: eb_dialog_content,
+                            footer: '',
+                            keyboard: false,
+                            backdrop: 'static'
+                        }).done(function(modal) {
+                            // Do what you want with your new modal.
+                            modal.show();
+                        });*/
 
-                    $('.eb_service_pop_up_content').html(eb_dialog_content);
-                    $('.eb_service_pop_up').show();
+                        $('.eb_service_pop_up_content').html(eb_dialog_content);
+                        $('.eb_service_pop_up').show();
 
-                    // $('<div />').html(eb_dialog_content).dialog();
+                        // $('<div />').html(eb_dialog_content).dialog();
 
-                    add_new_service_in_select(service_select_fld, web_service_name, response.service_id);
-                    add_new_token_in_select('#id_eb_token', response.token, response.service_id);
+                        add_new_service_in_select(service_select_fld, web_service_name, response.service_id);
+                        add_new_token_in_select('#id_eb_token', response.token, response.service_id);
 
-                    /*if (is_mform) {
-                        $('#eb_mform_token').text(response.token);
-                    }*/
+                        /*if (is_mform) {
+                            $('#eb_mform_token').text(response.token);
+                        }*/
 
 
-                } else {
+                    } else {
+                        $('#eb_common_err').css('display', 'block');
+                        $(common_errr_fld).text(response.msg);
+                    }
 
-                    $('#eb_common_err').css('display', 'block');
+                    return response;
 
-                    $(common_errr_fld).text(response.msg);
-                }
+                }).fail(function(response) {
+                    $("body").css("cursor", "default");
+                    /*jQuery("body").css("cursor", "auto");
+                    swal("error !", response.success, "error");*/
 
-                return response;
+                    return 0;
 
-            }).fail(function(response) {
-                $("body").css("cursor", "default");
-                /*jQuery("body").css("cursor", "auto");
-                swal("error !", response.success, "error");*/
+                }); //promise end
 
-                return 0;
+            }
 
-            }); //promise end
         }
 
 
