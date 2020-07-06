@@ -132,7 +132,7 @@ $string['empty_userid_err'] = 'Please select the user.';
 $string['eb_link_success'] = 'Web service sucessfully linked.';
 $string['eb_link_err'] = 'Unable to link the web service.';
 $string['eb_service_select_err'] = 'Please select valid external web service.';
-$string['eb_service_info_error'] = ' service functions missing in your currebtly selected service, Please Update service to add all missing webservice functions.';
+$string['eb_service_info_error'] = ' service functions missing in your currently selected service, Please Update service to add all missing webservice functions.';
 
 
 $string['dailog_title'] = 'Token And Url';
