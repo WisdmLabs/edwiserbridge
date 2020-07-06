@@ -28,8 +28,8 @@ require_once(dirname(__FILE__).'/lib.php');
 
 global $CFG, $COURSE, $DB, $PAGE;
 
-/*
-$PAGE->requires->jquery();
+
+/*$PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');*/
 

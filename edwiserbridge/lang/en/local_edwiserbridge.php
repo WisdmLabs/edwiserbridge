@@ -262,4 +262,14 @@ $string["manual_notification"] = "MANUAL NOTIFICATION";
 
 
 
+/*********  Form error Handling.    *******/
+
+
+
+$string['service_name_empty'] = 'Please enter web service name';
+$string['user_empty'] = 'Please select User';
+$string['token_empty'] = 'Please select Token';
+// $string['service_name_empty'] = 'Please enter web service name';
+
+
 
