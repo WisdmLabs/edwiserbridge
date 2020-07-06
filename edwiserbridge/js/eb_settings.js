@@ -23,9 +23,6 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         console.log(results);
     });*/
 
-
-
-
     $(document).ready(function () {
 
 
@@ -34,7 +31,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         */
         $("#id_eb_sevice_list").change(function () {
 
-            $("body").css("cursor", "progress");
+
             var service_id = $(this).val();
             $('#eb_common_success').css('display', 'none');
             $('#eb_common_err').css('display', 'none');
@@ -42,33 +39,40 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
             $("#id_eb_token option:selected").removeAttr("selected");
 
             $('#id_eb_token option[value=""]').attr("selected",true);
-            $("#id_eb_token").children('option').hide();
-            $("#id_eb_token").children("option[data-id^=" + $(this).val() + "]").show();
-            handlefieldsdisplay('create', $(this).val(), '.eb_service_field', '#id_eb_mform_create_service');
 
-            var promises = ajax.call([
-                {methodname: 'eb_get_service_info', args: {service_id: service_id}}
-            ]);
-
-            promises[0].done(function(response) {
-                $("body").css("cursor", "default");
-                if (!response.status) {
-                    $('#eb_common_err').text(response.msg);
-                    $('#eb_common_err').css('display', 'block');
-
-                    // $('#eb_common_success').text(response.msg);
-                }/* else {
-                }*/
-
-                return response;
-
-            }).fail(function(response) {
-                $("body").css("cursor", "default");
-                return 0;
-            }); //promise end
-        // }
+            handlefieldsdisplay('create', service_id, '.eb_service_field', '#id_eb_mform_create_service');
 
 
+            if ($(this).val() != '') {
+                $("#id_eb_token").children('option').hide();
+                $("#id_eb_token").children("option[data-id^=" + $(this).val() + "]").show();
+
+                if ($(this).val() != 'create') {
+                    $("body").css("cursor", "progress");
+                    var promises = ajax.call([
+                        {methodname: 'eb_get_service_info', args: {service_id: service_id}}
+                    ]);
+
+                    promises[0].done(function(response) {
+                        $("body").css("cursor", "default");
+                        if (!response.status) {
+                            $('#eb_common_err').text(response.msg);
+                            $('#eb_common_err').css('display', 'block');
+
+                            // $('#eb_common_success').text(response.msg);
+                        }/* else {
+                        }*/
+
+                        return response;
+
+                    }).fail(function(response) {
+                        $("body").css("cursor", "default");
+                        return 0;
+                    }); //promise end
+                }
+            // }
+
+            }
 
         });
 
@@ -117,9 +121,13 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         
 
         /*********** END *********/
+        // Add Settings field.
+        if (!$('.eb_settings_btn_cont').length) {
+            $( "#admin-eb_test_field" ).before( '<div class="eb_settings_btn_cont" style="padding: 30px;"> '+  M.util.get_string('eb_settings_msg', 'local_edwiserbridge') +' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="'+ M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service"> '+ M.util.get_string('click_here', 'local_edwiserbridge') +' </a></div>' );
+        }
+        // $('#admin-ebexistingserviceselect').css('display', 'none');
+        $('#admin-eb_test_field').css('display', 'none');
 
-        $( "#admin-ebexistingserviceselect" ).before( '<div class="eb_settings_btn_cont" style="padding: 30px;"> '+  M.util.get_string('eb_settings_msg', 'local_edwiserbridge') +' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="'+ M.cfg.wwwroot +'/local/edwiserbridge/edwiserbridge.php?tab=service"> '+ M.util.get_string('click_here', 'local_edwiserbridge') +' </a></div>' );
-        $('#admin-ebexistingserviceselect').css('display', 'none');
 
 
 
@@ -166,6 +174,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
             //If the select box has a value to create the web service the create web service else
             if (service_id == 'create') {
+
                 if (web_service_name == "") {
                     $('#id_eb_service_inp').after('<span class="eb_settings_err">'+ M.util.get_string('eb_empty_name_err', 'local_edwiserbridge') +'</span>');
                     error = 1;
@@ -182,6 +191,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
                 create_web_service(web_service_name, user_id, '#id_eb_sevice_list', '#eb_common_err', 1);
             } else {
+
                 //If select has selected existing web service
                 if (service_id != '') {
                     link_web_service(service_id, token, '#eb_common_err', '#eb_common_success');
@@ -325,7 +335,6 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         }
 
 
-
         /**
          * This function adds newly created web service in the drop down 
          */
@@ -335,16 +344,17 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
             $(element).append('<option data-id="'+ id +'" value="'+ token +'" selected> '+ token +' </option>');
         }
 
+
         /**
          * This function handles the display of the service creation form depending on the drop down value.
          */
         function handlefieldsdisplay(condition, condition_var, element, btn = '')
         {
             if (condition == condition_var) {
-                // $(btn).text(M.util.get_string('create', 'local_edwiserbridge'));
+                $(btn).text(M.util.get_string('create', 'local_edwiserbridge'));
                 $(element).css('display', 'flex');
             } else {
-                // $(btn).text(M.util.get_string('link', 'local_edwiserbridge'));
+                $(btn).text(M.util.get_string('link', 'local_edwiserbridge'));
                 $(element).css('display', 'none');
             }
 
@@ -384,7 +394,6 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
 
         $(document).on('click', '.eb_service_pop_up_close', function(){
-            console.log('CLICKED ::: ');
             $(".eb_service_pop_up").hide();
         });
 
@@ -395,10 +404,10 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         function create_web_service(web_service_name, user_id, service_select_fld, common_errr_fld, is_mform)
         {
             $("body").css("cursor", "progress");
+            $('#eb_common_err').css('display', 'none');
+
             var promises = ajax.call([
-
                 {methodname: 'eb_create_service', args: {web_service_name: web_service_name, user_id: user_id}}
-
             ]);
 
             promises[0].done(function(response) {
@@ -450,12 +459,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
                     $('.eb_service_pop_up_content').html(eb_dialog_content);
                     $('.eb_service_pop_up').show();
 
-
-
-
                     // $('<div />').html(eb_dialog_content).dialog();
-
-
 
                     add_new_service_in_select(service_select_fld, web_service_name, response.service_id);
                     add_new_token_in_select('#id_eb_token', response.token, response.service_id);
@@ -466,6 +470,9 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
 
                 } else {
+
+                    $('#eb_common_err').css('display', 'block');
+
                     $(common_errr_fld).text(response.msg);
                 }
 

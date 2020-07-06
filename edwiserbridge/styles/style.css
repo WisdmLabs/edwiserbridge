@@ -171,10 +171,14 @@
 }
 
 
-#admin-ebexistingserviceselect{
+/*#admin-ebexistingserviceselect{
+    display: none;
+}*/
+
+
+#admin-eb_test_field{
     display: none;
 }
-
 
 
 .eb_copy_txt_wrap{
