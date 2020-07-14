@@ -59,5 +59,32 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_create_service' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_create_service',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Create web service',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_link_service' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_link_service',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_get_service_info' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_get_service_info',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
     )
 );

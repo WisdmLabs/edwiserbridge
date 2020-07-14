@@ -227,7 +227,7 @@ class local_edwiserbridge_external extends external_api
             array('offset' => $offset, "limit" => $limit, "search_string" => $search_string, "total_users" => $total_users)
         );
 
-        $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE  deleted = 0 AND confirmed = 1 ";
+        $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE  deleted = 0 AND confirmed = 1 AND username != 'guest' ";
 
         if (!empty($params['search_string'])) {
             $search_string = "%" . $params['search_string'] . "%";
@@ -249,7 +249,7 @@ class local_edwiserbridge_external extends external_api
 
         $user_count = 0;
         if (!empty($params['total_users'])) {
-            $user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user}");
+            $user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user} WHERE  deleted = 0 AND confirmed = 1 AND username != 'guest' ");
             $user_count = $user_count->total_count;
         }
 
@@ -287,4 +287,131 @@ class local_edwiserbridge_external extends external_api
             )
         );
     }
+
+
+
+    /**
+     * functionality to create new external service 
+     * @param  [type] $user_id
+     * @return [type]          
+     */
+    public static function eb_create_service($web_service_name, $user_id)
+    {
+        global $DB;
+        $settings_handler = new eb_settings_handler();
+        $response = $settings_handler->eb_create_externle_service($web_service_name, $user_id);
+        return $response;
+    }
+
+    public static function eb_create_service_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                'web_service_name' => new external_value(PARAM_TEXT, get_string('web_service_name', 'local_edwiserbridge')),
+                'user_id'          => new external_value(PARAM_TEXT, get_string('web_service_auth_user', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+    public static function eb_create_service_returns()
+    {
+        return new external_single_structure(
+            array(
+                'token'     => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge')),
+                'site_url'  => new external_value(PARAM_TEXT, get_string('moodle_url', 'local_edwiserbridge')),
+                'service_id'  => new external_value(PARAM_INT, get_string('web_service_id', 'local_edwiserbridge')),
+                'status'  => new external_value(PARAM_INT, get_string('web_service_creation_status', 'local_edwiserbridge')),
+                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_creation_msg', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+
+
+    /**
+     * functionality to link existing services.
+     * @param  [type] $user_id
+     * @return [type]          
+     */
+    public static function eb_link_service($service_id, $token)
+    {
+        global $DB;
+        $response['status'] = 0;
+        $response['msg'] = get_string('eb_link_err', 'local_edwiserbridge');
+
+        $settings_handler = new eb_settings_handler();
+        $result = $settings_handler->eb_link_exitsing_service($service_id, $token);
+        if ($result) {
+            $response['status'] = 1;
+            $response['msg'] = get_string('eb_link_success', 'local_edwiserbridge');
+            return $response;
+        }
+        return $response;
+    }
+
+    public static function eb_link_service_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                'service_id' => new external_value(PARAM_TEXT, get_string('web_service_id', 'local_edwiserbridge')),
+                'token'      => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+    public static function eb_link_service_returns()
+    {
+        return new external_single_structure(
+            array(
+                'status'  => new external_value(PARAM_INT, get_string('web_service_creation_status', 'local_edwiserbridge')),
+                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_creation_msg', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+
+
+
+
+    /**
+     * functionality to link existing services.
+     * @param  [type] $user_id
+     * @return [type]          
+     */
+    public static function eb_get_service_info($service_id)
+    {
+        global $DB;
+        $response['status'] = 1;
+        $response['msg'] = '';
+
+        $count = eb_get_service_info($service_id);
+        if ($count) {
+            $response['status'] = 0;
+            $response['msg'] = $count . get_string('eb_service_info_error', 'local_edwiserbridge');
+            return $response;
+        }
+        return $response;
+    }
+
+    public static function eb_get_service_info_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                'service_id' => new external_value(PARAM_TEXT, get_string('web_service_id', 'local_edwiserbridge')),
+                // 'token'      => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+    public static function eb_get_service_info_returns()
+    {
+        return new external_single_structure(
+            array(
+                'status'  => new external_value(PARAM_INT, get_string('web_service_creation_status', 'local_edwiserbridge')),
+                'msg'  => new external_value(PARAM_TEXT, get_string('web_service_creation_msg', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+
 }
