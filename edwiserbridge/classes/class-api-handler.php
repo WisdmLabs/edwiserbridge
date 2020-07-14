@@ -44,6 +44,10 @@ class api_handler
         $response = curl_exec($curl);
         $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
+
+// var_dump('response ::: '.print_r($response, 1));
+
+
         if (curl_error($curl)) {
             $error_msg = curl_error($curl);
             curl_close($curl);

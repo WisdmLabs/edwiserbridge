@@ -15,5 +15,9 @@ $observers = array(
     array(
        'eventname' => 'core\event\user_deleted',
        'callback'  => 'local_edwiserbridge_observer::user_deleted',
-    )
+    )/*,
+    array(
+       'eventname' => '\core\event\user_updated',
+       'callback'  => 'local_edwiserbridge_observer::user_updated',
+    )*/
 );
