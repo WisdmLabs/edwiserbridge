@@ -360,16 +360,29 @@ class edwiserbridge_synchronization_form extends moodleform
         $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
 
         // 1st Field
+        // Course enrollment
         $mform->addElement('advcheckbox', 'course_enrollment', get_string('enrollment_checkbox', 'local_edwiserbridge'), get_string("enrollment_checkbox_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
         // 2nd field
+        // Course unenrollment
         $mform->addElement('advcheckbox', 'course_un_enrollment', get_string('unenrollment_checkbox', 'local_edwiserbridge'), get_string("unenrollment_checkbox_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
         // 3rd field.
+        // Course deletion.
+        $mform->addElement('advcheckbox', 'course_deletion', get_string('course_deletion', 'local_edwiserbridge'), get_string("course_deletion_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
+        // 4th field.
+        // user creation.
         $mform->addElement('advcheckbox', 'user_creation', get_string('user_creation', 'local_edwiserbridge'), get_string("user_creation_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
-        // 4th field.
+        // 5th field.
+        // User update
         $mform->addElement('advcheckbox', 'user_deletion', get_string('user_deletion', 'local_edwiserbridge'), get_string("user_deletion_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
+        // 6th field.
+        // User deletion
+        $mform->addElement('advcheckbox', 'user_updation', get_string('user_updation', 'local_edwiserbridge'), get_string("user_updation_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
 
         //fill form with the existing values
         if (!empty($defaultvalues)) {
@@ -377,6 +390,8 @@ class edwiserbridge_synchronization_form extends moodleform
             $mform->setDefault("course_un_enrollment", $defaultvalues["course_un_enrollment"]);
             $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
             $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
+            $mform->setDefault("course_deletion", $defaultvalues["course_deletion"]);
+            $mform->setDefault("user_updation", $defaultvalues["user_updation"]);
         }
 
 

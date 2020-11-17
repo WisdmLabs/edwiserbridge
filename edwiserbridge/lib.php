@@ -54,7 +54,9 @@ function save_synchronization_form_settings($form_data)
         "course_enrollment"    => $form_data->course_enrollment,
         "course_un_enrollment" => $form_data->course_un_enrollment,
         "user_creation"        => $form_data->user_creation,
-        "user_deletion"        => $form_data->user_deletion
+        "user_deletion"        => $form_data->user_deletion,
+        "course_deletion"      => $form_data->course_deletion,
+        "user_updation"        => $form_data->user_updation
         );
     } else {
         $synch_settings[$form_data->wp_site_list] = array(
@@ -62,7 +64,9 @@ function save_synchronization_form_settings($form_data)
             "course_enrollment"    => $form_data->course_enrollment,
             "course_un_enrollment" => $form_data->course_un_enrollment,
             "user_creation"        => $form_data->user_creation,
-            "user_deletion"        => $form_data->user_deletion
+            "user_deletion"        => $form_data->user_deletion,
+            "course_deletion"      => $form_data->course_deletion,
+            "user_updation"        => $form_data->user_updation
         );
     }
     set_config("eb_synch_settings", serialize($synch_settings));
@@ -151,7 +155,9 @@ function get_synch_settings($index)
         "course_enrollment"    => 0,
         "course_un_enrollment" => 0,
         "user_creation"        => 0,
-        "user_deletion"        => 0
+        "user_deletion"        => 0,
+        "course_deletion"      => 0,
+        "user_updation"        => 0,
     );
 
     if (isset($reponse[$index]) && !empty($reponse[$index])) {

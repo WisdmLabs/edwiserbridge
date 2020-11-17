@@ -40,12 +40,18 @@ class local_edwiserbridge_external extends external_api
         $api_handler = api_handler_instance();
         $response = $api_handler->connect_to_wp_with_args($params["wp_url"], $request_data);
         if (!$response["error"]) {
+
             $status = $response["data"]->status;
             $msg = $response["data"]->msg;
+            if (!$status) {
+                $msg = $response["data"]->msg . get_string('wp_test_connection_failed', 'local_edwiserbridge');
+            }
+
         } else {
             $status = 0;
             $msg = $response["msg"];
         }
+
 
         return array("status"=> $status, "msg" => $msg);
     }
