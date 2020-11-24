@@ -60,8 +60,8 @@ $string["user_deletion_desc"] = "Delete user In linked Wordpress site when delet
 
 $string["course_deletion"] = "Enable Course Deletion";
 $string["course_deletion_desc"] = "This won't delete course but it will mark course as deleted in linked Wordpress site.";
-$string["user_updation"] = "Enable User Deletion";
-$string["user_updation_desc"] = "This will update user first name, last name and password and won't update root and password.";
+$string["user_updation"] = "Enable User Update";
+$string["user_updation_desc"] = "This will update user first name, last name and password and won't update Username and Email.";
 
 
 $string["wp_settings_section"] = "Wordpress Connection Settings";
@@ -237,7 +237,7 @@ $string['sum_token_link'] = 'Token Linked';
 
 $string['sum_error_rest_proctocol'] = 'Error: Please enable Rest Protocol';
 $string['sum_error_web_services'] = 'Error: Please enable Web Service';
-$string['sum_error_pass_policy'] = 'Error: Please enable Password Policy';
+$string['sum_error_pass_policy'] = 'Error: Please disable Password Policy';
 $string['sum_error_extended_char'] = 'Error: Please enable Allow Extended Characters in username';
 $string['sum_error_service_link'] = 'Error: Please update Service and Token';
 $string['sum_error_token_link'] = 'Error: Please update Token ';
