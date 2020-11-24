@@ -541,12 +541,13 @@ class edwiserbridge_summary_form extends moodleform
 
         $summary_array = array(
             'summary_setting_section' => array(
-                /*'rest_protocol'       => array(
+                'webserviceprotocols' => array(
                     'label'          => get_string('sum_rest_proctocol', 'local_edwiserbridge'),
-                    'expected_value' => 1
+                    'expected_value' => 'dynamic',
+                    'value'          => 1,
                     'error_msg'      =>  get_string('sum_error_rest_proctocol', 'local_edwiserbridge'),
                     'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
-                ),*/
+                ),
                 'enablewebservices'   => array(
                     'expected_value' => 1,
                     'label'          => get_string('sum_web_services', 'local_edwiserbridge'),
@@ -640,6 +641,32 @@ class edwiserbridge_summary_form extends moodleform
                     // $html .= '<td class="sum_status"> <span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></td>';
 
                     $html .= '<td class="sum_status">' . $value['value'] . '<td>';
+
+                } elseif ($value['expected_value'] === 'dynamic') {
+                    if ($key == 'webserviceprotocols') {
+                        $active_webservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
+                        if (!in_array('rest', $active_webservices)) {
+                            // return 'error';
+
+                            $html .= '<td class="sum_status">
+                                <span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
+                            </td>';       
+                            $error = 1;
+
+                        } else {
+                            $success_msg = 'Disabled';
+                            if ($value['expected_value']) {
+                                $success_msg = 'Enabled';
+                            }
+
+
+                            $html .= '<td class="sum_status">
+                                <span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>
+                                <span style="color: #7ad03a;"> '. $success_msg .' </span>
+                            </td>';
+                        }
+                    }
+
 
                 } elseif (isset($CFG->$key) && $value['expected_value'] == $CFG->$key) {
 

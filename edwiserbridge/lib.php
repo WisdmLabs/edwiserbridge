@@ -91,7 +91,6 @@ function save_settings_form_settings($form_data)
 
 
         set_config('webserviceprotocols', implode(',', $active_webservices));
-
         set_config("enablewebservices", $form_data->web_service);
         set_config("extendedusernamechars", $form_data->extended_username);
         set_config("passwordpolicy", $form_data->pass_policy);
@@ -392,12 +391,21 @@ function eb_get_summary_status()
     $settings_array = array(
         'enablewebservices'     => 1,
         'passwordpolicy'        => 0,
-        'extendedusernamechars' => 1
+        'extendedusernamechars' => 1,
+        'webserviceprotocols'   => 1
+
     );
 
     foreach ($settings_array as $key => $value) {
         if(isset($CFG->$key) && $value != $CFG->$key) {
-            return 'error';
+            if ($key == 'webserviceprotocols') {
+                $active_webservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
+                if (!in_array('rest', $active_webservices)) {
+                    return 'error';
+                }
+            } else {
+                return 'error';
+            }
         }
     }
 
