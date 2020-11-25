@@ -196,7 +196,8 @@ class eb_settings_handler
             array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_get_cohorts'),
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_cohort_enrollment'),
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_delete_cohort'),
-            array('externalserviceid' => $serviceid, 'functionname' => 'wdm_manage_cohort_enrollment')
+            array('externalserviceid' => $serviceid, 'functionname' => 'wdm_manage_cohort_enrollment'),
+            array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_user_cohort_enrollment')
         );
 
         $allfunctions = array_merge($ssofunctions, $selectivesynchfunctions, $bulkpurchase);

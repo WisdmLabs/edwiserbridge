@@ -111,21 +111,6 @@ class local_edwiserbridge_observer {
         // $enc_iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($enc_method));
         $enc_iv = '1234567891011121'; 
 
-
-
-/*        $request_data = array(
-            "action" => "user_creation",
-            "data" => serialize(
-                array(
-                    "user_id"     => $event->relateduserid,
-                    "user_name"   => $user_data[$event->relateduserid]->username,
-                    "first_name"  => $user_data[$event->relateduserid]->firstname,
-                    "last_name"   => $user_data[$event->relateduserid]->lastname,
-                    "email"       => $user_data[$event->relateduserid]->email
-                )
-            )
-        );
-*/
         $api_handler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
             $sites = unserialize($CFG->eb_connection_settings);
@@ -189,8 +174,6 @@ class local_edwiserbridge_observer {
         $enc_method = 'AES-128-CTR';
         // $enc_iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($enc_method));
         $enc_iv = '1234567891011121'; 
-
-
 
 
         $api_handler = api_handler_instance();
