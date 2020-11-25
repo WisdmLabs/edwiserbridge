@@ -360,16 +360,29 @@ class edwiserbridge_synchronization_form extends moodleform
         $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
 
         // 1st Field
+        // Course enrollment
         $mform->addElement('advcheckbox', 'course_enrollment', get_string('enrollment_checkbox', 'local_edwiserbridge'), get_string("enrollment_checkbox_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
         // 2nd field
+        // Course unenrollment
         $mform->addElement('advcheckbox', 'course_un_enrollment', get_string('unenrollment_checkbox', 'local_edwiserbridge'), get_string("unenrollment_checkbox_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
         // 3rd field.
+        // Course deletion.
+        $mform->addElement('advcheckbox', 'course_deletion', get_string('course_deletion', 'local_edwiserbridge'), get_string("course_deletion_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
+        // 4th field.
+        // user creation.
         $mform->addElement('advcheckbox', 'user_creation', get_string('user_creation', 'local_edwiserbridge'), get_string("user_creation_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
         
-        // 4th field.
+        // 5th field.
+        // User update
         $mform->addElement('advcheckbox', 'user_deletion', get_string('user_deletion', 'local_edwiserbridge'), get_string("user_deletion_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
+        // 6th field.
+        // User deletion
+        $mform->addElement('advcheckbox', 'user_updation', get_string('user_updation', 'local_edwiserbridge'), get_string("user_updation_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
+
 
         //fill form with the existing values
         if (!empty($defaultvalues)) {
@@ -377,6 +390,8 @@ class edwiserbridge_synchronization_form extends moodleform
             $mform->setDefault("course_un_enrollment", $defaultvalues["course_un_enrollment"]);
             $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
             $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
+            $mform->setDefault("course_deletion", $defaultvalues["course_deletion"]);
+            $mform->setDefault("user_updation", $defaultvalues["user_updation"]);
         }
 
 
@@ -526,12 +541,13 @@ class edwiserbridge_summary_form extends moodleform
 
         $summary_array = array(
             'summary_setting_section' => array(
-                /*'rest_protocol'       => array(
+                'webserviceprotocols' => array(
                     'label'          => get_string('sum_rest_proctocol', 'local_edwiserbridge'),
-                    'expected_value' => 1
+                    'expected_value' => 'dynamic',
+                    'value'          => 1,
                     'error_msg'      =>  get_string('sum_error_rest_proctocol', 'local_edwiserbridge'),
                     'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
-                ),*/
+                ),
                 'enablewebservices'   => array(
                     'expected_value' => 1,
                     'label'          => get_string('sum_web_services', 'local_edwiserbridge'),
@@ -625,6 +641,32 @@ class edwiserbridge_summary_form extends moodleform
                     // $html .= '<td class="sum_status"> <span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></td>';
 
                     $html .= '<td class="sum_status">' . $value['value'] . '<td>';
+
+                } elseif ($value['expected_value'] === 'dynamic') {
+                    if ($key == 'webserviceprotocols') {
+                        $active_webservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
+                        if (!in_array('rest', $active_webservices)) {
+                            // return 'error';
+
+                            $html .= '<td class="sum_status">
+                                <span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
+                            </td>';       
+                            $error = 1;
+
+                        } else {
+                            $success_msg = 'Disabled';
+                            if ($value['expected_value']) {
+                                $success_msg = 'Enabled';
+                            }
+
+
+                            $html .= '<td class="sum_status">
+                                <span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>
+                                <span style="color: #7ad03a;"> '. $success_msg .' </span>
+                            </td>';
+                        }
+                    }
+
 
                 } elseif (isset($CFG->$key) && $value['expected_value'] == $CFG->$key) {
 

@@ -50,13 +50,19 @@ $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization 
 
 // $string[""] = "Wordpress Synchronization Settings";
 $string["enrollment_checkbox"] = "Enable User Enrollment.";
-$string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users";
+$string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users.";
 $string["unenrollment_checkbox"] = "Enable User Un-enrollment.";
-$string["unenrollment_checkbox_desc"] = "Unenroll user from Moodle to Wordpress for linked users";
+$string["unenrollment_checkbox_desc"] = "Unenroll user from Moodle to Wordpress for linked users.";
 $string["user_creation"] = "Enable User Creation";
-$string["user_creation_desc"] = "Create user In linked Wordpress site when created in Moodle Site";
+$string["user_creation_desc"] = "Create user In linked Wordpress site when created in Moodle Site.";
 $string["user_deletion"] = "Enable User Deletion";
-$string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted in Moodle Site";
+$string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted in Moodle Site.";
+
+$string["course_deletion"] = "Enable Course Deletion";
+$string["course_deletion_desc"] = "This won't delete course but it will mark course as deleted in linked Wordpress site.";
+$string["user_updation"] = "Enable User Update";
+$string["user_updation_desc"] = "This will update user first name, last name and password and won't update Username and Email.";
+
 
 $string["wp_settings_section"] = "Wordpress Connection Settings";
 $string["wordpress_url"] = "Wordpress URL";
@@ -231,7 +237,7 @@ $string['sum_token_link'] = 'Token Linked';
 
 $string['sum_error_rest_proctocol'] = 'Error: Please enable Rest Protocol';
 $string['sum_error_web_services'] = 'Error: Please enable Web Service';
-$string['sum_error_pass_policy'] = 'Error: Please enable Password Policy';
+$string['sum_error_pass_policy'] = 'Error: Please disable Password Policy';
 $string['sum_error_extended_char'] = 'Error: Please enable Allow Extended Characters in username';
 $string['sum_error_service_link'] = 'Error: Please update Service and Token';
 $string['sum_error_token_link'] = 'Error: Please update Token ';
@@ -247,6 +253,7 @@ $string['enabled'] = 'Enabled';
 $string['disabled'] = 'Disabled';
 
 $string['mdl_url'] = 'Moodle URL';
+$string['wp_test_connection_failed'] = 'or Wordpress permalink is not postname. Also, check if you have any firewall or security plugin, If yes  Whitelist Moodle URL and IP. If this does not fix then connect with your Hosting providers.';
 
 
 /**************/
@@ -270,6 +277,10 @@ $string['service_name_empty'] = 'Please enter web service name';
 $string['user_empty'] = 'Please select User';
 $string['token_empty'] = 'Please select Token';
 // $string['service_name_empty'] = 'Please enter web service name';
+
+
+$string['web_service_creation_status'] = 'Web service creation status';
+$string['web_service_creation_msg'] = 'Web service creation message';
 
 
 

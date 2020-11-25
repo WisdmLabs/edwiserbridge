@@ -54,7 +54,9 @@ function save_synchronization_form_settings($form_data)
         "course_enrollment"    => $form_data->course_enrollment,
         "course_un_enrollment" => $form_data->course_un_enrollment,
         "user_creation"        => $form_data->user_creation,
-        "user_deletion"        => $form_data->user_deletion
+        "user_deletion"        => $form_data->user_deletion,
+        "course_deletion"      => $form_data->course_deletion,
+        "user_updation"        => $form_data->user_updation
         );
     } else {
         $synch_settings[$form_data->wp_site_list] = array(
@@ -62,7 +64,9 @@ function save_synchronization_form_settings($form_data)
             "course_enrollment"    => $form_data->course_enrollment,
             "course_un_enrollment" => $form_data->course_un_enrollment,
             "user_creation"        => $form_data->user_creation,
-            "user_deletion"        => $form_data->user_deletion
+            "user_deletion"        => $form_data->user_deletion,
+            "course_deletion"      => $form_data->course_deletion,
+            "user_updation"        => $form_data->user_updation
         );
     }
     set_config("eb_synch_settings", serialize($synch_settings));
@@ -87,7 +91,6 @@ function save_settings_form_settings($form_data)
 
 
         set_config('webserviceprotocols', implode(',', $active_webservices));
-
         set_config("enablewebservices", $form_data->web_service);
         set_config("extendedusernamechars", $form_data->extended_username);
         set_config("passwordpolicy", $form_data->pass_policy);
@@ -151,7 +154,9 @@ function get_synch_settings($index)
         "course_enrollment"    => 0,
         "course_un_enrollment" => 0,
         "user_creation"        => 0,
-        "user_deletion"        => 0
+        "user_deletion"        => 0,
+        "course_deletion"      => 0,
+        "user_updation"        => 0,
     );
 
     if (isset($reponse[$index]) && !empty($reponse[$index])) {
@@ -386,12 +391,21 @@ function eb_get_summary_status()
     $settings_array = array(
         'enablewebservices'     => 1,
         'passwordpolicy'        => 0,
-        'extendedusernamechars' => 1
+        'extendedusernamechars' => 1,
+        'webserviceprotocols'   => 1
+
     );
 
     foreach ($settings_array as $key => $value) {
         if(isset($CFG->$key) && $value != $CFG->$key) {
-            return 'error';
+            if ($key == 'webserviceprotocols') {
+                $active_webservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
+                if (!in_array('rest', $active_webservices)) {
+                    return 'error';
+                }
+            } else {
+                return 'error';
+            }
         }
     }
 
