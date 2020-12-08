@@ -109,7 +109,8 @@ class local_edwiserbridge_observer {
 
         $enc_method = 'AES-128-CTR';
         // $enc_iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($enc_method));
-        $enc_iv = '1234567891011121'; 
+        // $enc_iv = '1234567891011121';
+
 
         $api_handler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
@@ -126,6 +127,8 @@ class local_edwiserbridge_observer {
                     if (isset($_POST['newpassword']) && $_POST['newpassword']) {
 
                         $enc_key   = openssl_digest($value["wp_token"], 'SHA256', true);
+                        $enc_iv = substr(hash('sha256', $value["wp_token"]), 0, 16);
+
                         // $crypttext = openssl_encrypt($_POST['newpassword'], $enc_method, $enc_key, 0, $enc_iv) . "::" . bin2hex($enc_iv);
                         $password = openssl_encrypt($_POST['newpassword'], $enc_method, $enc_key, 0, $enc_iv);
 
@@ -173,7 +176,7 @@ class local_edwiserbridge_observer {
 
         $enc_method = 'AES-128-CTR';
         // $enc_iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($enc_method));
-        $enc_iv = '1234567891011121'; 
+        // $enc_iv = '1234567891011121';
 
 
         $api_handler = api_handler_instance();
@@ -189,6 +192,8 @@ class local_edwiserbridge_observer {
                     if (isset($_POST['newpassword']) && $_POST['newpassword']) {
 
                         $enc_key   = openssl_digest($value["wp_token"], 'SHA256', true);
+                        $enc_iv = substr(hash('sha256', $value["wp_token"]), 0, 16);
+
                         // $crypttext = openssl_encrypt($_POST['newpassword'], $enc_method, $enc_key, 0, $enc_iv) . "::" . bin2hex($enc_iv);
                         $password = openssl_encrypt($_POST['newpassword'], $enc_method, $enc_key, 0, $enc_iv);
 

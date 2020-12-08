@@ -26,7 +26,14 @@
 defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__).'/lib.php');
 
+
 global $CFG, $COURSE, $DB, $PAGE;
+
+
+/*$systemcontext = context_system::instance();
+$hassiteconfig = has_capability('moodle/site:config', $systemcontext);*/
+
+
 
 
 /*$PAGE->requires->jquery();
@@ -42,15 +49,18 @@ $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 
 // $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 
+// if ($hassiteconfig) {
 
-
-$ADMIN->add('modules', new admin_category('edwisersettings',
-    new lang_string(
-            'edwiserbridge',
-            'local_edwiserbridge'
+    $ADMIN->add('modules', new admin_category('edwisersettings',
+        new lang_string(
+                'edwiserbridge',
+                'local_edwiserbridge'
+            )
         )
-    )
-);
+    );
+// }
+
+
 
 $ADMIN->add('edwisersettings', new admin_externalpage('edwiserbridge_conn_synch_settings',
         new lang_string(
