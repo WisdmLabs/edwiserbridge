@@ -28,12 +28,8 @@ class local_edwiserbridge_external extends external_api
         );
 
         $request_data = array(
-            "action" => "test_connection",
-            "data" => serialize(
-                array(
-                    "token" => $params["wp_token"]
-                )
-            )
+            'action'     => "test_connection",
+            'secret_key' => $params["wp_token"]
         );
 
 
@@ -376,9 +372,6 @@ class local_edwiserbridge_external extends external_api
     }
 
 
-
-
-
     /**
      * functionality to link existing services.
      * @param  [type] $user_id
@@ -419,5 +412,62 @@ class local_edwiserbridge_external extends external_api
         );
     }
 
+
+
+    /**
+     * functionality to link existing services.
+     * @param  [type] $user_id
+     * @return [type]          
+     */
+    public static function eb_get_edwiser_plugins_info()
+    {
+        global $DB;
+        $response['plugin_name'] = 'edwiser_bridge';
+        $response['version']     = '';
+
+        // $count = eb_get_service_info($service_id);
+
+        // throw new invalid_parameter_exception('The field cannot be blank');
+        // $version = get_config('local_edwiserbridge', 'release');
+
+        // if ($version) {
+        $response['plugin_name'] = 'edwiser_bridge';
+        $response['version']     = '2.0.4';
+        // }
+
+        /*$version = get_config('local_wdmgroupregistration', 'release');
+        if ($version) {
+            $response['plugin_name'] = 'bulk_purchase';
+            $response['version']     = $version;
+        }
+
+        $version = get_config('auth_wdmwpmoodle', 'release');
+        if ($version) {
+            $response['plugin_name'] = 'sso';
+            $response['version']     = $version;
+        }
+*/
+        return $response;
+    }
+
+    public static function eb_get_edwiser_plugins_info_parameters()
+    {
+        return new external_function_parameters(
+            array(
+                // 'service_id' => new external_value(PARAM_TEXT, get_string('web_service_id', 'local_edwiserbridge')),
+                // 'token'      => new external_value(PARAM_TEXT, get_string('web_service_token', 'local_edwiserbridge'))
+            )
+        );
+    }
+
+    public static function eb_get_edwiser_plugins_info_returns()
+    {
+        return new external_single_structure(
+            array(
+                'plugin_name'  => new external_value(PARAM_TEXT, get_string('eb_plugin_name', 'local_edwiserbridge')),
+                'version'  => new external_value(PARAM_TEXT, get_string('eb_plugin_version', 'local_edwiserbridge'))
+            )
+        );
+    }
 
 }

@@ -86,5 +86,14 @@ $functions = array(
             'type'          => 'read',
             'ajax'          => true,
             'capabilities'  => 'local/edwiserbridge:view',
+    ),
+    'eb_get_edwiser_plugins_info' => array(
+            'classname'     => 'local_edwiserbridge_external',
+            'methodname'    => 'eb_get_edwiser_plugins_info',
+            'classpath'     => 'local/edwiserbridge/externallib.php',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+            'capabilities'  => 'local/edwiserbridge:view',
     )
 );

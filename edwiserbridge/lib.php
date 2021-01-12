@@ -363,7 +363,8 @@ function eb_get_service_info($service_id)
         array('externalserviceid' => $service_id, 'functionname' => 'core_enrol_get_users_courses'),
         array('externalserviceid' => $service_id, 'functionname' => 'eb_test_connection'),
         array('externalserviceid' => $service_id, 'functionname' => 'eb_get_site_data'),
-        array('externalserviceid' => $service_id, 'functionname' => 'eb_get_course_progress')
+        array('externalserviceid' => $service_id, 'functionname' => 'eb_get_course_progress'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_edwiser_plugins_info'),
     );
 
 
