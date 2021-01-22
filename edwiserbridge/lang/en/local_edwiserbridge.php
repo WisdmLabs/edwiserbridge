@@ -189,6 +189,9 @@ $string["web_service_username"] = "Username of the user.";
 $string["web_service_firstname"] = "Firstname of the user.";
 $string["web_service_lastname"] = "Lastname of the user.";
 $string["web_service_email"] = "Email of the user.";
+$string['eb_plugin_name']= "Plugin Name";
+$string['eb_plugin_version']= "Plugin Version";
+
 /******/
 
 

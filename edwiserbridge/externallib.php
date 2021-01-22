@@ -432,7 +432,7 @@ class local_edwiserbridge_external extends external_api
 
         // if ($version) {
         $response['plugin_name'] = 'edwiser_bridge';
-        $response['version']     = '2.0.4';
+        $response['version']     = '2.0.5';
         // }
 
         /*$version = get_config('local_wdmgroupregistration', 'release');
