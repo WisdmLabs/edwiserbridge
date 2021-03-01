@@ -22,10 +22,10 @@ $string['blank'] = '';
 
 /*** TABS  ***/
 
-$string['tab_service'] = 'Web Service Settings';
-$string['tab_conn'] = 'Wordpress Site Settings';
-$string['tab_synch'] = 'Sync Settings';
-$string['tab_mdl_required_settings'] = 'General Settings';
+$string['tab_service'] = 'Web Service';
+$string['tab_conn'] = 'Wordpress Site';
+$string['tab_synch'] = 'Synchronization';
+$string['tab_mdl_required_settings'] = 'General';
 $string['summary'] = 'Summary';
 
 
@@ -196,7 +196,7 @@ $string['eb_plugin_version']= "Plugin Version";
 
 
 /****  error handling  ***/
-$string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://knowledgebase.edwiser.org/'  target='_blank'> click here </a>";
+$string["default_error"] = "Please check the URL or wordpress site permalink: to know more about this error <a href='https://edwiser.helpscoutdocs.com/collection/85-edwiser-bridge-plugin'  target='_blank'> click here </a>";
 
 $string['eb_empty_name_err'] = 'Please enter valid service name.';
 $string['eb_empty_user_err'] = 'Please select user.';
