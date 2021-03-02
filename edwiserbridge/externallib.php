@@ -1,11 +1,13 @@
 <?php
 
 /**
-*
+* This class will add the web services for edwiser bridge.
 */
 
 require_once($CFG->libdir . "/externallib.php");
 require_once(dirname(__FILE__).'/lib.php');
+
+use core_completion\progress as progress;
 
 class local_edwiserbridge_external extends external_api
 {
@@ -110,18 +112,42 @@ class local_edwiserbridge_external extends external_api
 
 
     /**
-     * functionality to get course progress
+     * Functionality to get course progress.
+     *
+     * @param  string $user_id the user id.
+     * @return array of the course progress.
+     */
+    public static function eb_get_course_progress( $user_id ) {
+        global $CFG;
+        $params   = self::validate_parameters(
+            self::eb_get_course_progress_parameters(),
+            array( 'user_id' => $user_id )
+        );
+        $mdl_branch = (int) $CFG->branch;
+        $response   = array();
+
+        if (  $mdl_branch < 35 ) {
+            $response = self::eb_get_course_progress_old( $user_id );
+        } else {
+            $user_courses = enrol_get_all_users_courses( $user_id );
+            foreach ( $user_courses as $course ) {
+                $response[] = array(
+                    'course_id'  => $course->id,
+                    'completion' => progress::get_course_progress_percentage( $course, $user_id ),
+                );
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * functionality to get course progress for moodle 3.1 to 3.4 
      * @param  [type] $user_id
      * @return [type]          [description]
      */
-    public static function eb_get_course_progress($user_id)
+    public static function eb_get_course_progress_old($user_id)
     {
         global $DB, $CFG;
-
-        $params = self::validate_parameters(
-            self::eb_get_course_progress_parameters(),
-            array('user_id' => $user_id)
-        );
 
         $result = $DB->get_records_sql("SELECT ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
         FROM {user} u
