@@ -1,21 +1,21 @@
 require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url, str) {
 
     var translation = str.get_strings([
-       {key: 'dailog_title', component: 'local_edwiserbridge'},
-       {key: 'site_url', component: 'local_edwiserbridge'},
-       {key: 'token', component: 'local_edwiserbridge'},
-       {key: 'copy', component: 'local_edwiserbridge'},
-       {key: 'copied', component: 'local_edwiserbridge'},
-       {key: 'link', component: 'local_edwiserbridge'},
-       {key: 'create', component: 'local_edwiserbridge'},
-       {key: 'eb_empty_name_err', component: 'local_edwiserbridge'},
-       {key: 'eb_empty_user_err', component: 'local_edwiserbridge'},
-       {key: 'eb_service_select_err', component: 'local_edwiserbridge'},
-       {key: 'click_to_copy', component: 'local_edwiserbridge'},
-       {key: 'pop_up_info', component: 'local_edwiserbridge'},
-       {key: 'eb_settings_msg', component: 'local_edwiserbridge'},
-       {key: 'click_here', component: 'local_edwiserbridge'}
-       // {key: 'manualsuccessuser', component: 'local_notifications'}
+        { key: 'dailog_title', component: 'local_edwiserbridge' },
+        { key: 'site_url', component: 'local_edwiserbridge' },
+        { key: 'token', component: 'local_edwiserbridge' },
+        { key: 'copy', component: 'local_edwiserbridge' },
+        { key: 'copied', component: 'local_edwiserbridge' },
+        { key: 'link', component: 'local_edwiserbridge' },
+        { key: 'create', component: 'local_edwiserbridge' },
+        { key: 'eb_empty_name_err', component: 'local_edwiserbridge' },
+        { key: 'eb_empty_user_err', component: 'local_edwiserbridge' },
+        { key: 'eb_service_select_err', component: 'local_edwiserbridge' },
+        { key: 'click_to_copy', component: 'local_edwiserbridge' },
+        { key: 'pop_up_info', component: 'local_edwiserbridge' },
+        { key: 'eb_settings_msg', component: 'local_edwiserbridge' },
+        { key: 'click_here', component: 'local_edwiserbridge' }
+        // {key: 'manualsuccessuser', component: 'local_notifications'}
     ]);
 
 
@@ -25,6 +25,47 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
     $(document).ready(function () {
 
+        function checkMissingServices(service_id, $messge_ele = false) {
+            var promises = ajax.call([
+                { methodname: 'eb_get_service_info', args: { service_id: service_id } }
+            ]);
+
+            promises[0].done(function (response) {
+                $("body").css("cursor", "default");
+                if (!response.status && !$messge_ele) {
+                    $('#eb_common_err').text(response.msg);
+                    $('#eb_common_err').css('display', 'block');
+                }
+                if ($messge_ele) {
+                    $message = '<span style="color: #7ad03a;"><span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span> All functions added</span>';
+                    if (!response.status) {
+                        var link = window.location.origin + window.location.pathname + '?tab=service'
+                        var fix_link = " Check more detials <a href='" + link + "'  target='_blank'>here</a>.";
+                        $message = "<span class='summ_error'>" + response.msg + fix_link + "</span>";
+                    }
+                    $($messge_ele).empty().append($message);
+                }
+                return response;
+            }).fail(function (response) {
+                $("body").css("cursor", "default");
+                return 0;
+            });
+        }
+
+        if (window.location.href.indexOf('edwiserbridge.php') > 1) {
+            let searchParams = new URLSearchParams(window.location.search)
+            if (searchParams.has('tab') && 'service' === searchParams.get('tab')) {
+                var service_id = $("#id_eb_sevice_list").val();
+                if ("" != service_id && 'create' != service_id) {
+                    checkMissingServices(service_id);
+                }
+            }
+            if (searchParams.has('tab') && 'summary' === searchParams.get('tab')) {
+                $('#web_service_status').empty();
+                var service_id = $("#web_service_status").data('serviceid');
+                checkMissingServices(service_id, '#web_service_status');
+            }
+        }
 
         /*
         * Functionality to show only tokens which are asscoiated with the service. 
@@ -49,31 +90,9 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
                 if ($(this).val() != 'create') {
                     $("body").css("cursor", "progress");
-                    var promises = ajax.call([
-                        { methodname: 'eb_get_service_info', args: { service_id: service_id } }
-                    ]);
-
-                    promises[0].done(function (response) {
-                        $("body").css("cursor", "default");
-                        if (!response.status) {
-                            $('#eb_common_err').text(response.msg);
-                            $('#eb_common_err').css('display', 'block');
-
-                            // $('#eb_common_success').text(response.msg);
-                        }/* else {
-                        }*/
-
-                        return response;
-
-                    }).fail(function (response) {
-                        $("body").css("cursor", "default");
-                        return 0;
-                    }); //promise end
+                    checkMissingServices(service_id);
                 }
-                // }
-
             }
-
         });
 
 
@@ -251,14 +270,14 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         /**
          * This shows the copy test on the side
          */
-        $(document).on("mouseenter", ".sum_status", function () {
+        $(document).on("mouseenter", ".eb_copy_text_wrap", function () {
             // hover starts code here
             var parent = $(this).find('.eb_copy_btn');
             parent.css('visibility', 'visible');
         });
 
 
-        $(document).on("mouseleave", ".sum_status", function () {
+        $(document).on("mouseleave", ".eb_copy_text_wrap", function () {
             // hover ends code here
             var parent = $(this).find('.eb_copy_btn');
             parent.css('visibility', 'hidden');
@@ -267,7 +286,7 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
         /**
          * Copy to clipboard functionality.
          */
-        $(document).on('click', '.sum_status', function (event) {
+        $(document).on('click', '.eb_copy_text_wrap', function (event) {
             event.preventDefault();
 
             var copyText = $(this).find('.eb_copy_text').html();

@@ -116,17 +116,6 @@ class edwiserbridge_service_form extends moodleform
 		$service     = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
 		$token_field = '';
 
-
-
-		/*$sites = get_site_list();
-		$site_keys = array_keys($sites);
-		$defaultvalues = get_synch_settings($site_keys[0]);*/
-
-		// $mform->addElement('select', 'wp_site_list', get_string('site-list', 'local_edwiserbridge'), $sites);
-
-
-		
-
 		// 1st Field Service list
 		$select = $mform->addElement('select', 'eb_sevice_list', get_string('existing_serice_lbl', 'local_edwiserbridge'), $existingservices);
 		$mform->addHelpButton('eb_sevice_list', 'eb_mform_service_desc', 'local_edwiserbridge');
@@ -479,24 +468,6 @@ class edwiserbridge_summary_form extends moodleform
 		global $DB, $CFG;
 
 		$mform            = $this->_form;
-		// $existingservices = eb_get_existing_services();
-		// $authusers        = eb_get_administrators();
-/*        $defaultvalues = get_required_settings();
-
-		$mform->addElement('advcheckbox', 'web_service', get_string('web_service_cb', 'local_edwiserbridge'), get_string("web_service_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-		$mform->addElement('advcheckbox', 'pass_policy', get_string('password_policy_cb', 'local_edwiserbridge'), get_string("password_policy_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-		$mform->addElement('advcheckbox', 'extended_username', get_string('extended_char_username_cb', 'local_edwiserbridge'), get_string("extended_char_username_cb_desc", "local_edwiserbridge"), array('group' => 1), array(0, 1));
-
-		//fill form with the existing values
-		if (!empty($defaultvalues)) {
-			$mform->setDefault("web_service", $defaultvalues["web_service"]);
-			$mform->setDefault("pass_policy", $defaultvalues["pass_policy"]);
-			$mform->setDefault("extended_username", $defaultvalues["extended_username"]);
-		}
-*/
-
 
 		$token        = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
 		$service      = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
@@ -515,10 +486,6 @@ class edwiserbridge_summary_form extends moodleform
 			$service_name = $result->name;
 		}
 
-
-
-
-
 		if (!empty($service)) {
 			//If the token available then show the token
 			$token_field = eb_create_token_field($service, $token);
@@ -526,10 +493,6 @@ class edwiserbridge_summary_form extends moodleform
 			// If service is empty then show just the blank text with dash
 			$token_field = $token;
 		}
-
-
-
-
 
 		$summary_array = array(
 			'summary_setting_section' => array(
@@ -557,6 +520,11 @@ class edwiserbridge_summary_form extends moodleform
 					'label'          => get_string('sum_extended_char', 'local_edwiserbridge'),
 					'error_msg'      => get_string('sum_error_extended_char', 'local_edwiserbridge'),
 					'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
+				),
+				'uptodatewebservicefunction' => array(
+					'expected_value' => 'static',
+					'label'          => get_string('web_service_status', 'local_edwiserbridge'),
+					'value'             => "<div id='web_service_status' data-serviceid='$service'>Checking...</div>"
 				)
 			),
 			'summary_connection_section'  => array(
@@ -564,27 +532,27 @@ class edwiserbridge_summary_form extends moodleform
 					'label'          => get_string('mdl_url', 'local_edwiserbridge'),
 					'expected_value' => 'static',
 					// 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_site_url">' . $CFG->wwwroot . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
-					'value'          => '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->wwwroot .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
+					'value'          => '<div class="eb_copy_text_wrap" data> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->wwwroot .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
 				),
 				'service_name' => array(
 					'label'          => get_string('web_service_name', 'local_edwiserbridge'),
 					'expected_value' => 'static',
-					'value'          => '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $service_name .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
+					'value'          => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $service_name .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
 				),
 				'token' => array(
 					'label'          => get_string('token', 'local_edwiserbridge'),
 					'expected_value' => 'static',
 					// 'value'          => '<b id="eb_mform_token">' . $token_field . '</b>'
-					'value'          =>  '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $token .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
+					'value'          =>  '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $token .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
 				),
 				'lang_code' => array(
 					'label'          => get_string('lang_label', 'local_edwiserbridge'),
 					'expected_value' => 'static',
 					// 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_lang">' . $CFG->lang . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
-					'value'         => '<div> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
+					'value'         => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 			   ),
 
 
@@ -597,7 +565,7 @@ class edwiserbridge_summary_form extends moodleform
 					'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service"
 
 				),
-				'edwiser_bridge_last_created_token' => array(
+				/*'edwiser_bridge_last_created_token' => array(
 					'label'          => get_string('sum_token_link', 'local_edwiserbridge'),
 					'expected_value' => 'isset',
 					'error_msg'      => get_string('sum_error_token_link', 'local_edwiserbridge'),
@@ -618,12 +586,11 @@ class edwiserbridge_summary_form extends moodleform
 		foreach ($summary_array as $section_key => $section) {
 			
 			$html .= '<div class="summary_section"> <div class="summary_section_title">'. get_string($section_key, 'local_edwiserbridge') .'</div>';
-
+		
 			$html .= '<table class="summary_section_tbl">';
 
 			foreach ($section as $key => $value) {
-				$html .= '<tr>
-							<td class="sum_label">';
+				$html .= "<tr><td class='sum_label'>";
 				$html .= $value['label'];
 				$html .= '</td>';
 
@@ -676,7 +643,7 @@ class edwiserbridge_summary_form extends moodleform
 
 					// $html .= '<td class="sum_status"><span class="summ_error">&#9888; '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span></td>';
 
-					 $html .= '<td class="sum_status">
+					 $html .= '<td class="sum_status" id="'.$key.'">
 								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
 							</td>';       
 					$error = 1;
