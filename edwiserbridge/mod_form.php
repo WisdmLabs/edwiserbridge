@@ -38,7 +38,7 @@ class edwiserbridge_navigation_form extends moodleform
 
 		$summary_status = eb_get_summary_status();
 
-		$summary = 'summary' === $current_tab ? 'active-tab eb-tabs summary_tab_' . $summary_status : 'eb-tabs summary_tab_' . $summary_status;
+		$summary = 'summary' === $current_tab ? 'active-tab eb-tabs eb_summary_tab summary_tab_' . $summary_status : 'eb-tabs eb_summary_tab  summary_tab_' . $summary_status;
 
 		$tabs = array(
 			array(
@@ -94,9 +94,6 @@ class edwiserbridge_navigation_form extends moodleform
 		return array();
 	}
 }
-
-
-
 
 
 /**
@@ -191,10 +188,6 @@ class edwiserbridge_service_form extends moodleform
 		return array();
 	}
 }
-
-
-
-
 
 
 /**
@@ -323,8 +316,6 @@ class edwiserbridge_connection_form extends moodleform
 }
 
 
-
-
 /**
 * form shown while adding activity.
 */
@@ -397,9 +388,6 @@ class edwiserbridge_synchronization_form extends moodleform
 
 
 
-
-
-
 /**
 * Used to create web service.
 */
@@ -454,10 +442,6 @@ class edwiserbridge_settings_form extends moodleform
 }
 
 
-
-
-
-
 /**
 * Used to create web service.
 */
@@ -473,17 +457,28 @@ class edwiserbridge_summary_form extends moodleform
 		$service      = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
 		$token_field  = '';
 		$service_name = '';
+		$missing_cap_msg  = '<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>';
 
-
-		$result = $DB->get_record_sql(
-			"SELECT name  FROM {external_services} WHERE  id = ?",
-			array(
-				$service
-			)
-		);
-
-		if (isset($result->name)) {
-			$service_name = $result->name;
+		/**
+		 * Check web service user have a capability to use the web service.
+		 */
+		$webservicemanager = new webservice();
+		$allowedusers = $webservicemanager->get_ws_authorised_users($service);
+		$usersmissingcaps = $webservicemanager->get_missing_capabilities_by_users($allowedusers, $service);
+		$webservicemanager->get_external_service_by_id($service);
+		foreach ($allowedusers as &$alloweduser) {
+			if (!is_siteadmin($alloweduser->id) and array_key_exists($alloweduser->id, $usersmissingcaps)) {
+				$url=$CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
+				$functions_page="<a href='$url' target='_blank'>here</a>";
+				$missing_cap_msg = "<span class='summ_error'>Capabilitys Missing Click $functions_page to know more.</span>";
+			}
+		}
+		/**
+		 * Get the web service name.
+		 */
+		$serviceObj = $webservicemanager->get_external_service_by_id($service);
+		if (isset($serviceObj->name)) {
+			$service_name = $serviceObj->name;
 		}
 
 		if (!empty($service)) {
@@ -525,6 +520,11 @@ class edwiserbridge_summary_form extends moodleform
 					'expected_value' => 'static',
 					'label'          => get_string('web_service_status', 'local_edwiserbridge'),
 					'value'             => "<div id='web_service_status' data-serviceid='$service'>Checking...</div>"
+				),
+				'webservicecap' => array(
+					'expected_value' => 'static',
+					'label'          => get_string('web_service_cap', 'local_edwiserbridge'),
+					'value'          => "<div id='web_service_status'>$missing_cap_msg</div>"
 				)
 			),
 			'summary_connection_section'  => array(
@@ -554,24 +554,6 @@ class edwiserbridge_summary_form extends moodleform
 					// 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_lang">' . $CFG->lang . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
 					'value'         => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 			   ),
-
-
-
-
-				/*'ebexistingserviceselect' => array(
-					'label'          => get_string('sum_service_link', 'local_edwiserbridge'),
-					'expected_value' => 'isset',
-					'error_msg'      => get_string('sum_error_service_link', 'local_edwiserbridge'),
-					'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service"
-
-				),
-				/*'edwiser_bridge_last_created_token' => array(
-					'label'          => get_string('sum_token_link', 'local_edwiserbridge'),
-					'expected_value' => 'isset',
-					'error_msg'      => get_string('sum_error_token_link', 'local_edwiserbridge'),
-					'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=service"
-
-				)*/
 			)
 		);
 
@@ -590,7 +572,7 @@ class edwiserbridge_summary_form extends moodleform
 			$html .= '<table class="summary_section_tbl">';
 
 			foreach ($section as $key => $value) {
-				$html .= "<tr><td class='sum_label'>";
+				$html .= "<tr id='$key'><td class='sum_label'>";
 				$html .= $value['label'];
 				$html .= '</td>';
 
@@ -633,7 +615,6 @@ class edwiserbridge_summary_form extends moodleform
 					if ($value['expected_value']) {
 						$success_msg = 'Enabled';
 					}
-
 
 					$html .= '<td class="sum_status">
 								<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>

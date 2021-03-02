@@ -32,18 +32,30 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
 
             promises[0].done(function (response) {
                 $("body").css("cursor", "default");
-                if (!response.status && !$messge_ele) {
-                    $('#eb_common_err').text(response.msg);
-                    $('#eb_common_err').css('display', 'block');
-                }
-                if ($messge_ele) {
-                    $message = '<span style="color: #7ad03a;"><span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span> All functions added</span>';
-                    if (!response.status) {
+                if (!response.status) {
+                    $('.eb_summary_tab').removeClass('summary_tab_sucess');
+                    $('.eb_summary_tab').addClass('summary_tab_error');
+                    if (!$messge_ele) {
+                        $('#eb_common_err').text(response.msg);
+                        $('#eb_common_err').css('display', 'block');
+                    } else if ($messge_ele) {
                         var link = window.location.origin + window.location.pathname + '?tab=service'
                         var fix_link = " Check more detials <a href='" + link + "'  target='_blank'>here</a>.";
                         $message = "<span class='summ_error'>" + response.msg + fix_link + "</span>";
+                        $($messge_ele).empty().append($message);
                     }
-                    $($messge_ele).empty().append($message);
+                } else {
+                    if (jQuery('#web_service_status span').hasClass('summ_error')) {
+                        $('.eb_summary_tab').removeClass('summary_tab_sucess');
+                        $('.eb_summary_tab').addClass('summary_tab_error');
+                    } else {
+                        $('.eb_summary_tab').addClass('summary_tab_sucess');
+                        $('.eb_summary_tab').removeClass('summary_tab_error');
+                    }
+                    if ($messge_ele) {
+                        $message = '<span style="color: #7ad03a;"><span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></span>';
+                        $($messge_ele).empty().append($message);
+                    }
                 }
                 return response;
             }).fail(function (response) {
@@ -51,7 +63,9 @@ require(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url,
                 return 0;
             });
         }
-
+        /**
+         * Check if the user is on edwiser bridge settings page.
+         */
         if (window.location.href.indexOf('edwiserbridge.php') > 1) {
             let searchParams = new URLSearchParams(window.location.search)
             if (searchParams.has('tab') && 'service' === searchParams.get('tab')) {
