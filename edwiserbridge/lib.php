@@ -288,13 +288,6 @@ function eb_get_service_tokens($service_id)
 {
     global $DB, $CFG;
 
-    /*$result = $DB->get_records_sql(
-        "SELECT token,  FROM {external_tokens} WHERE  externalserviceid = ?",
-        array(
-            $service_id
-        )
-    );*/
-
     $result = $DB->get_records("external_tokens", null, '','token, externalserviceid');
 
     foreach ($result as $value) {

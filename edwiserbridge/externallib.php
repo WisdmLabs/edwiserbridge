@@ -299,7 +299,6 @@ class local_edwiserbridge_external extends external_api
      */
     public static function eb_create_service($web_service_name, $user_id)
     {
-        global $DB;
         $settings_handler = new eb_settings_handler();
         $response = $settings_handler->eb_create_externle_service($web_service_name, $user_id);
         return $response;
@@ -337,7 +336,6 @@ class local_edwiserbridge_external extends external_api
      */
     public static function eb_link_service($service_id, $token)
     {
-        global $DB;
         $response['status'] = 0;
         $response['msg'] = get_string('eb_link_err', 'local_edwiserbridge');
 
@@ -379,7 +377,6 @@ class local_edwiserbridge_external extends external_api
      */
     public static function eb_get_service_info($service_id)
     {
-        global $DB;
         $response['status'] = 1;
         $response['msg'] = '';
 
@@ -421,7 +418,6 @@ class local_edwiserbridge_external extends external_api
      */
     public static function eb_get_edwiser_plugins_info()
     {
-        global $DB;
         $response['plugin_name'] = 'edwiser_bridge';
         $response['version']     = '';
 

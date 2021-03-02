@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__).'/lib.php');
 
 
-global $CFG, $COURSE, $DB, $PAGE;
+global $CFG, $COURSE, $PAGE;
 
 
 /*$systemcontext = context_system::instance();

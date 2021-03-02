@@ -449,7 +449,7 @@ class edwiserbridge_summary_form extends moodleform
 {
 	public function definition()
 	{
-		global $DB, $CFG;
+		global $CFG;
 
 		$mform            = $this->_form;
 
