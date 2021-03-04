@@ -458,37 +458,41 @@ class edwiserbridge_summary_form extends moodleform
 		$token_field  = '';
 		$service_name = '';
 		$missing_cap_msg  = '<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>';
-
+		$url              = $CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
+		$functions_page   = "<a href='$url' target='_blank'>here</a>";
 		/**
 		 * Check web service user have a capability to use the web service.
 		 */
 		$webservicemanager = new webservice();
-		$allowedusers = $webservicemanager->get_ws_authorised_users($service);
-		$usersmissingcaps = $webservicemanager->get_missing_capabilities_by_users($allowedusers, $service);
-		$webservicemanager->get_external_service_by_id($service);
-		foreach ($allowedusers as &$alloweduser) {
-			if (!is_siteadmin($alloweduser->id) and array_key_exists($alloweduser->id, $usersmissingcaps)) {
-				$url=$CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
-				$functions_page="<a href='$url' target='_blank'>here</a>";
-				$missing_cap_msg = "<span class='summ_error'>Capabilitys Missing Click $functions_page to know more.</span>";
+		if(!empty($service)){
+			$allowedusers = $webservicemanager->get_ws_authorised_users($service);
+			$usersmissingcaps = $webservicemanager->get_missing_capabilities_by_users($allowedusers, $service);
+			$webservicemanager->get_external_service_by_id($service);
+			foreach ($allowedusers as &$alloweduser) {
+				if (!is_siteadmin($alloweduser->id) and array_key_exists($alloweduser->id, $usersmissingcaps)) {
+					$missing_cap_msg = "<span class='summ_error'>User don't have web service access capabilities, click $functions_page to know more.</span>";
+				}
 			}
-		}
-		/**
-		 * Get the web service name.
-		 */
-		$serviceObj = $webservicemanager->get_external_service_by_id($service);
-		if (isset($serviceObj->name)) {
-			$service_name = $serviceObj->name;
-		}
+		
+			/**
+			 * Get the web service name.
+			 */
+			$serviceObj = $webservicemanager->get_external_service_by_id($service);
+			if (isset($serviceObj->name)) {
+				$service_name = $serviceObj->name;
+			}
 
-		if (!empty($service)) {
-			//If the token available then show the token
-			$token_field = eb_create_token_field($service, $token);
-		} else {
-			// If service is empty then show just the blank text with dash
-			$token_field = $token;
-		}
+			if (!empty($service)) {
+				//If the token available then show the token
+				$token_field = eb_create_token_field($service, $token);
+			} else {
+				// If service is empty then show just the blank text with dash
+				$token_field = $token;
+			}
 
+		}else{
+			$missing_cap_msg = "<span class='summ_error'>User don't have web service access capabilities, click $functions_page to know more.</span>";
+		}
 		$summary_array = array(
 			'summary_setting_section' => array(
 				'webserviceprotocols' => array(
