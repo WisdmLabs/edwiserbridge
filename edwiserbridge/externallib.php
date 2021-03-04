@@ -118,36 +118,12 @@ class local_edwiserbridge_external extends external_api
      * @return array of the course progress.
      */
     public static function eb_get_course_progress( $user_id ) {
-        global $CFG;
-        $params   = self::validate_parameters(
-            self::eb_get_course_progress_parameters(),
-            array( 'user_id' => $user_id )
-        );
-        $mdl_branch = (int) $CFG->branch;
-        $response   = array();
-
-        if (  $mdl_branch < 35 ) {
-            $response = self::eb_get_course_progress_old( $user_id );
-        } else {
-            $user_courses = enrol_get_all_users_courses( $user_id );
-            foreach ( $user_courses as $course ) {
-                $response[] = array(
-                    'course_id'  => $course->id,
-                    'completion' => progress::get_course_progress_percentage( $course, $user_id ),
-                );
-            }
-        }
-        return $response;
-    }
-
-    /**
-     * functionality to get course progress for moodle 3.1 to 3.4 
-     * @param  [type] $user_id
-     * @return [type]          [description]
-     */
-    public static function eb_get_course_progress_old($user_id)
-    {
         global $DB, $CFG;
+
+        $params = self::validate_parameters(
+            self::eb_get_course_progress_parameters(),
+            array('user_id' => $user_id)
+        );
 
         $result = $DB->get_records_sql("SELECT ctx.instanceid course, (count(cmc.completionstate) / count(cm.id) * 100) completed
         FROM {user} u
@@ -156,22 +132,17 @@ class local_edwiserbridge_external extends external_api
         JOIN {course_modules} cm ON ctx.instanceid = cm.course AND cm.completion > 0
         LEFT JOIN {course_modules_completion} cmc ON cm.id = cmc.coursemoduleid AND u.id = cmc.userid AND cmc.completionstate > 0
         GROUP BY ctx.instanceid, u.id
-        HAVING completed = 30 OR completed > 30
         ORDER BY u.id", array($params['user_id']));
-
 
         $enrolled_courses = get_array_of_enrolled_courses($params['user_id'], 1);
         $processed_courses = $enrolled_courses;
-
 
         $response = array();
 
         if ($result && !empty($result)) {
             foreach ($result as $key => $value) {
-                // if ($params['user_id'] == $value->user) {
                 $course = get_course($value->course);
                 $cinfo = new completion_info($course);
-                // $iscomplete = $cinfo->is_course_complete($USER->id);
                 $iscomplete = $cinfo->is_course_complete($value->user);
                 if ($iscomplete) {
                     array_push($response, array("course_id" => $value->course, "completion" => "100"));
@@ -180,7 +151,6 @@ class local_edwiserbridge_external extends external_api
                     array_push($response, array("course_id" => $value->course, "completion" => $value->completed));
                     $processed_courses = remove_processed_coures($value->course, $processed_courses);
                 }
-                // }
             }
         } else {
             foreach ($enrolled_courses as $value) {
@@ -197,7 +167,6 @@ class local_edwiserbridge_external extends external_api
                 }
             }
         }
-
 
         if (!empty($processed_courses)) {
             foreach ($processed_courses as $value) {
@@ -262,16 +231,7 @@ class local_edwiserbridge_external extends external_api
             $query .= " AND (firstname LIKE '$search_string' OR lastname LIKE '$search_string' OR username LIKE '$search_string')";
         }
 
-        if (!empty($params['limit'])) {
-            $query .= " LIMIT $limit";
-        }
-
-        if (!empty($params['offset'])) {
-            $query .= " OFFSET $offset";
-        }
-
-
-        $users = $DB->get_records_sql($query);
+        $users = $DB->get_records_sql($query, NUll, $limit, $offset);
         $users = json_decode(json_encode($users), true);
 
 
