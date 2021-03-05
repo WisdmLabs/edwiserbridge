@@ -110,7 +110,6 @@ class local_edwiserbridge_external extends external_api
 		);
 	}
 
-
 	/**
 	 * Functionality to get course progress.
 	 *
@@ -146,22 +145,9 @@ class local_edwiserbridge_external extends external_api
 				$course     = get_course( $value->course );
 				$cinfo      = new completion_info( $course );
 				$iscomplete = $cinfo->is_course_complete( $value->user );
-				$progress   = $iscomplete ? 100 : ( $value->completed / $value->outoff );
+				$progress   = $iscomplete ? 100 : ( $value->completed / $value->outoff )*100;
 				$response[] = array(
 					'course_id'  => $value->course,
-					'completion' => $progress,
-				);
-
-				$processed_courses = remove_processed_coures( $value->course, $processed_courses );
-			}
-		} else {
-			foreach ( $enrolled_courses as $value ) {
-				$course     = get_course( $value );
-				$cinfo      = new completion_info( $course );
-				$iscomplete = $cinfo->is_course_complete( $params['user_id'] );
-				$progress   = $iscomplete ? 100 : 0;
-				$response[] = array(
-					'course_id'  => $value,
 					'completion' => $progress,
 				);
 
