@@ -217,10 +217,7 @@ class local_edwiserbridge_external extends external_api
 			$query .= " AND (firstname LIKE '$search_string' OR lastname LIKE '$search_string' OR username LIKE '$search_string')";
 		}
 
-		$users = $DB->get_records_sql($query, NUll, $limit, $offset);
-		$users = json_decode(json_encode($users), true);
-
-
+		$users = $DB->get_records_sql($query, null, $offset, $limit);
 		$user_count = 0;
 		if (!empty($params['total_users'])) {
 			$user_count = $DB->get_record_sql("SELECT count(*) total_count FROM {user} WHERE  deleted = 0 AND confirmed = 1 AND username != 'guest' ");
