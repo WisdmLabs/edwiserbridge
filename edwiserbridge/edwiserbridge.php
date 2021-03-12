@@ -8,7 +8,7 @@ require_once($CFG->libdir.'/adminlib.php');
 require_once('mod_form.php');
 
 
-global $CFG, $COURSE, $DB, $PAGE;
+global $CFG, $COURSE, $PAGE;
 
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');

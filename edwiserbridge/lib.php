@@ -288,13 +288,6 @@ function eb_get_service_tokens($service_id)
 {
     global $DB, $CFG;
 
-    /*$result = $DB->get_records_sql(
-        "SELECT token,  FROM {external_tokens} WHERE  externalserviceid = ?",
-        array(
-            $service_id
-        )
-    );*/
-
     $result = $DB->get_records("external_tokens", null, '','token, externalserviceid');
 
     foreach ($result as $value) {
@@ -363,7 +356,8 @@ function eb_get_service_info($service_id)
         array('externalserviceid' => $service_id, 'functionname' => 'core_enrol_get_users_courses'),
         array('externalserviceid' => $service_id, 'functionname' => 'eb_test_connection'),
         array('externalserviceid' => $service_id, 'functionname' => 'eb_get_site_data'),
-        array('externalserviceid' => $service_id, 'functionname' => 'eb_get_course_progress')
+        array('externalserviceid' => $service_id, 'functionname' => 'eb_get_course_progress'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_edwiser_plugins_info'),
     );
 
 
