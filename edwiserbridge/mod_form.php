@@ -166,6 +166,10 @@ class edwiserbridge_service_form extends moodleform
 
 		$mform->addElement('button', 'eb_mform_create_service', get_string("link", 'local_edwiserbridge'));
 
+		if( ! class_exists(webservice)){
+			require_once $CFG->dirroot."/webservice/lib.php";
+		}
+
 
 		//set default values
 		if (!empty($service)) {
