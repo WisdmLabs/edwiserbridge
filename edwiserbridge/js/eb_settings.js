@@ -26,7 +26,7 @@ define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'c
 
         $(document).ready(function () {
 
-            function checkMissingServices(service_id, $messge_ele = false) {
+            function checkMissingServices(service_id, messge_ele = false) {
                 var promises = ajax.call([
                     { methodname: 'eb_get_service_info', args: { service_id: service_id } }
                 ]);
@@ -36,14 +36,14 @@ define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'c
                     if (!response.status) {
                         $('.eb_summary_tab').removeClass('summary_tab_sucess');
                         $('.eb_summary_tab').addClass('summary_tab_error');
-                        if (!$messge_ele) {
+                        if (!messge_ele) {
                             $('#eb_common_err').text(response.msg);
                             $('#eb_common_err').css('display', 'block');
-                        } else if ($messge_ele) {
+                        } else if (messge_ele) {
                             var link = window.location.origin + window.location.pathname + '?tab=service'
                             var fix_link = " Check more detials <a href='" + link + "'  target='_blank'>here</a>.";
-                            $message = "<span class='summ_error'>" + response.msg + fix_link + "</span>";
-                            $($messge_ele).empty().append($message);
+                            message = "<span class='summ_error'>" + response.msg + fix_link + "</span>";
+                            $(messge_ele).empty().append(message);
                         }
                     } else {
                         if (jQuery('#web_service_status span').hasClass('summ_error')) {
@@ -53,9 +53,9 @@ define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'c
                             $('.eb_summary_tab').addClass('summary_tab_sucess');
                             $('.eb_summary_tab').removeClass('summary_tab_error');
                         }
-                        if ($messge_ele) {
-                            $message = '<span style="color: #7ad03a;"><span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></span>';
-                            $($messge_ele).empty().append($message);
+                        if (messge_ele) {
+                            message = '<span style="color: #7ad03a;"><span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;</span></span>';
+                            $(messge_ele).empty().append(message);
                         }
                     }
                     return response;
