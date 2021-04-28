@@ -32,6 +32,7 @@ define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'c
                 ]);
 
                 promises[0].done(function (response) {
+                    var message = '';
                     $("body").css("cursor", "default");
                     if (!response.status) {
                         $('.eb_summary_tab').removeClass('summary_tab_sucess');
