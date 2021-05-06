@@ -684,13 +684,13 @@ class edwiserbridge_summary_form extends moodleform
 			'wdmwpmoodle' => $plugins_data['wdmwpmoodle']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
 		);
 		if(false !== $remote_data){
-			if(version_compare($plugins_data['edwiserbridge'],$remote_data->moodle_edwiser_bridge->version,"<")){
+			if(isset( $remote_data->moodle_edwiser_bridge->version ) && version_compare($plugins_data['edwiserbridge'],$remote_data->moodle_edwiser_bridge->version,"<")){
 				$version_info['edwiserbridge'] =$plugins_data['edwiserbridge']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge->version.")<a href='".$remote_data->moodle_edwiser_bridge->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
 			}
-			if(version_compare($plugins_data['wdmgroupregistration'],$remote_data->moodle_edwiser_bridge_bp->version,"<")){
+			if(isset( $remote_data->moodle_edwiser_bridge_bp->version ) && version_compare($plugins_data['wdmgroupregistration'],$remote_data->moodle_edwiser_bridge_bp->version,"<")){
 				$version_info['wdmgroupregistration'] =$plugins_data['wdmgroupregistration']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge_bp->version.")<a href='".$remote_data->moodle_edwiser_bridge_bp->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
 			}
-			if(version_compare($plugins_data['wdmwpmoodle'],$remote_data->moodle_edwiser_bridge_sso->version,"<")){
+			if(isset( $remote_data->moodle_edwiser_bridge_sso->version ) && version_compare($plugins_data['wdmwpmoodle'],$remote_data->moodle_edwiser_bridge_sso->version,"<")){
 				$version_info['wdmwpmoodle'] =$plugins_data['wdmwpmoodle']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge_sso->version.")<a href='".$remote_data->moodle_edwiser_bridge_sso->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
 			}	
 		}	
