@@ -454,8 +454,8 @@ class edwiserbridge_summary_form extends moodleform
 	public function definition()
 	{
 		global $CFG;
-
-		$mform            = $this->_form;
+		$plugins_vdata = $this->get_plugin_version_data(); 
+		$mform        = $this->_form;
 
 		$token        = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
 		$service      = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
@@ -539,7 +539,6 @@ class edwiserbridge_summary_form extends moodleform
 				'url' => array(
 					'label'          => get_string('mdl_url', 'local_edwiserbridge'),
 					'expected_value' => 'static',
-					// 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_site_url">' . $CFG->wwwroot . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
 					'value'          => '<div class="eb_copy_text_wrap" data> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->wwwroot .'</span>'.' <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
 				),
@@ -552,16 +551,34 @@ class edwiserbridge_summary_form extends moodleform
 				'token' => array(
 					'label'          => get_string('token', 'local_edwiserbridge'),
 					'expected_value' => 'static',
-					// 'value'          => '<b id="eb_mform_token">' . $token_field . '</b>'
 					'value'          =>  '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $token .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 
 				),
 				'lang_code' => array(
 					'label'          => get_string('lang_label', 'local_edwiserbridge'),
 					'expected_value' => 'static',
-					// 'value'          => '<div class="eb_copy_txt_wrap"> <div style="width:60%;"> <b class="eb_copy" id="eb_mform_lang">' . $CFG->lang . '</b> </div> <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button></div></div>'
 					'value'         => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'. get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
 			   ),
+			),
+			'edwiser_bridge_plugin_summary'  => array(
+				'mdl_edwiser_bridge' => array(
+					'label'          => get_string('mdl_edwiser_bridge_lbl', 'local_edwiserbridge'),
+					'expected_value' => 'static',
+					'value'          => $plugins_vdata['edwiserbridge'],
+
+				),
+				'mdl_edwiser_bridge_sso' => array(
+					'label'          => get_string('mdl_edwiser_bridge_sso_lbl', 'local_edwiserbridge'),
+					'expected_value' => 'static',
+					'value'          => $plugins_vdata['wdmwpmoodle'],
+
+				),
+				'mdl_edwiser_bridge_bp' => array(
+					'label'          => get_string('mdl_edwiser_bridge_bp_lbl', 'local_edwiserbridge'),
+					'expected_value' => 'static',
+					'value'          => $plugins_vdata['wdmgroupregistration'],
+
+				),
 			)
 		);
 
@@ -649,9 +666,77 @@ class edwiserbridge_summary_form extends moodleform
 			'html',
 			$html
 		);
+	}
 
+	private function get_plugin_version_data(){
+		$plugins_data =array();
+		$pluginman = \core_plugin_manager::instance();
+        $localplugin = $pluginman->get_plugins_of_type('local');
+		$plugins_data['edwiserbridge']=isset($localplugin['edwiserbridge'])?$localplugin['edwiserbridge']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
+		$plugins_data['wdmgroupregistration']=isset($localplugin['wdmgroupregistration'])?$localplugin['wdmgroupregistration']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
+        $authplugin = $pluginman->get_plugins_of_type('auth');
+		$plugins_data['wdmwpmoodle']=isset($localplugin['wdmwpmoodle'])?$localplugin['wdmwpmoodle']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
+		
+		$remote_data = $this->get_remote_plugins_data();
+		$version_info = array(
+			'edwiserbridge'=>$plugins_data['edwiserbridge']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
+			'wdmgroupregistration' => $plugins_data['wdmgroupregistration']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
+			'wdmwpmoodle' => $plugins_data['wdmwpmoodle']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
+		);
+		if(false !== $remote_data){
+			if(version_compare($plugins_data['edwiserbridge'],$remote_data->moodle_edwiser_bridge->version,"<")){
+				$version_info['edwiserbridge'] =$plugins_data['edwiserbridge']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge->version.")<a href='".$remote_data->moodle_edwiser_bridge->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
+			}
+			if(version_compare($plugins_data['wdmgroupregistration'],$remote_data->moodle_edwiser_bridge_bp->version,"<")){
+				$version_info['wdmgroupregistration'] =$plugins_data['wdmgroupregistration']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge_bp->version.")<a href='".$remote_data->moodle_edwiser_bridge_bp->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
+			}
+			if(version_compare($plugins_data['wdmwpmoodle'],$remote_data->moodle_edwiser_bridge_sso->version,"<")){
+				$version_info['wdmwpmoodle'] =$plugins_data['wdmwpmoodle']. "<span  style='padding-left:1rem;'>(".$remote_data->moodle_edwiser_bridge_sso->version.")<a href='".$remote_data->moodle_edwiser_bridge_sso->url."' title='".get_string('mdl_edwiser_bridge_txt_download_help','local_edwiserbridge')."'>".get_string('mdl_edwiser_bridge_txt_download','local_edwiserbridge')."</a></span>";
+			}	
+		}	
+		return $version_info;
+	}
 
-		// $this->add_action_buttons(false);
+	private function get_remote_plugins_data(){
+		$data = get_config('local_edwiserbridge','edwiserbridge_plugins_versions');
+		$request_data =true;
+		
+		if($data){
+			$data = json_decode($data);
+			if(isset($data->data) && isset($data->time) && $data->time >time()){
+				$output= json_decode($data->data);
+				$request_data = false;
+			}
+		}
+		if($request_data){
+			if(!function_exists('curl_version')){
+				return false;
+			}
+
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_RETURNTRANSFER => 1,
+				CURLOPT_URL => "http://localhost/bridge-free-plugin-info.json",
+				CURLOPT_TIMEOUT => 100,
+				CURLOPT_SSL_VERIFYHOST=>0,
+				CURLOPT_SSL_VERIFYPEER=>0,
+			));
+			$output = curl_exec($curl);
+			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+			curl_close($curl);
+			echo "<pre>";
+			var_dump($httpcode);
+			echo "</pre>";
+			if(200 === $httpcode){
+				$data = array(
+					'time'=>time()+(60*60*24),
+					'data'=>$output,
+				);
+				set_config('edwiserbridge_plugins_versions',json_encode($data),'local_edwiserbridge');
+			}
+			$output=json_decode($output);
+		}
+		return $output;
 	}
 
 	public function validation($data, $files)

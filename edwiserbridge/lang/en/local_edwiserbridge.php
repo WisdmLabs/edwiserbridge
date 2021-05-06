@@ -208,6 +208,7 @@ $string['here'] = ' here ';
 
 $string['summary_setting_section'] = 'General Settings Summary';
 $string['summary_connection_section'] = 'Connection Settings Summary';
+$string['edwiser_bridge_plugin_summary'] = 'Edwiser Bridge Plugin Summary';
 
 $string['enabled'] = 'Enabled';
 $string['disabled'] = 'Disabled';
@@ -241,3 +242,14 @@ $string['privacy:metadata:wp_site:username'] = 'The username is sent from Moodle
 $string['privacy:metadata:wp_site:firstname'] = 'The firstname is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site';
 $string['privacy:metadata:wp_site:lastname'] = 'The lastname is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site';
 $string['privacy:metadata:wp_site:password'] = 'The password is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site';
+
+/**
+ * Plugin stats.
+ */
+$string['mdl_edwiser_bridge_lbl'] ='Edwiser Bridge Moodle:';
+$string['mdl_edwiser_bridge_bp_lbl'] ='Edwiser Bridge Bulk Purchase Moodle:';
+$string['mdl_edwiser_bridge_sso_lbl'] ='Edwiser Bridge Single Sign On Moodle:';
+$string['mdl_edwiser_bridge_txt_latest'] = 'Latest';
+$string['mdl_edwiser_bridge_txt_download'] = 'Download';
+$string['mdl_edwiser_bridge_txt_download_help'] = 'Click here to downaload the plugin file.';
+$string['mdl_edwiser_bridge_txt_not_avbl'] = 'Not Available';
