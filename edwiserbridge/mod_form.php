@@ -724,9 +724,6 @@ class edwiserbridge_summary_form extends moodleform
 			$output = curl_exec($curl);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			curl_close($curl);
-			echo "<pre>";
-			var_dump($httpcode);
-			echo "</pre>";
 			if(200 === $httpcode){
 				$data = array(
 					'time'=>time()+(60*60*24),

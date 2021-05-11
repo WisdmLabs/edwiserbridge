@@ -36,7 +36,7 @@ function save_connection_form_settings($form_data)
 }
 
 /**
- * save the synch settings for the individual site
+ * Save the synch settings for the individual site
  */
 function save_synchronization_form_settings($form_data)
 {
@@ -47,7 +47,7 @@ function save_synchronization_form_settings($form_data)
 
 
     if (in_array($form_data->wp_site_list, $connection_settings_keys)) {
-        $existing_synch_settings = unserialize($CFG->eb_synch_settings);
+        $existing_synch_settings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
         $synch_settings = $existing_synch_settings;
         $synch_settings[$form_data->wp_site_list] = array(
         // "course_enrollment"    => $form_data->wp_site_list,
