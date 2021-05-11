@@ -253,3 +253,4 @@ $string['mdl_edwiser_bridge_txt_latest'] = 'Latest';
 $string['mdl_edwiser_bridge_txt_download'] = 'Download';
 $string['mdl_edwiser_bridge_txt_download_help'] = 'Click here to downaload the plugin file.';
 $string['mdl_edwiser_bridge_txt_not_avbl'] = 'Not Available';
+$string['mdl_edwiser_bridge_fetch_info'] = 'Check for update';

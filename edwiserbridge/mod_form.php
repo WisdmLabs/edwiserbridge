@@ -561,6 +561,12 @@ class edwiserbridge_summary_form extends moodleform
 			   ),
 			),
 			'edwiser_bridge_plugin_summary'  => array(
+				'' => array(
+					'label'          => '',
+					'expected_value' => 'static',
+					'value'          => $this->get_plugin_fetch_link(),
+
+				),
 				'mdl_edwiser_bridge' => array(
 					'label'          => get_string('mdl_edwiser_bridge_lbl', 'local_edwiserbridge'),
 					'expected_value' => 'static',
@@ -668,6 +674,12 @@ class edwiserbridge_summary_form extends moodleform
 		);
 	}
 
+	private function get_plugin_fetch_link(){
+		global $CFG;
+		$url = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=summary&fetch_data=true';
+		return "<a href='{$url}'><i class='fa fa-refresh'></i> ".get_string('mdl_edwiser_bridge_fetch_info', 'local_edwiserbridge')."</a>";
+	}
+
 	private function get_plugin_version_data(){
 		$plugins_data =array();
 		$pluginman = \core_plugin_manager::instance();
@@ -676,8 +688,8 @@ class edwiserbridge_summary_form extends moodleform
 		$plugins_data['wdmgroupregistration']=isset($localplugin['wdmgroupregistration'])?$localplugin['wdmgroupregistration']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
         $authplugin = $pluginman->get_plugins_of_type('auth');
 		$plugins_data['wdmwpmoodle']=isset($localplugin['wdmwpmoodle'])?$localplugin['wdmwpmoodle']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
-		
-		$remote_data = $this->get_remote_plugins_data();
+		$fetch_data =(isset($_GET['fetch_data']) && 'true'===$_GET['fetch_data']) ? true : false;
+		$remote_data = $this->get_remote_plugins_data($fetch_data);
 		$version_info = array(
 			'edwiserbridge'=>$plugins_data['edwiserbridge']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
 			'wdmgroupregistration' => $plugins_data['wdmgroupregistration']."<span style='padding-left:1rem;color:limegreen;'>".get_string('mdl_edwiser_bridge_txt_latest','local_edwiserbridge')." </span>",
@@ -697,11 +709,11 @@ class edwiserbridge_summary_form extends moodleform
 		return $version_info;
 	}
 
-	private function get_remote_plugins_data(){
+	private function get_remote_plugins_data($fetch_data){
 		$data = get_config('local_edwiserbridge','edwiserbridge_plugins_versions');
 		$request_data =true;
 		
-		if($data){
+		if($data || $fetch_data){
 			$data = json_decode($data);
 			if(isset($data->data) && isset($data->time) && $data->time >time()){
 				$output= json_decode($data->data);
