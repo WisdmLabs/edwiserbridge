@@ -716,7 +716,7 @@ class edwiserbridge_summary_form extends moodleform
 			$curl = curl_init();
 			curl_setopt_array($curl, array(
 				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_URL => "http://localhost/bridge-free-plugin-info.json",
+				CURLOPT_URL => "https://edwiser.org/edwiserdemoimporter/bridge-free-plugin-info.json",
 				CURLOPT_TIMEOUT => 100,
 				CURLOPT_SSL_VERIFYHOST=>0,
 				CURLOPT_SSL_VERIFYPEER=>0,
