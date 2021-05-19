@@ -687,7 +687,7 @@ class edwiserbridge_summary_form extends moodleform
 		$plugins_data['edwiserbridge']=isset($localplugin['edwiserbridge'])?$localplugin['edwiserbridge']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
 		$plugins_data['wdmgroupregistration']=isset($localplugin['wdmgroupregistration'])?$localplugin['wdmgroupregistration']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
         $authplugin = $pluginman->get_plugins_of_type('auth');
-		$plugins_data['wdmwpmoodle']=isset($localplugin['wdmwpmoodle'])?$localplugin['wdmwpmoodle']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
+		$plugins_data['wdmwpmoodle']=isset($authplugin['wdmwpmoodle'])?$authplugin['wdmwpmoodle']->release:get_string('mdl_edwiser_bridge_txt_not_avbl','local_edwiserbridge');
 		$fetch_data =(isset($_GET['fetch_data']) && 'true'===$_GET['fetch_data']) ? true : false;
 		$remote_data = $this->get_remote_plugins_data($fetch_data);
 		$version_info = array(
