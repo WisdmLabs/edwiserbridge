@@ -59,12 +59,12 @@ class provider implements
      */
     public static function get_metadata(collection $collection) : collection {
         $collection->add_external_location_link('wp_site', [
-            'userid' => 'privacy:metadata:wp_site:userid',
-            'username' => 'privacy:metadata:wp_site:username',
+            'userid'    => 'privacy:metadata:wp_site:userid',
+            'username'  => 'privacy:metadata:wp_site:username',
             'firstname' => 'privacy:metadata:wp_site:firstname',
-            'lastname' => 'privacy:metadata:wp_site:lastname',
-            'email' => 'privacy:metadata:wp_site:email',
-            'password' => 'privacy:metadata:wp_site:password',
+            'lastname'  => 'privacy:metadata:wp_site:lastname',
+            'email'     => 'privacy:metadata:wp_site:email',
+            'password'  => 'privacy:metadata:wp_site:password',
         ], 'privacy:metadata:wp_site');
  
         return $collection;
