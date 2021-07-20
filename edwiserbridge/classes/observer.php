@@ -109,6 +109,7 @@ class local_edwiserbridge_observer {
             foreach ($sites as $key => $value) {
                 if ($synch_conditions[$value["wp_name"]]["user_creation"] && $value['wp_token']) {
                     $password = '';
+                    $enc_iv   = '';
                     // If new password in not empty
                     if (isset($_POST['newpassword']) && $_POST['newpassword']) {
                         $enc_key   = openssl_digest($value["wp_token"], 'SHA256', true);

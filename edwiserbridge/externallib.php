@@ -390,28 +390,9 @@ class local_edwiserbridge_external extends external_api
 		$response['plugin_name'] = 'edwiser_bridge';
 		$response['version']     = '';
 
-		// $count = eb_get_service_info($service_id);
-
-		// throw new invalid_parameter_exception('The field cannot be blank');
-		// $version = get_config('local_edwiserbridge', 'release');
-
-		// if ($version) {
 		$response['plugin_name'] = 'edwiser_bridge';
-		$response['version']     = '2.0.6';
-		// }
+		$response['version']     = '2.0.7';
 
-		/*$version = get_config('local_wdmgroupregistration', 'release');
-		if ($version) {
-			$response['plugin_name'] = 'bulk_purchase';
-			$response['version']     = $version;
-		}
-
-		$version = get_config('auth_wdmwpmoodle', 'release');
-		if ($version) {
-			$response['plugin_name'] = 'sso';
-			$response['version']     = $version;
-		}
-*/
 		return $response;
 	}
 
