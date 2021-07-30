@@ -10,8 +10,7 @@ class local_edwiserbridge_observer {
     /**
      * functionality to handle user enrollment event.
      */
-    public static function user_enrolment_created(core\event\user_enrolment_created $event)
-    {
+    public static function user_enrolment_created(core\event\user_enrolment_created $event) {
         global $CFG;
         $user_data = user_get_users_by_id(array($event->relateduserid));
 
@@ -24,7 +23,6 @@ class local_edwiserbridge_observer {
             'last_name'  => $user_data[$event->relateduserid]->lastname,
             'email'      => $user_data[$event->relateduserid]->email
         );
-
 
         if (check_if_request_is_from_wp()) {
             return;
@@ -50,8 +48,7 @@ class local_edwiserbridge_observer {
     /**
      * functionality to handle user un enrollment event
      */
-    public static function user_enrolment_deleted(core\event\user_enrolment_deleted $event)
-    {
+    public static function user_enrolment_deleted(core\event\user_enrolment_deleted $event) {
         global $CFG;
         $user_data = user_get_users_by_id(array($event->relateduserid));
         $request_data = array(
@@ -64,7 +61,7 @@ class local_edwiserbridge_observer {
             'email'      => $user_data[$event->relateduserid]->email
         );
 
-        //checks if the request is from the wordpress site or from te Moodle site itself
+        // checks if the request is from the wordpress site or from te Moodle site itself
         if (check_if_request_is_from_wp()) {
             return;
         }
@@ -89,8 +86,7 @@ class local_edwiserbridge_observer {
     /**
      * functionality to handle user creation event
      */
-    public static function user_created(core\event\user_created $event)
-    {
+    public static function user_created(core\event\user_created $event) {
 
         global $CFG;
         $user_data = user_get_users_by_id(array($event->relateduserid));
@@ -99,7 +95,6 @@ class local_edwiserbridge_observer {
         // We will use token as the key as it is present on both sites.
         // Open SSL encryption initialization.
         $enc_method = 'AES-128-CTR';
-
 
         $api_handler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
@@ -140,11 +135,10 @@ class local_edwiserbridge_observer {
     /**
      * functionality to handle user update event
      */
-    public static function user_updated(core\event\user_updated $event)
-    {
+    public static function user_updated(core\event\user_updated $event) {
         global $CFG;
         $user_data = user_get_users_by_id(array($event->relateduserid));
-       
+
         // User password should be encrypted. Using Openssl for it.
         // We will use token as the key as it is present on both sites.
         // Open SSL encryption initialization.
@@ -171,7 +165,6 @@ class local_edwiserbridge_observer {
 
                     }
 
-
                     $request_data = array(
                         'action'     => 'user_updated',
                         'user_id'    => $event->relateduserid,
@@ -196,8 +189,7 @@ class local_edwiserbridge_observer {
     /**
      * functionality to handle user deletion event
      */
-    public static function user_deleted(core\event\user_deleted $event)
-    {
+    public static function user_deleted(core\event\user_deleted $event) {
         global $CFG;
         $request_data = array(
             'action'  => 'user_deletion',
@@ -222,10 +214,9 @@ class local_edwiserbridge_observer {
 
 
     /**
-     * Functionality to handle Course deletion event. 
+     * Functionality to handle Course deletion event.
      */
-    public static function course_deleted(core\event\course_deleted $event)
-    {
+    public static function course_deleted(core\event\course_deleted $event) {
         global $CFG;
 
         $request_data = array(

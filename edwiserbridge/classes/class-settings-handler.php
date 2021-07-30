@@ -1,8 +1,8 @@
 <?php
 
 /**
-* File responsible to perform all actions of the set-up wizard.
-*/
+ * File responsible to perform all actions of the set-up wizard.
+ */
 
 require_once($CFG->libdir . "/externallib.php");
 
@@ -16,46 +16,42 @@ class eb_settings_handler
      * @param  [type] $userid [description]
      * @return [type]         [description]
      */
-    public function eb_create_externle_service($name, $userid)
-    {
+    public function eb_create_externle_service($name, $userid) {
         global $DB, $CFG;
-        //response initializations.
+        // response initializations.
         $response['status']            = 1;
         $response['msg']               = '';
         $response['token']             = 0;
         $response['site_url']          = $CFG->wwwroot;
         $response['service_id']        = 0;
 
-
-        //service creation default data
+        // service creation default data
         $servicedata                   = array();
         $service['name']               = $name;
         $service['enabled']            = 1;
-        $service['requiredcapability'] = NULL;
+        $service['requiredcapability'] = null;
         $service['restrictedusers']    = 1;
-        $service['component']          = NULL;
+        $service['component']          = null;
         $service['timecreated']        = time();
-        $service['timemodified']       = NULL;
+        $service['timemodified']       = null;
 
         $service['shortname']          = $this->eb_generate_service_shortname();
 
-
-        //User id validation.
+        // User id validation.
         if (empty($userid)) {
             $response['status'] = 0;
             $response['msg']    = get_string('empty_userid_err', 'local_edwiserbridge');
             return $response;
         }
 
-
-        //creates unique shortname
+        // creates unique shortname
         if (empty($service['shortname'])) {
             $response['status'] = 0;
             $response['msg']    = get_string('create_service_shortname_err', 'local_edwiserbridge');
             return $response;
         }
 
-        //checks if the name is avaialble.
+        // checks if the name is avaialble.
         if (!$this->eb_check_if_service_name_available($name)) {
             $response['status'] = 0;
             $response['msg']    = get_string('create_service_name_err', 'local_edwiserbridge');
@@ -68,12 +64,12 @@ class eb_settings_handler
         $serviceid = $DB->insert_record('external_services', $service);
 
         if ($serviceid) {
-            //Add auth user
+            // Add auth user
             $this->eb_add_auth_user($serviceid, $userid);
-            //Adding functions in web service
+            // Adding functions in web service
             $this->eb_add_default_web_service_functions($serviceid);
 
-            //Creating token iwith service id.
+            // Creating token iwith service id.
             $token = $this->eb_create_token($serviceid, $userid);
             $response['service_id'] = $serviceid;
             $response['token'] = $token;
@@ -90,8 +86,7 @@ class eb_settings_handler
      * auto generates service shortname
      * @return [type] [description]
      */
-    public function eb_generate_service_shortname()
-    {
+    public function eb_generate_service_shortname() {
         global $DB;
         $shortname = 'edwiser';
 
@@ -113,8 +108,7 @@ class eb_settings_handler
      * @param  [type] $servicename [description]
      * @return [type]              [description]
      */
-    public function eb_check_if_service_name_available($servicename)
-    {
+    public function eb_check_if_service_name_available($servicename) {
         global $DB;
         if($DB->record_exists('external_services', array('name' => $servicename)))
         {
@@ -125,11 +119,10 @@ class eb_settings_handler
 
     /**
      * Adds authorized user for the external service.
-     * @param  [type] $serviceid 
-     * @param  [type] $userid    
+     * @param  [type] $serviceid
+     * @param  [type] $userid
      */
-    public function eb_add_auth_user($serviceid, $userid)
-    {
+    public function eb_add_auth_user($serviceid, $userid) {
         global $DB;
         $dbarr = array();
         $dbarr['externalserviceid'] = $serviceid;
@@ -143,10 +136,9 @@ class eb_settings_handler
 
     /**
      * This function adds default web services which registered with the edwiser-bridge only
-     * @param  [type] $serviceid 
+     * @param  [type] $serviceid
      */
-    public function eb_add_default_web_service_functions($serviceid)
-    {
+    public function eb_add_default_web_service_functions($serviceid) {
         global $DB;
         $functions = array(
             array('externalserviceid' => $serviceid, 'functionname' => 'core_user_create_users'),
@@ -169,16 +161,15 @@ class eb_settings_handler
             }
         }
 
-        //add extension functions if they are present
+        // add extension functions if they are present
         $this->eb_extensions_web_service_function($serviceid);
     }
 
     /**
      * This function adds extensions web services which are registered with the edwiser-bridge only
-     * @param  [type] $serviceid 
+     * @param  [type] $serviceid
      */
-    public function eb_extensions_web_service_function($serviceid)
-    {
+    public function eb_extensions_web_service_function($serviceid) {
         global $DB;
         $ssofunctions = array(
             array('externalserviceid' => $serviceid, 'functionname' => 'wdm_sso_verify_token'),
@@ -217,13 +208,12 @@ class eb_settings_handler
      * @param  [type] $serviceid [description]
      * @return [type]            [description]
      */
-    public function eb_link_exitsing_service($serviceid, $token)
-    {
+    public function eb_link_exitsing_service($serviceid, $token) {
         $this->eb_add_default_web_service_functions($serviceid);
         $this->eb_extensions_web_service_function($serviceid);
         set_config('ebexistingserviceselect', $serviceid);
         set_config("edwiser_bridge_last_created_token", $token);
-        
+
         return 1;
     }
 
@@ -234,12 +224,11 @@ class eb_settings_handler
      * @param  [type] $userid    [description]
      * @return [type]            [description]
      */
-    public function eb_create_token($serviceid, $userid)
-    {
+    public function eb_create_token($serviceid, $userid) {
         $tokentype = EXTERNAL_TOKEN_PERMANENT; // check this add for testing purpose
         $contextorid = 1;
 
-        //Default function of Moodle to create the token.
+        // Default function of Moodle to create the token.
         $token = external_generate_token($tokentype, $serviceid, $userid, $contextorid);
         set_config("edwiser_bridge_last_created_token", $token);
         set_config('ebexistingserviceselect', $serviceid);

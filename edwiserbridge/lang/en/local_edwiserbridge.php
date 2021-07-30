@@ -110,7 +110,7 @@ $string['site_url'] = 'Site URL';
 
 /*********** Settings page validation and Modal strings************/
 $string['create_service_shortname_err'] = 'Unable to create the webservice please contact plugin owner.';
-$string['create_service_name_err'] =   'This name is already in use please use different name.';
+$string['create_service_name_err'] = 'This name is already in use please use different name.';
 $string['create_service_creation_err'] = 'Unable to create the webservice please contact plugin owner.';
 $string['empty_userid_err'] = 'Please select the user.';
 $string['eb_link_success'] = 'Web service sucessfully linked.';
@@ -160,8 +160,8 @@ $string["web_service_username"] = "Username of the user.";
 $string["web_service_firstname"] = "Firstname of the user.";
 $string["web_service_lastname"] = "Lastname of the user.";
 $string["web_service_email"] = "Email of the user.";
-$string['eb_plugin_name']= "Plugin Name";
-$string['eb_plugin_version']= "Plugin Version";
+$string['eb_plugin_name'] = "Plugin Name";
+$string['eb_plugin_version'] = "Plugin Version";
 /******/
 
 /****  error handling  ***/
@@ -246,9 +246,9 @@ $string['privacy:metadata:wp_site:password'] = 'The password is sent from Moodle
 /**
  * Plugin stats.
  */
-$string['mdl_edwiser_bridge_lbl'] ='Edwiser Bridge Moodle:';
-$string['mdl_edwiser_bridge_bp_lbl'] ='Edwiser Bridge Bulk Purchase Moodle:';
-$string['mdl_edwiser_bridge_sso_lbl'] ='Edwiser Bridge Single Sign On Moodle:';
+$string['mdl_edwiser_bridge_lbl'] = 'Edwiser Bridge Moodle:';
+$string['mdl_edwiser_bridge_bp_lbl'] = 'Edwiser Bridge Bulk Purchase Moodle:';
+$string['mdl_edwiser_bridge_sso_lbl'] = 'Edwiser Bridge Single Sign On Moodle:';
 $string['mdl_edwiser_bridge_txt_latest'] = 'Latest';
 $string['mdl_edwiser_bridge_txt_download'] = 'Download';
 $string['mdl_edwiser_bridge_txt_download_help'] = 'Click here to downaload the plugin file.';

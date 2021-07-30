@@ -66,7 +66,7 @@ class provider implements
             'email'     => 'privacy:metadata:wp_site:email',
             'password'  => 'privacy:metadata:wp_site:password',
         ], 'privacy:metadata:wp_site');
- 
+
         return $collection;
     }
 
