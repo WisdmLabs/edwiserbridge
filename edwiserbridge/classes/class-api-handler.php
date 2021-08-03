@@ -1,7 +1,25 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
+ * Edwiser Bridge - WordPress and Moodle integration.
+ * This file is responsible for WordPress connection related functionality.  
  *
+ * @package local_edwiserbridge
+ * @copyright  2016 Wisdmlabs
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class api_handler
 {
@@ -21,36 +39,30 @@ class api_handler
      * functionality which creates request to connect to the wordpress
      * @return [type]               [description]
      */
-    public function connect_to_wp_with_args($request_url, $request_data) {
+    public function connect_to_wp_with_args($requesturl, $requestdata) {
         global $CFG;
-        $success          = 1;
-        $response_message = 'success';
-        $request_url .= '/wp-json/edwiser-bridge/wisdmlabs/';
+        $requesturl .= '/wp-json/edwiser-bridge/wisdmlabs/';
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $request_url,
-            CURLOPT_TIMEOUT => 100
+            CURLOPT_URL            => $requesturl,
+            CURLOPT_TIMEOUT        => 100
         ));
 
-        // curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $request_data);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $requestdata);
         $response = curl_exec($curl);
-        $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // var_dump('response ::: '.print_r($response, 1));
+        $statuscode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (curl_error($curl)) {
-            $error_msg = curl_error($curl);
+            $errormsg = curl_error($curl);
             curl_close($curl);
-            return array("error" => 1, "msg" => $error_msg );
+            return array("error" => 1, "msg" => $errormsg );
         } else {
             curl_close($curl);
 
-            if ("200" == $status_code) {
+            if ("200" == $statuscode) {
                 return array("error" => 0, "data" => json_decode($response));
             } else {
                 $msg = get_string("default_error", "local_edwiserbridge");

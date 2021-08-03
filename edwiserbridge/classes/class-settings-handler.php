@@ -1,7 +1,25 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
+ * Edwiser Bridge - WordPress and Moodle integration.
  * File responsible to perform all actions of the set-up wizard.
+ *
+ * @package local_edwiserbridge
+ * @copyright  2016 Wisdmlabs
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once($CFG->libdir . "/externallib.php");
@@ -19,14 +37,15 @@ class eb_settings_handler
     public function eb_create_externle_service($name, $userid) {
         global $DB, $CFG;
         // response initializations.
-        $response['status']            = 1;
-        $response['msg']               = '';
-        $response['token']             = 0;
-        $response['site_url']          = $CFG->wwwroot;
-        $response['service_id']        = 0;
+        $response               = array();
+        $response['status']     = 1;
+        $response['msg']        = '';
+        $response['token']      = 0;
+        $response['site_url']   = $CFG->wwwroot;
+        $response['service_id'] = 0;
 
         // service creation default data
-        $servicedata                   = array();
+        $service                       = array();
         $service['name']               = $name;
         $service['enabled']            = 1;
         $service['requiredcapability'] = null;
@@ -89,7 +108,7 @@ class eb_settings_handler
     public function eb_generate_service_shortname() {
         global $DB;
         $shortname = 'edwiser';
-
+        $numtries  = 0;
         do {
             $numtries ++;
             $newshortname = $shortname . $numtries;
@@ -110,8 +129,7 @@ class eb_settings_handler
      */
     public function eb_check_if_service_name_available($servicename) {
         global $DB;
-        if($DB->record_exists('external_services', array('name' => $servicename)))
-        {
+        if ($DB->record_exists('external_services', array('name' => $servicename))) {
             return 0;
         }
         return 1;

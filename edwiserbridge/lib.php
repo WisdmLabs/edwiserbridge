@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Edwiser Bridge - WordPress and Moodle integration.
- * File contains all required 
+ * File contains all required
  *
  * @package local_edwiserbridge
  * @copyright  2016 Wisdmlabs
@@ -248,6 +248,7 @@ function check_if_request_is_from_wp() {
 
 function eb_get_administrators() {
     $admins          = get_admins();
+    $settingsarr      = array();
     $settingsarr[''] = get_string('new_serivce_user_lbl', 'local_edwiserbridge');
 
     foreach ($admins as $value) {
@@ -261,6 +262,7 @@ function eb_get_administrators() {
 
 function eb_get_existing_services() {
     global $DB;
+    $settingsarr           = array();
     $result                = $DB->get_records("external_services", null, '', 'id, name');
     $settingsarr['']       = get_string('existing_serice_lbl', 'local_edwiserbridge');
     $settingsarr['create'] = ' - ' . get_string('new_web_new_service', 'local_edwiserbridge') . ' - ';
@@ -279,7 +281,8 @@ function eb_get_existing_services() {
 function eb_get_service_tokens($service_id) {
     global $DB;
 
-    $result = $DB->get_records("external_tokens", null, '', 'token, externalserviceid');
+    $settingsarr = array();
+    $result      = $DB->get_records("external_tokens", null, '', 'token, externalserviceid');
 
     foreach ($result as $value) {
         $settingsarr[] = array('token' => $value->token, 'id' => $value->externalserviceid);
@@ -345,12 +348,12 @@ function eb_get_service_info($serviceid) {
     $count = 0;
 
     foreach ($functions as $function) {
-        if (!$DB->record_exists('external_services_functions', array('functionname' => $function['functionname'], 'externalserviceid' => $service_id))) {
+        if (!$DB->record_exists('external_services_functions', array('functionname' => $function['functionname'], 'externalserviceid' => $serviceid))) {
             $count ++;
         }
     }
 
-    // add extension functions if they are present
+    // add extension functions if they are present.
     return $count;
 }
 
