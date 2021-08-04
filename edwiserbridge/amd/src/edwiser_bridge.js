@@ -1,4 +1,4 @@
-require(['jquery', 'core/ajax', 'core/url'], function (jQuery, ajax, url) {
+require(['jquery', 'core/ajax', 'core/url'], function ($, ajax, url) {
     return {
         init: function ($params) {
             $(document).ready(function(){

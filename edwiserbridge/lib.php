@@ -35,7 +35,7 @@ function local_edwiserbridge_extend_settings_navigation($settingsnav, $context) 
 
 /**
  * [save_connection_form_settings description]
- * @param  string $formdata formdata
+ * @param object $formdata formdata
  */
 function save_connection_form_settings($formdata) {
     if (count($formdata->wp_url) != count($formdata->wp_token)) {
@@ -92,6 +92,7 @@ function save_synchronization_form_settings($formdata) {
 
 
 function save_settings_form_settings($formdata) {
+    global $CFG;
 
     if (isset($formdata->web_service) && isset($formdata->pass_policy) && isset($formdata->extended_username)) {
 
@@ -174,7 +175,7 @@ function get_synch_settings($index) {
 
 /**
  * returns all the sites created in the edwiser settings.
- * @return [type] [description]
+ * @return array sites list
  */
 function get_site_list() {
     global $CFG;

@@ -23,8 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-class api_handler
-{
+class api_handler {
     // Returns instance of the class if already created.
     protected static $instance = null;
 

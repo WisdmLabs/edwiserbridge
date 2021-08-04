@@ -1,4 +1,4 @@
-define(['jquery', 'core/ajax', 'core/url', 'core/str'], function (jQuery, ajax, url) {
+define(['jquery', 'core/ajax', 'core/url', 'core/str'], function ($, ajax, url) {
     return {
         init: function ($params) {
             $(document).ready(function(){

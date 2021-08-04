@@ -25,9 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . "/externallib.php");
 
-
-class eb_settings_handler
-{
+class eb_settings_handler {
 
     /**
      * Create external service with the provided name and the user id

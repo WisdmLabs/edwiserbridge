@@ -677,6 +677,8 @@ class edwiserbridge_summary_form extends moodleform
             )
         );
 
+        $html = '';
+
         foreach ($summaryarray as $sectionkey => $section) {
             $html .= '<div class="summary_section"> <div class="summary_section_title">'
             . get_string($sectionkey, 'local_edwiserbridge') .'</div>';
@@ -796,7 +798,7 @@ class edwiserbridge_summary_form extends moodleform
         );
 
         if (false !== $remotedata) {
-            if (isset( $remotedata->moodle_edwiser_bridge->version ) &&
+            if (isset($remotedata->moodle_edwiser_bridge->version) &&
             version_compare($pluginsdata['edwiserbridge'], $remotedata->moodle_edwiser_bridge->version, "<")
             ) {
                 $versioninfo['edwiserbridge'] = $pluginsdata['edwiserbridge'] . "<span  style='padding-left:1rem;'>("
@@ -804,7 +806,7 @@ class edwiserbridge_summary_form extends moodleform
                 . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
                 . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
-            if (isset( $remotedata->moodle_edwiser_bridge_bp->version ) &&
+            if (isset($remotedata->moodle_edwiser_bridge_bp->version) &&
             version_compare($pluginsdata['wdmgroupregistration'], $remotedata->moodle_edwiser_bridge_bp->version, "<")
             ) {
                 $versioninfo['wdmgroupregistration'] = $pluginsdata['wdmgroupregistration']. "<span  style='padding-left:1rem;'>("
@@ -812,7 +814,7 @@ class edwiserbridge_summary_form extends moodleform
                 . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
                 . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
-            if (isset( $remotedata->moodle_edwiser_bridge_sso->version ) &&
+            if (isset($remotedata->moodle_edwiser_bridge_sso->version) &&
             version_compare($pluginsdata['wdmwpmoodle'], $remotedata->moodle_edwiser_bridge_sso->version, "<")
             ) {
                 $versioninfo['wdmwpmoodle'] = $pluginsdata['wdmwpmoodle']. "<span  style='padding-left:1rem;'>("
@@ -828,7 +830,7 @@ class edwiserbridge_summary_form extends moodleform
      * Returns plugin details.
      *
      * @param string $fetchdata
-     * @return string
+     * @return object
      */
     private function get_remote_plugins_data($fetchdata) {
         $data         = get_config('local_edwiserbridge', 'edwiserbridge_plugins_versions');

@@ -26,11 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__).'/lib.php');
 require_once($CFG->libdir . "/externallib.php");
 
-
-use core_completion\progress as progress;
-
-class local_edwiserbridge_external extends external_api
-{
+class local_edwiserbridge_external extends external_api {
     public function __construct() {
     }
 
@@ -215,7 +211,7 @@ class local_edwiserbridge_external extends external_api
             new external_single_structure(
                 array(
                     'course_id'   => new external_value(PARAM_TEXT, ''),
-                    'completion'  => new external_value(PARAM_NUMBER, '')
+                    'completion'  => new external_value(PARAM_INT, '')
                 )
             )
         );
