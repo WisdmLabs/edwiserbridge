@@ -15,18 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Edwiser Bridge - WordPress and Moodle integration.
- * This file is responsible for WordPress connection related functionality.  
+ * This file is responsible for WordPress connection related functionality.
  *
  * @package local_edwiserbridge
  * @copyright  2016 Wisdmlabs
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+
 class api_handler
 {
-    // Returns instance of the class if already created
+    // Returns instance of the class if already created.
     protected static $instance = null;
 
-    // creates insce of the class
+    // Creates insce of the class.
     public static function instance() {
         if (is_null(self::$instance)) {
             self::$instance = new self();
@@ -36,11 +38,13 @@ class api_handler
 
 
     /**
-     * functionality which creates request to connect to the wordpress
-     * @return [type]               [description]
+     * Create external service with the provided name and the user id
+     *
+     * @param  string $requesturl   requesturl.
+     * @param  int $requestdata requestdata.
+     * @return array
      */
     public function connect_to_wp_with_args($requesturl, $requestdata) {
-        global $CFG;
         $requesturl .= '/wp-json/edwiser-bridge/wisdmlabs/';
 
         $curl = curl_init();

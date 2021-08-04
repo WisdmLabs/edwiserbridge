@@ -1,10 +1,26 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Language File
+ * Privacy Subsystem implementation for local_edwiserbridge.
  *
- * @package   local_edwiser
- * @author    Wisdmlabs
+ * @package   local_edwiserbridge
+ * @copyright 2018 Andrew Nicols <andrew@nicols.co.uk>
+ * @copyright (c) 2020 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 
@@ -30,8 +46,6 @@ $string['lang_label'] = 'Language Code';
 /******* navigation menu and settings page   ********/
 
 $string["wp_site_settings_title"] = "Site Settings :";
-
-// $string["nav_name"] = "Edwiser Bridge Settings";
 $string["nav_name"] = "Settings";
 $string["default_settings_nav"] = "Settings";
 
@@ -40,7 +54,6 @@ $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
 $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization Settings";
 
-// $string[""] = "Wordpress Synchronization Settings";
 $string["enrollment_checkbox"] = "Enable User Enrollment.";
 $string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users.";
 $string["unenrollment_checkbox"] = "Enable User Un-enrollment.";
@@ -225,7 +238,6 @@ $string["manual_notification"] = "MANUAL NOTIFICATION";
 $string['service_name_empty'] = 'Please enter web service name';
 $string['user_empty'] = 'Please select User';
 $string['token_empty'] = 'Please select Token';
-// $string['service_name_empty'] = 'Please enter web service name';
 
 $string['web_service_creation_status'] = 'Web service creation status';
 $string['web_service_creation_msg'] = 'Web service creation message';
@@ -234,7 +246,6 @@ $string['web_service_creation_msg'] = 'Web service creation message';
 /*
  * GDPR compatibility strings.
  */
-
 $string['privacy:metadata:wp_site'] = 'In order to integrate with a WordPress site, user data needs to be exchanged with WordPress. Which will perform actions like user creation, user deletion, user metedata update, user enrollment synchronization and user un-enrollment synchronization on WordPress site.';
 $string['privacy:metadata:wp_site:userid'] = 'The userid is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site.';
 $string['privacy:metadata:wp_site:email'] = 'Your email is sent to the WordPress site to perform any of the actions mentioned in above site description on WordPress site';
@@ -243,9 +254,7 @@ $string['privacy:metadata:wp_site:firstname'] = 'The firstname is sent from Mood
 $string['privacy:metadata:wp_site:lastname'] = 'The lastname is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site';
 $string['privacy:metadata:wp_site:password'] = 'The password is sent from Moodle to perform any of the actions mentioned in above site description on WordPress site';
 
-/**
- * Plugin stats.
- */
+// Plugin stats.
 $string['mdl_edwiser_bridge_lbl'] = 'Edwiser Bridge Moodle:';
 $string['mdl_edwiser_bridge_bp_lbl'] = 'Edwiser Bridge Bulk Purchase Moodle:';
 $string['mdl_edwiser_bridge_sso_lbl'] = 'Edwiser Bridge Single Sign On Moodle:';

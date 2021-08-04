@@ -21,6 +21,7 @@
  * @copyright  2016 Wisdmlabs
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__)."/classes/class-api-handler.php");
 require_once(dirname(__FILE__)."/classes/class-settings-handler.php");
@@ -34,8 +35,7 @@ function local_edwiserbridge_extend_settings_navigation($settingsnav, $context) 
 
 /**
  * [save_connection_form_settings description]
- * @param  [type] $formdata [description]
- * @return [type]            [description]
+ * @param  string $formdata formdata
  */
 function save_connection_form_settings($formdata) {
     if (count($formdata->wp_url) != count($formdata->wp_token)) {
@@ -278,7 +278,7 @@ function eb_get_existing_services() {
 
 
 
-function eb_get_service_tokens($service_id) {
+function eb_get_service_tokens($serviceid) {
     global $DB;
 
     $settingsarr = array();
@@ -315,12 +315,14 @@ function eb_create_token_field($serviceid, $existingtoken = '') {
             $display = 'style="display:none"';
         }
 
-        $html .= '<option data-id="'. $token['id'] .'" value="'. $token['token'] .'" '. $display ." " . $selected.'>'. $token['token'] .'</option>';
+        $html .= '<option data-id="'. $token['id'] .'" value="'. $token['token'] .'" '
+        . $display ." " . $selected.'>'. $token['token'] .'</option>';
     }
 
     $html .= '      </select>
                 </div>
-                <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</button> </div>
+                <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') 
+                .'</button> </div>
             </div>';
 
     return $html;
@@ -348,12 +350,17 @@ function eb_get_service_info($serviceid) {
     $count = 0;
 
     foreach ($functions as $function) {
-        if (!$DB->record_exists('external_services_functions', array('functionname' => $function['functionname'], 'externalserviceid' => $serviceid))) {
+        if (!$DB->record_exists(
+                'external_services_functions',
+                array('functionname' => $function['functionname'],
+                'externalserviceid' => $serviceid
+            ))
+        ) {
             $count ++;
         }
     }
 
-    // add extension functions if they are present.
+    // Add extension functions if they are present.
     return $count;
 }
 
@@ -394,7 +401,5 @@ function eb_get_summary_status() {
             return 'warning';
         }
     }
-
     return 'sucess';
 }
-

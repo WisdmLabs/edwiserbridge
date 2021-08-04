@@ -48,9 +48,6 @@ class provider implements
     \core_privacy\local\request\core_userlist_provider,
     \core_privacy\local\request\plugin\provider{
 
-    /** The user preference for the navigation drawer. */
-    // const DRAWER_OPEN_NAV = 'drawer-open-nav';
-
     /**
      * Returns meta data about this system.
      *

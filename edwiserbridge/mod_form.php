@@ -22,8 +22,6 @@
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
-
-
 /**
  * form shown while adding activity.
  */
@@ -37,7 +35,8 @@ class edwiserbridge_navigation_form extends moodleform
 
         $summarystatus = eb_get_summary_status();
 
-        $summary = 'summary' === $currenttab ? 'active-tab eb-tabs eb_summary_tab summary_tab_' . $summarystatus : 'eb-tabs eb_summary_tab  summary_tab_' . $summarystatus;
+        $summary = 'summary' === $currenttab ? 'active-tab eb-tabs eb_summary_tab summary_tab_'
+        . $summarystatus : 'eb-tabs eb_summary_tab  summary_tab_' . $summarystatus;
 
         $tabs = array(
         array(
@@ -165,7 +164,7 @@ class edwiserbridge_service_form extends moodleform
         $tokenfield = $token;
 
         if (!empty($service)) {
-            // If the token available then show the token
+            // If the token available then show the token.
             $tokenfield = eb_create_token_field($service, $token);
         }
 
@@ -190,7 +189,7 @@ class edwiserbridge_service_form extends moodleform
             require_once($CFG->dirroot."/webservice/lib.php");
         }
 
-        // set default values.
+        // Set default values.
         if (!empty($service)) {
             $mform->setDefault("eb_sevice_list", $service);
         }
@@ -221,16 +220,32 @@ class edwiserbridge_connection_form extends moodleform
         $mform = $this->_form;
         $repeatarray = array();
 
-        $repeatarray[] = $mform->createElement('header', 'wp_header', get_string('wp_site_settings_title', 'local_edwiserbridge'). "<div class ='test'> </div>");
+        $repeatarray[] = $mform->createElement('header', 'wp_header', get_string('wp_site_settings_title', 'local_edwiserbridge')
+        . "<div class ='test'> </div>");
 
-        $repeatarray[] = $mform->createElement('text', 'wp_name', get_string('wordpress_site_name', 'local_edwiserbridge'), 'size="35"');
+        $repeatarray[] = $mform->createElement(
+            'text',
+            'wp_name',
+            get_string('wordpress_site_name', 'local_edwiserbridge'),
+            'size="35"'
+        );
         $repeatarray[] = $mform->createElement('text', 'wp_url', get_string('wordpress_url', 'local_edwiserbridge'), 'size="35"');
         $repeatarray[] = $mform->createElement('text', 'wp_token', get_string('wp_token', 'local_edwiserbridge'), 'size="35"');
         $repeatarray[] = $mform->createElement('hidden', 'wp_remove', 'no');
 
         $buttonarray = array();
-        $buttonarray[] = $mform->createElement('button', 'eb_test_connection', get_string("wp_test_conn_btn", "local_edwiserbridge"), "", "");
-        $buttonarray[] = $mform->createElement('button', 'eb_remove_site', get_string("wp_test_remove_site", "local_edwiserbridge"));
+        $buttonarray[] = $mform->createElement(
+            'button',
+            'eb_test_connection',
+            get_string("wp_test_conn_btn", "local_edwiserbridge"),
+            "",
+            ""
+        );
+        $buttonarray[] = $mform->createElement(
+            'button',
+            'eb_remove_site',
+            get_string("wp_test_remove_site", "local_edwiserbridge")
+        );
         $buttonarray[] = $mform->createElement('html', '<div id="eb_test_conne_response"> </div>');
 
         $repeatarray[] = $mform->createElement("group", "eb_buttons", "", $buttonarray);
@@ -254,10 +269,6 @@ class edwiserbridge_connection_form extends moodleform
         /*
         * Adding rule for each field.
         */
-        /*$repeateloptions['wp_name']['rule']  = 'required';
-        $repeateloptions['wp_url']['rule']   = 'required';
-        $repeateloptions['wp_token']['rule'] = 'required';*/
-
         $count = 1;
         if (!empty($defaultvalues) && !empty($defaultvalues["eb_connection_settings"])) {
             $count = count($defaultvalues["eb_connection_settings"]);
@@ -270,16 +281,27 @@ class edwiserbridge_connection_form extends moodleform
             }
         }
 
-        $this->repeat_elements($repeatarray, $count, $repeateloptions, 'eb_connection_setting_repeats', 'eb_option_add_fields', 1, get_string("add_more_sites", "local_edwiserbridge"), true);
+        $this->repeat_elements(
+            $repeatarray,
+            $count,
+            $repeateloptions,
+            'eb_connection_setting_repeats',
+            'eb_option_add_fields',
+            1,
+            get_string("add_more_sites", "local_edwiserbridge"),
+            true
+        );
 
-        // closing header section
+        // Closing header section.
         $mform->closeHeaderBefore('eb_option_add_fields');
 
         $mform->addElement(
         'html',
         '<div class="eb_connection_btns">
-				<input type="submit" class="btn btn-primary eb_setting_btn" id="conne_submit" name="conne_submit" value="'.get_string("save", "local_edwiserbridge").'">
-				<input type="submit" class="btn btn-primary eb_setting_btn" id="conne_submit_continue" name="conne_submit_continue" value="'.get_string("save_cont", "local_edwiserbridge").'">
+				<input type="submit" class="btn btn-primary eb_setting_btn" id="conne_submit" name="conne_submit"
+                value="'.get_string("save", "local_edwiserbridge").'">
+				<input type="submit" class="btn btn-primary eb_setting_btn" id="conne_submit_continue" name="conne_submit_continue"
+                value="'.get_string("save_cont", "local_edwiserbridge").'">
 			</div>');
 
         // Fill form with the existing values.
@@ -313,7 +335,12 @@ class edwiserbridge_connection_form extends moodleform
             }
 
             // If the site settings is removed then remove the validation errors also.
-            if (isset($errors['wp_name['.$i.']']) && isset($errors['wp_url['.$i.']']) && isset($errors['wp_token['.$i.']']) && isset($data['wp_remove'][$i]) && 'yes' == $data['wp_remove'][$i]) {
+            if (isset($errors['wp_name['.$i.']']) &&
+            isset($errors['wp_url['.$i.']']) &&
+            isset($errors['wp_token['.$i.']']) &&
+            isset($data['wp_remove'][$i]) &&
+            'yes' == $data['wp_remove'][$i]
+            ) {
                 unset($errors['wp_name['.$i.']']);
                 unset($errors['wp_url['.$i.']']);
                 unset($errors['wp_token['.$i.']']);
@@ -523,10 +550,12 @@ class edwiserbridge_summary_form extends moodleform
         $mform         = $this->_form;
         $token         = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
         $service       = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
-        $missingcapmsg = '<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>';
+        $missingcapmsg = '<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;
+        </span>';
         $url           = $CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
         $functionspage = "<a href='$url' target='_blank'>here</a>";
-        $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities, click $functionspage to know more.</span>";
+        $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities,
+         click $functionspage to know more.</span>";
 
         // Check web service user have a capability to use the web service.
         $webservicemanager = new webservice();
@@ -536,7 +565,8 @@ class edwiserbridge_summary_form extends moodleform
             $webservicemanager->get_external_service_by_id($service);
             foreach ($allowedusers as &$alloweduser) {
                 if (!is_siteadmin($alloweduser->id) and array_key_exists($alloweduser->id, $usersmissingcaps)) {
-                    $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities, click $functionspage to know more.</span>";
+                    $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities,
+                     click $functionspage to know more.</span>";
                 }
             }
 
@@ -664,7 +694,8 @@ class edwiserbridge_summary_form extends moodleform
                         $activewebservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
                         if (!in_array('rest', $activewebservices)) {
                             $html .= '<td class="sum_status">
-								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
+								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'
+                                .get_string('here', 'local_edwiserbridge').'</a> </span>
 							</td>';
                             $error = 1;
                         } else {
@@ -693,7 +724,8 @@ class edwiserbridge_summary_form extends moodleform
 							</td>';
                 } else {
                     $html .= '<td class="sum_status" id="'.$key.'">
-								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
+								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link']
+                                .'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
 							</td>';
                     $error = 1;
                 }
@@ -784,8 +816,8 @@ class edwiserbridge_summary_form extends moodleform
             version_compare($pluginsdata['wdmwpmoodle'], $remotedata->moodle_edwiser_bridge_sso->version, "<")
             ) {
                 $versioninfo['wdmwpmoodle'] = $pluginsdata['wdmwpmoodle']. "<span  style='padding-left:1rem;'>("
-                . $remotedata->moodle_edwiser_bridge_sso->version.")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url . "' title='"
-                . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
+                . $remotedata->moodle_edwiser_bridge_sso->version.")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url 
+                . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
                 . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
         }

@@ -1,4 +1,26 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * Edwiser Bridge - WordPress and Moodle integration.
+ * Observer file used as the callback for all the events.
+ *
+ * @package local_edwiserbridge
+ * @copyright  2016 Wisdmlabs
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/local/edwiserbridge/lib.php');
@@ -60,7 +82,7 @@ class local_edwiserbridge_observer {
             'email'      => $userdata[$event->relateduserid]->email
         );
 
-        // checks if the request is from the wordpress site or from te Moodle site itself.
+        // Checks if the request is from the wordpress site or from te Moodle site itself.
         if (check_if_request_is_from_wp()) {
             return;
         }
@@ -70,8 +92,7 @@ class local_edwiserbridge_observer {
             $sites = unserialize($CFG->eb_connection_settings);
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
-            foreach ($sites as $key => $value) {
-
+            foreach ($sites as $value) {
                 if ($synchconditions[$value['wp_name']]['course_un_enrollment'] && $value['wp_token']) {
                     // Adding Token for verification in WP from Moodle.
                     $requestdata['secret_key'] = $value['wp_token'];
@@ -148,7 +169,10 @@ class local_edwiserbridge_observer {
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
             foreach ($sites as $value) {
-                if (isset($synchconditions[$value["wp_name"]]["user_updation"]) && $synchconditions[$value["wp_name"]]["user_updation"] && $value['wp_token']) {
+                if (isset($synchconditions[$value["wp_name"]]["user_updation"]) &&
+                $synchconditions[$value["wp_name"]]["user_updation"] &&
+                $value['wp_token']
+                ) {
                     $password = '';
                     $enciv   = '';
 
@@ -223,7 +247,10 @@ class local_edwiserbridge_observer {
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
             foreach ($sites as $value) {
-                if (isset($synchconditions[$value["wp_name"]]["course_deletion"]) && $synchconditions[$value["wp_name"]]["course_deletion"] && $value['wp_token']) {
+                if (isset($synchconditions[$value["wp_name"]]["course_deletion"]) &&
+                $synchconditions[$value["wp_name"]]["course_deletion"] &&
+                $value['wp_token']
+                ) {
                     // Adding Token for verification in WP from Moodle.
                     $requestdata['secret_key'] = $value['wp_token'];
 
