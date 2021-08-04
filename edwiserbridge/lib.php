@@ -321,7 +321,7 @@ function eb_create_token_field($serviceid, $existingtoken = '') {
 
     $html .= '      </select>
                 </div>
-                <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge') 
+                <div> <button class="btn btn-primary eb_primary_copy_btn">'. get_string('copy', 'local_edwiserbridge')
                 .'</button> </div>
             </div>';
 

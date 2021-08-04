@@ -816,7 +816,7 @@ class edwiserbridge_summary_form extends moodleform
             version_compare($pluginsdata['wdmwpmoodle'], $remotedata->moodle_edwiser_bridge_sso->version, "<")
             ) {
                 $versioninfo['wdmwpmoodle'] = $pluginsdata['wdmwpmoodle']. "<span  style='padding-left:1rem;'>("
-                . $remotedata->moodle_edwiser_bridge_sso->version.")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url 
+                . $remotedata->moodle_edwiser_bridge_sso->version.")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url
                 . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
                 . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
