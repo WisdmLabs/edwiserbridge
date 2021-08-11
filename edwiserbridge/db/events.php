@@ -46,6 +46,10 @@ $observers = array(
        'callback'  => 'local_edwiserbridge_observer::user_updated',
     ),
     array(
+      'eventname' => 'core\event\course_created',
+      'callback'  => 'local_edwiserbridge_observer::course_created',
+    ),
+    array(
        'eventname' => 'core\event\course_deleted',
        'callback'  => 'local_edwiserbridge_observer::course_deleted',
     )

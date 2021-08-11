@@ -82,6 +82,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from test connection function.
+     */
     public static function eb_test_connection_returns() {
         return new external_single_structure(
             array(
@@ -105,6 +108,9 @@ class local_edwiserbridge_external extends external_api {
         return get_synch_settings($params['site_index']);
     }
 
+     /**
+     * paramters defined for get site data function.
+     */
     public static function eb_get_site_data_parameters() {
         return new external_function_parameters(
             array(
@@ -113,6 +119,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from get site data function.
+     */
     public static function eb_get_site_data_returns() {
         return new external_single_structure(
             array(
@@ -128,10 +137,22 @@ class local_edwiserbridge_external extends external_api {
                     PARAM_INT,
                     get_string('web_service_user_creation', 'local_edwiserbridge')
                 ),
+                'user_updation'        => new external_value(
+                    PARAM_INT,
+                    get_string('web_service_user_update', 'local_edwiserbridge')
+                ),
                 'user_deletion'        => new external_value(
                     PARAM_INT,
                     get_string('web_service_user_deletion', 'local_edwiserbridge')
-                )
+                ),
+                'course_creation'        => new external_value(
+                    PARAM_INT,
+                    get_string('web_service_course_creation', 'local_edwiserbridge')
+                ),
+                'course_deletion'        => new external_value(
+                    PARAM_INT,
+                    get_string('web_service_course_deletion', 'local_edwiserbridge')
+                ),
             )
         );
     }
@@ -198,6 +219,9 @@ class local_edwiserbridge_external extends external_api {
         return $response;
     }
 
+    /**
+     * paramters defined for course progress function.
+     */
     public static function eb_get_course_progress_parameters() {
         return new external_function_parameters(
             array(
@@ -206,6 +230,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from course progress function.
+     */
     public static function eb_get_course_progress_returns() {
         return new external_multiple_structure(
             new external_single_structure(
@@ -219,11 +246,13 @@ class local_edwiserbridge_external extends external_api {
 
 
 
-
     /**
      * functionality to get users in chunk.
-     * @param  [type] $user_id
-     * @return [type]          [description]
+     * @param  int $offset offset
+     * @param  int $limit  limit
+     * @param  string $searchstring searchstring
+     * @param  int $totalusers totalusers
+     * @return array array of users.
      */
     public static function eb_get_users($offset, $limit, $searchstring, $totalusers) {
         global $DB;
@@ -252,6 +281,9 @@ class local_edwiserbridge_external extends external_api {
         return array("total_users" => $usercount, "users" => $users);
     }
 
+    /**
+     * paramters defined for get users function.
+     */
     public static function eb_get_users_parameters() {
         return new external_function_parameters(
             array(
@@ -275,6 +307,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from get users function.
+     */
     public static function eb_get_users_returns() {
         return new external_function_parameters(
             array(
@@ -313,8 +348,9 @@ class local_edwiserbridge_external extends external_api {
 
     /**
      * functionality to create new external service
-     * @param  [type] $user_id
-     * @return [type]
+     * @param  string $webservicename
+     * @param  int $userid
+     * @return boolean
      */
     public static function eb_create_service($webservicename, $userid) {
         $settingshandler = new eb_settings_handler();
@@ -322,6 +358,9 @@ class local_edwiserbridge_external extends external_api {
         return $response;
     }
 
+    /**
+     * Paramters defined for create service function.
+     */
     public static function eb_create_service_parameters() {
         return new external_function_parameters(
             array(
@@ -331,6 +370,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from create service function.
+     */
     public static function eb_create_service_returns() {
         return new external_single_structure(
         array(
@@ -348,8 +390,9 @@ class local_edwiserbridge_external extends external_api {
     /**
      * Functionality to link existing services.
      *
-     * @param  [type] $user_id
-     * @return [type]
+     * @param  string $serviceid
+     * @param  int $token
+     * @return array
      */
     public static function eb_link_service($serviceid, $token) {
         $response           = array();
@@ -366,6 +409,9 @@ class local_edwiserbridge_external extends external_api {
         return $response;
     }
 
+    /**
+     * paramters defined for link service function.
+     */
     public static function eb_link_service_parameters() {
         return new external_function_parameters(
             array(
@@ -375,6 +421,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from link service function.
+     */
     public static function eb_link_service_returns() {
         return new external_single_structure(
             array(
@@ -387,8 +436,8 @@ class local_edwiserbridge_external extends external_api {
 
     /**
      * functionality to link existing services.
-     * @param  [type] $user_id
-     * @return [type]
+     * @param  int $serviceid service id.
+     * @return array
      */
     public static function eb_get_service_info($serviceid) {
         $response           = array();
@@ -404,6 +453,9 @@ class local_edwiserbridge_external extends external_api {
         return $response;
     }
 
+    /**
+     * paramters defined for get service info function.
+     */
     public static function eb_get_service_info_parameters() {
         return new external_function_parameters(
             array(
@@ -412,6 +464,9 @@ class local_edwiserbridge_external extends external_api {
         );
     }
 
+    /**
+     * paramters which will be returned from get service info function.
+     */
     public static function eb_get_service_info_returns() {
         return new external_single_structure(
             array(
@@ -425,8 +480,7 @@ class local_edwiserbridge_external extends external_api {
 
     /**
      * functionality to link existing services.
-     * @param  [type] $user_id
-     * @return [type]
+     * @return array
      */
     public static function eb_get_edwiser_plugins_info() {
         $response                = array();
@@ -438,10 +492,16 @@ class local_edwiserbridge_external extends external_api {
         return $response;
     }
 
+    /**
+     * paramters defined for get plugin info function.
+     */
     public static function eb_get_edwiser_plugins_info_parameters() {
         return new external_function_parameters(array());
     }
 
+    /**
+     * paramters which will be returned from get plugin info function.
+     */
     public static function eb_get_edwiser_plugins_info_returns() {
         return new external_single_structure(
             array(

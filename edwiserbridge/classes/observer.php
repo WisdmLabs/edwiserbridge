@@ -30,7 +30,9 @@ require_once($CFG->dirroot.'/user/lib.php');
 class local_edwiserbridge_observer {
 
     /**
-     * functionality to handle user enrollment event.
+     * Functionality to handle user enrollment event.
+     *
+     * @param  object event.
      */
     public static function user_enrolment_created(core\event\user_enrolment_created $event) {
         global $CFG;
@@ -67,7 +69,9 @@ class local_edwiserbridge_observer {
 
 
     /**
-     * functionality to handle user un enrollment event
+     * Functionality to handle user un enrollment event.
+     *
+     * @param  object event.
      */
     public static function user_enrolment_deleted(core\event\user_enrolment_deleted $event) {
         global $CFG;
@@ -104,7 +108,9 @@ class local_edwiserbridge_observer {
 
 
     /**
-     * functionality to handle user creation event
+     * Functionality to handle user creation event.
+     *
+     * @param  object event.
      */
     public static function user_created(core\event\user_created $event) {
 
@@ -152,7 +158,9 @@ class local_edwiserbridge_observer {
     }
 
     /**
-     * functionality to handle user update event
+     * Functionality to handle user update event.
+     *
+     * @param  object event.
      */
     public static function user_updated(core\event\user_updated $event) {
         global $CFG;
@@ -204,7 +212,9 @@ class local_edwiserbridge_observer {
     }
 
     /**
-     * functionality to handle user deletion event
+     * Functionality to handle user deletion event.
+     *
+     * @param  object event.
      */
     public static function user_deleted(core\event\user_deleted $event) {
         global $CFG;
@@ -229,9 +239,50 @@ class local_edwiserbridge_observer {
         }
     }
 
+    /**
+     * Functionality to handle Course deletion event.
+     *
+     * @param  object event.
+     */
+    public static function course_created(core\event\course_created $event) {
+        global $CFG;
+        // Get course info.
+        $course = get_course($event->courseid);
+
+        $apihandler = api_handler_instance();
+        if (isset($CFG->eb_connection_settings)) {
+            
+
+            $sites = unserialize($CFG->eb_connection_settings);
+            $synchconditions = unserialize($CFG->eb_synch_settings);
+
+            foreach ($sites as $value) {
+                if (isset($synchconditions[$value["wp_name"]]["course_creation"]) &&
+                $synchconditions[$value["wp_name"]]["course_creation"] &&
+                $value['wp_token']
+                ) {
+                    $requestdata = array(
+                        'action'      => 'course_created',
+                        'course_id'   => $event->courseid,
+                        'fullname'    => $course->fullname,
+                        'summary'     => $course->summary,
+                        'cat'         => $course->category,
+                        'secret_key'  => $value['wp_token'], // Adding Token for verification in WP from Moodle.
+                    );
+
+                    $apihandler->connect_to_wp_with_args($value["wp_url"], $requestdata);
+
+                }
+            }
+        }
+
+    }
+
 
     /**
      * Functionality to handle Course deletion event.
+     *
+     * @param  object event.
      */
     public static function course_deleted(core\event\course_deleted $event) {
         global $CFG;

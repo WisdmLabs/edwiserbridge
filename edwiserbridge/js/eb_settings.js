@@ -158,10 +158,10 @@ define('local_edwiserbridge/eb_settings', ['jquery', 'core/ajax', 'core/url', 'c
             /*********** END *********/
             // Add Settings field.
             if (!$('.eb_settings_btn_cont').length) {
-                $("#admin-eb_test_field").before('<div class="eb_settings_btn_cont" style="padding: 30px;"> ' + M.util.get_string('eb_settings_msg', 'local_edwiserbridge') + ' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="' + M.cfg.wwwroot + '/local/edwiserbridge/edwiserbridge.php?tab=service"> ' + M.util.get_string('click_here', 'local_edwiserbridge') + ' </a></div>');
+                $("#admin-eb_setup_wizard_field").before('<div class="eb_settings_btn_cont" style="padding: 30px;"> ' + M.util.get_string('eb_settings_msg', 'local_edwiserbridge') + ' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="' + M.cfg.wwwroot + '/local/edwiserbridge/edwiserbridge.php?tab=service"> ' + M.util.get_string('click_here', 'local_edwiserbridge') + ' </a></div>');
             }
             // $('#admin-ebexistingserviceselect').css('display', 'none');
-            $('#admin-eb_test_field').css('display', 'none');
+            $('#admin-eb_setup_wizard_field').css('display', 'none');
 
 
 

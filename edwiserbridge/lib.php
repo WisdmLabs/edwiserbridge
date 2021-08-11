@@ -73,18 +73,11 @@ function save_synchronization_form_settings($formdata) {
             "course_un_enrollment" => $formdata->course_un_enrollment,
             "user_creation"        => $formdata->user_creation,
             "user_deletion"        => $formdata->user_deletion,
+            "course_creation"      => $formdata->course_creation,
             "course_deletion"      => $formdata->course_deletion,
             "user_updation"        => $formdata->user_updation
         );
 
-        $synchsettings[$formdata->wp_site_list] = array(
-            "course_enrollment"    => $formdata->course_enrollment,
-            "course_un_enrollment" => $formdata->course_un_enrollment,
-            "user_creation"        => $formdata->user_creation,
-            "user_deletion"        => $formdata->user_deletion,
-            "course_deletion"      => $formdata->course_deletion,
-            "user_updation"        => $formdata->user_updation
-        );
     }
     set_config("eb_synch_settings", serialize($synchsettings));
 }
@@ -162,6 +155,7 @@ function get_synch_settings($index) {
         "course_un_enrollment" => 0,
         "user_creation"        => 0,
         "user_deletion"        => 0,
+        "course_creation"      => 0,
         "course_deletion"      => 0,
         "user_updation"        => 0,
     );
@@ -206,7 +200,9 @@ function api_handler_instance() {
 
 /**
  * returns the list of courses in which user is enrolled
- * @return [type]          [description]
+ *
+ * @return int $userid user id.
+ * @return array array of courses.
  */
 function get_array_of_enrolled_courses($userid) {
     $enrolledcourses = enrol_get_users_courses($userid);
@@ -219,8 +215,11 @@ function get_array_of_enrolled_courses($userid) {
 }
 
 /**
- * removes processed coureses from the course whose progress is already provided.
- * @return [type]            [description]
+ * Removes processed coureses from the course whose progress is already provided.
+ *
+ * @param int $courseid course id.
+ * @param array $courses courses array.
+ * @return array courses array.
  */
 function remove_processed_coures($courseid, $courses) {
     $key = array_search($courseid, $courses);
@@ -231,8 +230,7 @@ function remove_processed_coures($courseid, $courses) {
 }
 
 /**
- * functionality to check if the request is from wordpress and the stop processing the enrollment and unenrollment.
- * @return
+ * Functionality to check if the request is from wordpress and the stop processing the enrollment and unenrollment.
  */
 function check_if_request_is_from_wp() {
     if (isset($_POST) && isset($_POST["enrolments"])) {
@@ -245,8 +243,9 @@ function check_if_request_is_from_wp() {
 /*-----------------------------------------------------------
  *   Functions used in Settings page
  *----------------------------------------------------------*/
-
-
+/**
+ * Functionality to get all available Moodle sites administrator.
+ */
 function eb_get_administrators() {
     $admins          = get_admins();
     $settingsarr      = array();
@@ -258,9 +257,9 @@ function eb_get_administrators() {
     return $settingsarr;
 }
 
-
-
-
+/**
+ * Functionality to get all available Moodle sites services.
+ */
 function eb_get_existing_services() {
     global $DB;
     $settingsarr           = array();
@@ -275,10 +274,12 @@ function eb_get_existing_services() {
     return $settingsarr;
 }
 
-
-
-
-
+/**
+ * Functionality to get all available Moodle sites tokens.
+ *
+ * @param int $serviceid service id.
+ * @return array settings array.
+ */
 function eb_get_service_tokens($serviceid) {
     global $DB;
 
@@ -292,9 +293,13 @@ function eb_get_service_tokens($serviceid) {
     return $settingsarr;
 }
 
-
-
-
+/**
+ * Functionality to create token.
+ *
+ * @param int $serviceid service id.
+ * @param int $existingtoken existing token.
+ * @return string html content.
+ */
 function eb_create_token_field($serviceid, $existingtoken = '') {
 
     $tokenslist = eb_get_service_tokens($serviceid);
@@ -330,7 +335,12 @@ function eb_create_token_field($serviceid, $existingtoken = '') {
 }
 
 
-
+/**
+ * Functionality to get count of not available services which are required for Edwiser-Bridge.
+ *
+ * @param int $serviceid service id.
+ * @return string count of not available services.
+ */
 function eb_get_service_info($serviceid) {
     global $DB;
     $functions = array(
@@ -366,7 +376,9 @@ function eb_get_service_info($serviceid) {
 }
 
 
-
+/**
+ * Functionality to get summary status.
+ */
 function eb_get_summary_status() {
     global $CFG;
 

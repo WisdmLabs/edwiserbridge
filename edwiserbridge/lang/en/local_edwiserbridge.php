@@ -64,6 +64,8 @@ $string["user_creation_desc"] = "Create user In linked Wordpress site when creat
 $string["user_deletion"] = "Enable User Deletion";
 $string["user_deletion_desc"] = "Delete user In linked Wordpress site when deleted in Moodle Site.";
 
+$string["course_creation"] = "Enable Course Creation";
+$string["course_creation_desc"] = "This will create course in Wordpress site.";
 $string["course_deletion"] = "Enable Course Deletion";
 $string["course_deletion_desc"] = "This won't delete course but it will mark course as deleted in linked Wordpress site.";
 $string["user_updation"] = "Enable User Update";
@@ -163,6 +165,10 @@ $string["web_service_course_enrollment"] = "Checks if the course enrollment is p
 $string["web_service_course_un_enrollment"] = "Checks if the course un-enrollment is performed for the saved site";
 $string["web_service_user_creation"] = "Checks if the user creation is performed for the saved site";
 $string["web_service_user_deletion"] = "Checks if the user deletion is performed for the saved site";
+$string["web_service_course_creation"] = "Checks if Edwiser Bridge 2 way sync course creation is enabled.";
+$string["web_service_course_deletion"] = "Checks if Edwiser Bridge 2 way sync course deletion is enabled.";
+$string["web_service_user_update"] = "Checks if Edwiser Bridge 2 way sync user update is enabled.";
+
 
 $string["web_service_offset"] = "This is the offset for the select query.";
 $string["web_service_limit"] = "This limits the number of users returned.";

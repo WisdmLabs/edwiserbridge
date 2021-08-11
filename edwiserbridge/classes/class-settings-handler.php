@@ -101,8 +101,8 @@ class eb_settings_handler {
     }
 
     /**
-     * auto generates service shortname
-     * @return [type] [description]
+     * auto generates service shortname.
+     * @return string new shortname.
      */
     public function eb_generate_service_shortname() {
         global $DB;
@@ -153,7 +153,7 @@ class eb_settings_handler {
 
     /**
      * This function adds default web services which registered with the edwiser-bridge only
-     * @param  [type] $serviceid
+     * @param  int $serviceid
      */
     public function eb_add_default_web_service_functions($serviceid) {
         global $DB;
@@ -184,7 +184,7 @@ class eb_settings_handler {
 
     /**
      * This function adds extensions web services which are registered with the edwiser-bridge only
-     * @param  [type] $serviceid
+     * @param  int $serviceid
      */
     public function eb_extensions_web_service_function($serviceid) {
         global $DB;
@@ -222,8 +222,9 @@ class eb_settings_handler {
     /**
      * This links the existing web service i.e it adds all the missing functions top the web-service
      * This does not add ayuth user.
-     * @param  [type] $serviceid [description]
-     * @return [type]            [description]
+     * @param  int $serviceid Service Id.
+     * @param  int $token Token.
+     * @return boolean returns success message.
      */
     public function eb_link_exitsing_service($serviceid, $token) {
         $this->eb_add_default_web_service_functions($serviceid);
@@ -237,12 +238,12 @@ class eb_settings_handler {
 
     /**
      * This function creates the token by calling Moodles inbuilt function
-     * @param  [type] $serviceid [description]
-     * @param  [type] $userid    [description]
-     * @return [type]            [description]
+     * @param  int $serviceid service id.
+     * @param  int $userid    user id.
+     * @return string Token
      */
     public function eb_create_token($serviceid, $userid) {
-        $tokentype = EXTERNAL_TOKEN_PERMANENT; // Check this add for testing purpose.
+        $tokentype   = EXTERNAL_TOKEN_PERMANENT; // Check this add for testing purpose.
         $contextorid = 1;
 
         // Default function of Moodle to create the token.

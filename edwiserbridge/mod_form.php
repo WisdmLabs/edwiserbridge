@@ -387,6 +387,17 @@ class edwiserbridge_synchronization_form extends moodleform
         );
 
         // 3rd field.
+        // Course Creation.
+        $mform->addElement(
+            'advcheckbox',
+            'course_creation',
+            get_string('course_creation', 'local_edwiserbridge'),
+            get_string("course_creation_desc", "local_edwiserbridge"),
+            array('group' => 1),
+            array(0, 1)
+        );
+
+        // 4th field.
         // Course deletion.
         $mform->addElement(
             'advcheckbox',
@@ -397,7 +408,7 @@ class edwiserbridge_synchronization_form extends moodleform
             array(0, 1)
         );
 
-        // 4th field.
+        // 5th field.
         // user creation.
         $mform->addElement(
             'advcheckbox',
@@ -408,7 +419,7 @@ class edwiserbridge_synchronization_form extends moodleform
             array(0, 1)
         );
 
-        // 5th field.
+        // 6th field.
         // User update
         $mform->addElement(
             'advcheckbox',
@@ -419,7 +430,7 @@ class edwiserbridge_synchronization_form extends moodleform
             array(0, 1)
         );
 
-        // 6th field.
+        // 7th field.
         // User deletion
         $mform->addElement(
             'advcheckbox',
@@ -437,6 +448,7 @@ class edwiserbridge_synchronization_form extends moodleform
             $mform->setDefault("course_un_enrollment", $defaultvalues["course_un_enrollment"]);
             $mform->setDefault("user_creation", $defaultvalues["user_creation"]);
             $mform->setDefault("user_deletion", $defaultvalues["user_deletion"]);
+            $mform->setDefault("course_creation", $defaultvalues["course_creation"]);
             $mform->setDefault("course_deletion", $defaultvalues["course_deletion"]);
             $mform->setDefault("user_updation", $defaultvalues["user_updation"]);
         }
@@ -467,7 +479,6 @@ class edwiserbridge_settings_form extends moodleform
 {
     public function definition() {
         global $CFG;
-
         $mform         = $this->_form;
         $defaultvalues = get_required_settings();
 
