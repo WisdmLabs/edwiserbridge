@@ -251,8 +251,6 @@ class local_edwiserbridge_observer {
 
         $apihandler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
-            
-
             $sites = unserialize($CFG->eb_connection_settings);
             $synchconditions = unserialize($CFG->eb_synch_settings);
 

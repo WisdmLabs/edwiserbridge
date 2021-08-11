@@ -108,7 +108,7 @@ class local_edwiserbridge_external extends external_api {
         return get_synch_settings($params['site_index']);
     }
 
-     /**
+    /**
      * paramters defined for get site data function.
      */
     public static function eb_get_site_data_parameters() {

@@ -175,11 +175,12 @@ function get_site_list() {
     global $CFG;
     $reponse = isset($CFG->eb_connection_settings) ? unserialize($CFG->eb_connection_settings) : false;
 
-    $sites = array("" => "--- No Sites Available ---");;
     if ($reponse && count($reponse)) {
         foreach ($reponse as $key => $value) {
             $sites[$key] = $value["wp_name"];
         }
+    } else {
+        $sites = array("" => get_string('eb_no_sites', 'local_edwiserbridge'));
     }
     return $sites;
 }

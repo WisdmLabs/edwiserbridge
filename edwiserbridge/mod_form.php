@@ -173,7 +173,7 @@ class edwiserbridge_service_form extends moodleform
             'static',
             'eb_mform_token_wrap',
             get_string('token', 'local_edwiserbridge'),
-            '<b id="id_eb_token">' . $tokenfield . '</b>'
+            '<b id="id_eb_token_wrap">' . $tokenfield . '</b>'
         );
 
         $mform->addHelpButton('eb_mform_token_wrap', 'eb_mform_token_desc', 'local_edwiserbridge');
@@ -565,8 +565,6 @@ class edwiserbridge_summary_form extends moodleform
         </span>';
         $url           = $CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
         $functionspage = "<a href='$url' target='_blank'>here</a>";
-        $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities,
-         click $functionspage to know more.</span>";
 
         // Check web service user have a capability to use the web service.
         $webservicemanager = new webservice();
@@ -593,6 +591,9 @@ class edwiserbridge_summary_form extends moodleform
                 // If the token available then show the token.
                 $tokenfield = eb_create_token_field($service, $token);
             }
+        } else {
+            $missingcapmsg = "<span class='summ_error'>User don't have web service access capabilities,
+            click $functionspage to know more.</span>";
         }
 
         $summaryarray = array(
