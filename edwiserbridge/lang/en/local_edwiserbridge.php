@@ -109,6 +109,7 @@ $string['auth_user_desc'] = 'All admin users used as Authorized User while creat
 
 $string['eb_settings_msg'] = 'To complete Edwiser Bridge Set up ';
 $string['click_here'] = ' Click Here ';
+$string['eb_dummy_msg'] = 'Set up Wizard field';
 
 $string['eb_mform_service_desc'] = 'Service desc';
 $string['eb_mform_service_desc_help'] = 'Edwiser web-service functions will get added into it and also be used as reference for upcoming updates.';

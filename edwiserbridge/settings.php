@@ -83,4 +83,4 @@ $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 
 
     // Adding this field so that the setting page will be shown after installation.
-    $settings->add(new admin_setting_configcheckbox('local_edwiserbridge/eb_setup_wizard_field', '', ' ', 1));
+    $settings->add(new admin_setting_configcheckbox('local_edwiserbridge/eb_setup_wizard_field', get_string('eb_dummy_msg', 'local_edwiserbridge'), ' ', 1));
