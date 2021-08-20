@@ -53,27 +53,22 @@ $baseurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection'
 $mform = array(
     'service' => array
     (
-        'url' => $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service',
         'id'  => 'eb_service_form'
     ),
     'connection' => array
     (
-        'url' => $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=connection',
         'id'  => 'eb_connection_form'
     ),
     'synchronization' => array
     (
-        'url' => $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=synchronization',
         'id'  => 'eb_synch_form'
     ),
     'settings' => array
     (
-        'url' => $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=settings',
         'id'  => 'eb_settings_form'
     ),
     'summary' => array
     (
-        'url' => $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=summary',
         'id'  => 'eb_summary_form'
     )
 
@@ -85,9 +80,6 @@ $mformnavigation = new edwiserbridge_navigation_form();
 /*
  * Necessary page requirements.
  */
-$PAGE->requires->jquery();
-$PAGE->requires->jquery_plugin('ui');
-$PAGE->requires->jquery_plugin('ui-css');
 $PAGE->set_pagelayout('admin');
 $PAGE->set_context($context);
 $PAGE->set_url('/local/edwiserbridge/edwiserbridge.php?tab=settings');
@@ -108,10 +100,11 @@ $mformnavigation->display();
 /*
 * Functionality to display tab wise forms
 */
+$pageurl = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=';
 foreach ($mform as $key => $mformdata) {
     // Create object.
-    $objectname = 'edwiserbridge_'. $key .'_form';
-    $object      = new $objectname($mformdata['url'], null, 'post', '', array("id" => $mformdata['id']), true, null);
+    $objectname = 'edwiserbridge_' . $key . '_form';
+    $object     = new $objectname($pageurl . $key, null, 'post', '', array("id" => $mformdata['id']), true, null);
 
     if ($formdata = $object->get_data()) {
         // In this case you process validated data. $mform->get_data() returns data posted in form.

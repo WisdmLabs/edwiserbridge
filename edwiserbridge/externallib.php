@@ -195,7 +195,7 @@ class local_edwiserbridge_external extends external_api {
                 $progress   = $iscomplete ? 100 : ( $value->completed / $value->outoff ) * 100;
                 $response[] = array(
                  'course_id'  => $value->course,
-                 'completion' => $progress,
+                 'completion' => ceil( $progress ),
                 );
 
                 $processedcourses = remove_processed_coures( $value->course, $processedcourses );

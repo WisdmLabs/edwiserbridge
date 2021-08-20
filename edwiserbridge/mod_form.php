@@ -883,7 +883,4 @@ class edwiserbridge_summary_form extends moodleform
         return $output;
     }
 
-    public function validation($data, $files) {
-        return array();
-    }
 }
