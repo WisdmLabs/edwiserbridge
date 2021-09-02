@@ -144,7 +144,7 @@ class local_edwiserbridge_external extends external_api
 			foreach ( $result as $key => $value ) {
 				$course     = get_course( $value->course );
 				$cinfo      = new completion_info( $course );
-				$iscomplete = $cinfo->is_course_complete( $value->user );
+				$iscomplete = $cinfo->is_course_complete( $params['user_id'] );
 				$progress   = $iscomplete ? 100 : ( $value->completed / $value->outoff )*100;
 				$response[] = array(
 					'course_id'  => $value->course,
