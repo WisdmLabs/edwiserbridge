@@ -187,6 +187,6 @@ Wisdmlabs
 
 # Provided by
 
-[![alt text](https://git.wisdmlabs.net/edwiser/remuiformat/raw/dev/images/readme-img.png)](https://edwiser.org)
+[![alt text](https://raw.githubusercontent.com/WisdmLabs/moodle-format_remuiformat/master/images/readme-img.png)](https://edwiser.org)
 
 [(Back to top)](#table-of-contents)
