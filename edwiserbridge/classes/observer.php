@@ -173,6 +173,7 @@ class local_edwiserbridge_observer {
 
         $apihandler = api_handler_instance();
         if (isset($CFG->eb_connection_settings)) {
+
             $sites = unserialize($CFG->eb_connection_settings);
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
@@ -200,6 +201,63 @@ class local_edwiserbridge_observer {
                         'country'    => $userdata[$event->relateduserid]->country,
                         'city'       => $userdata[$event->relateduserid]->city,
                         'phone'      => $userdata[$event->relateduserid]->phone1,
+                        'password'   => $password,
+                        'enc_iv'     => $enciv,
+                        'secret_key' => $value['wp_token'], // Adding Token for verification in WP from Moodle.
+                    );
+
+                    $apihandler->connect_to_wp_with_args($value["wp_url"], $requestdata);
+                }
+            }
+        }
+    }
+
+
+
+
+    /**
+     * Functionality to handle user update event.
+     *
+     * @param  object event.
+     */
+    public static function user_password_updated(core\event\user_password_updated $event) {
+        global $CFG;
+
+        $userdata = user_get_users_by_id(array($event->userid));
+
+        // User password should be encrypted. Using Openssl for it.
+        // We will use token as the key as it is present on both sites.
+        // Open SSL encryption initialization.
+        $encmethod = 'AES-128-CTR';
+
+        $apihandler = api_handler_instance();
+        if (isset($CFG->eb_connection_settings)) {
+
+            $sites = unserialize($CFG->eb_connection_settings);
+            $synchconditions = unserialize($CFG->eb_synch_settings);
+
+            foreach ($sites as $value) {
+
+                if (isset($synchconditions[$value["wp_name"]]["user_updation"]) &&
+                $synchconditions[$value["wp_name"]]["user_updation"] &&
+                $value['wp_token']
+                ) {
+
+                    $password = '';
+                    $enciv   = '';
+
+                    // If new password in not empty.
+                    if (isset($_POST['newpassword1']) && $_POST['newpassword1']) {
+
+                        $enckey   = openssl_digest($value["wp_token"], 'SHA256', true);
+                        $enciv = substr(hash('sha256', $value["wp_token"]), 0, 16);
+                        $password = openssl_encrypt($_POST['newpassword1'], $encmethod, $enckey, 0, $enciv);
+                    }
+
+                    $requestdata = array(
+                        'action'     => 'user_updated',
+                        'user_id'    => $event->userid,
+                        'email'      => $userdata[$event->userid]->email,
                         'password'   => $password,
                         'enc_iv'     => $enciv,
                         'secret_key' => $value['wp_token'], // Adding Token for verification in WP from Moodle.

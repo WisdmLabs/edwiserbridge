@@ -22,8 +22,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021090900;    // The current plugin version (Date: YYYYMMDDXX).
-$plugin->release   = '2.1.2';
-$plugin->requires   = '2016052318'; // Requires this Moodle version (Moodle V3.1.0).
+$plugin->version   = 2021081100;
+$plugin->component = 'local_edwiserbridge';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->component = 'local_edwiserbridge'; // Full name of the plugin (used for diagnostics).
+$plugin->release   = '2.1.2';

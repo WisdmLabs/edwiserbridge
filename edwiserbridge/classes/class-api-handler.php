@@ -47,7 +47,9 @@ class api_handler {
         $requesturl .= '/wp-json/edwiser-bridge/wisdmlabs/';
 
         $curl = curl_init();
-        curl_setopt_array($curl, array(
+        curl_setopt_array(
+            $curl,
+            array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL            => $requesturl,
             CURLOPT_TIMEOUT        => 100
@@ -56,6 +58,11 @@ class api_handler {
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestdata);
         $response = curl_exec($curl);
+
+var_dump($response);
+
+
+
         $statuscode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (curl_error($curl)) {

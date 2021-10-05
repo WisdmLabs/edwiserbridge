@@ -28,16 +28,13 @@ require_once(dirname(__FILE__)."/classes/class-settings-handler.php");
 require_once("{$CFG->libdir}/completionlib.php");
 
 
-function local_edwiserbridge_extend_settings_navigation($settingsnav, $context) {
-
-}
-
-
 /**
- * [save_connection_form_settings description]
+ * Saving test connection form data.
+ * Saves forntend form data with all the available data like multiple WP site and token.
  * @param object $formdata formdata
  */
 function save_connection_form_settings($formdata) {
+    // Checking if provided data count is correct or not.
     if (count($formdata->wp_url) != count($formdata->wp_token)) {
         return;
     }
@@ -57,6 +54,8 @@ function save_connection_form_settings($formdata) {
 
 /**
  * Save the synch settings for the individual site
+ *
+ * @param object $formdata formdata
  */
 function save_synchronization_form_settings($formdata) {
     global $CFG;
@@ -83,7 +82,11 @@ function save_synchronization_form_settings($formdata) {
 }
 
 
-
+/**
+ * Save the general settings for Moodle.
+ *
+ * @param object $formdata formdata
+ */
 function save_settings_form_settings($formdata) {
     global $CFG;
 
@@ -104,11 +107,12 @@ function save_settings_form_settings($formdata) {
         set_config("passwordpolicy", $formdata->pass_policy);
 
     }
-
 }
 
 
-
+/**
+ * Get required settings fromm DB.
+ */
 function get_required_settings() {
     global $CFG;
 
@@ -131,7 +135,7 @@ function get_required_settings() {
 
 
 /**
- * returns connection settings saved in the settings form.
+ * Returns connection settings saved in the settings form.
  */
 function get_connection_settings() {
     global $CFG;
@@ -141,9 +145,9 @@ function get_connection_settings() {
 
 
 /**
- * returns individual sites data.
- * @param  [type] $index [description]
- * @return [type]        [description]
+ * Returns individual sites data.
+ * @param  int $index [description]
+ * @return array returns selected sites data.
  */
 function get_synch_settings($index) {
     global $CFG;
@@ -168,7 +172,7 @@ function get_synch_settings($index) {
 
 
 /**
- * returns all the sites created in the edwiser settings.
+ * Returns all the sites created in the edwiser settings.
  * @return array sites list
  */
 function get_site_list() {
@@ -234,10 +238,11 @@ function remove_processed_coures($courseid, $courses) {
  * Functionality to check if the request is from wordpress and the stop processing the enrollment and unenrollment.
  */
 function check_if_request_is_from_wp() {
+    $required = 0;
     if (isset($_POST) && isset($_POST["enrolments"])) {
-        return 1;
+        $required = 1;
     }
-    return 0;
+    return $required;
 }
 
 

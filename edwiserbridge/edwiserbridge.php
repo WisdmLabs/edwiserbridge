@@ -71,7 +71,6 @@ $mform = array(
     (
         'id'  => 'eb_summary_form'
     )
-
 );
 
 $mformnavigation = new edwiserbridge_navigation_form();

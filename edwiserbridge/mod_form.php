@@ -882,5 +882,4 @@ class edwiserbridge_summary_form extends moodleform
         }
         return $output;
     }
-
 }
