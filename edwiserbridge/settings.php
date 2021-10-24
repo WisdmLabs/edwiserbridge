@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once(dirname(__FILE__).'/lib.php');
 
 
-global $CFG, $COURSE, $PAGE;
+global $CFG, $PAGE;
 
 $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
@@ -35,42 +35,38 @@ $stringmanager = get_string_manager();
 $strings = $stringmanager->load_component_strings('local_edwiserbridge', 'en');
 $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 
-
-    $ADMIN->add(
-        'modules',
-        new admin_category(
-            'edwisersettings',
-            new lang_string(
-                'edwiserbridge',
-                'local_edwiserbridge'
-            )
-        )
-    );
-
-    $ADMIN->add(
+$ADMIN->add(
+    'modules',
+    new admin_category(
         'edwisersettings',
-        new admin_externalpage(
-            'edwiserbridge_conn_synch_settings',
-            new lang_string(
-                'nav_name',
-                'local_edwiserbridge'
-            ),
-            "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=settings",
-            array(
-                'moodle/user:update',
-                'moodle/user:delete'
-            )
+        new lang_string(
+            'edwiserbridge',
+            'local_edwiserbridge'
         )
-    );
+    )
+);
 
+$ADMIN->add(
+    'edwisersettings',
+    new admin_externalpage(
+        'edwiserbridge_conn_synch_settings',
+        new lang_string(
+            'nav_name',
+            'local_edwiserbridge'
+        ),
+        "$CFG->wwwroot/local/edwiserbridge/edwiserbridge.php?tab=settings",
+        array(
+            'moodle/user:update',
+            'moodle/user:delete'
+        )
+    )
+);
 
-    // In every plugin there is one if condition added please check it.
-    $settings = new admin_settingpage('edwiserbridge_settings', new lang_string('pluginname', 'local_edwiserbridge'));
-    $ADMIN->add('localplugins', $settings);
+// Adding settings page.
+$settings = new admin_settingpage('edwiserbridge_settings', new lang_string('pluginname', 'local_edwiserbridge'));
+$ADMIN->add('localplugins', $settings);
 
-
-
-    $settings->add(
+$settings->add(
     new admin_setting_heading(
         'local_edwiserbridge/eb_settings_msg',
         '',
@@ -79,8 +75,18 @@ $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
         background-color: #2578dd; margin-left: 5px;" href="'.$CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service'
         .'" >' . get_string('click_here', 'local_edwiserbridge') . '</a></div>'
     )
-    );
+);
 
 
-    // Adding this field so that the setting page will be shown after installation.
-    $settings->add(new admin_setting_configcheckbox('local_edwiserbridge/eb_setup_wizard_field', get_string('eb_dummy_msg', 'local_edwiserbridge'), ' ', 1));
+// Adding this field so that the setting page will be shown after installation.
+$settings->add(
+    new admin_setting_configcheckbox(
+        'local_edwiserbridge/eb_setup_wizard_field',
+        get_string(
+            'eb_dummy_msg',
+            'local_edwiserbridge'
+        ),
+        ' ',
+        1
+    )
+);

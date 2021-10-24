@@ -238,8 +238,15 @@ function remove_processed_coures($courseid, $courses) {
  * Functionality to check if the request is from wordpress and the stop processing the enrollment and unenrollment.
  */
 function check_if_request_is_from_wp() {
-    $required = 0;
-    if (isset($_POST) && isset($_POST["enrolments"])) {
+    $required    = 0;
+    $enrollments = optional_param('enrolments', 0, PARAM_INT);
+
+    // var_dump('enrollments :::: ');
+    // var_dump($enrollments);
+    // exit();
+
+    // if (isset($_POST) && isset($_POST["enrolments"])) {
+    if ($enrollments && !empty($enrollments)) {
         $required = 1;
     }
     return $required;

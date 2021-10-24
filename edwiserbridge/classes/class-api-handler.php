@@ -50,18 +50,19 @@ class api_handler {
         curl_setopt_array(
             $curl,
             array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL            => $requesturl,
-            CURLOPT_TIMEOUT        => 100
-        ));
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL            => $requesturl,
+                CURLOPT_TIMEOUT        => 100
+            )
+        );
 
         curl_setopt($curl, CURLOPT_POST, 1);
+
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Skip SSL Verification.
+
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestdata);
         $response = curl_exec($curl);
-
-var_dump($response);
-
-
 
         $statuscode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 

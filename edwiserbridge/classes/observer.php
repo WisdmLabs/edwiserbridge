@@ -129,13 +129,16 @@ class local_edwiserbridge_observer {
 
             foreach ($sites as $value) {
                 if ($synchconditions[$value["wp_name"]]["user_creation"] && $value['wp_token']) {
-                    $password = '';
-                    $enciv   = '';
+                    $password    = '';
+                    $enciv       = '';
+                    $newpassword = optional_param('newpassword', '', PARAM_TEXT);
+
                     // If new password in not empty.
-                    if (isset($_POST['newpassword']) && $_POST['newpassword']) {
+                    if ($newpassword && !empty($newpassword)) {
+                        // if (isset($_POST['newpassword']) && $_POST['newpassword']) {
                         $enckey   = openssl_digest($value["wp_token"], 'SHA256', true);
-                        $enciv = substr(hash('sha256', $value["wp_token"]), 0, 16);
-                        $password = openssl_encrypt($_POST['newpassword'], $encmethod, $enckey, 0, $enciv);
+                        $enciv    = substr(hash('sha256', $value["wp_token"]), 0, 16);
+                        $password = openssl_encrypt($newpassword, $encmethod, $enckey, 0, $enciv);
                     }
 
                     $requestdata = array(
@@ -182,14 +185,16 @@ class local_edwiserbridge_observer {
                 $synchconditions[$value["wp_name"]]["user_updation"] &&
                 $value['wp_token']
                 ) {
-                    $password = '';
-                    $enciv   = '';
+                    $password    = '';
+                    $enciv       = '';
+                    $newpassword = optional_param('newpassword', '', PARAM_TEXT);
 
                     // If new password in not empty.
-                    if (isset($_POST['newpassword']) && $_POST['newpassword']) {
+                    if ($newpassword && !empty($newpassword)) {
+                        // if (isset($_POST['newpassword']) && $_POST['newpassword']) {
                         $enckey   = openssl_digest($value["wp_token"], 'SHA256', true);
                         $enciv = substr(hash('sha256', $value["wp_token"]), 0, 16);
-                        $password = openssl_encrypt($_POST['newpassword'], $encmethod, $enckey, 0, $enciv);
+                        $password = openssl_encrypt($newpassword, $encmethod, $enckey, 0, $enciv);
                     }
 
                     $requestdata = array(
@@ -211,8 +216,6 @@ class local_edwiserbridge_observer {
             }
         }
     }
-
-
 
 
     /**
@@ -237,21 +240,21 @@ class local_edwiserbridge_observer {
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
             foreach ($sites as $value) {
-
                 if (isset($synchconditions[$value["wp_name"]]["user_updation"]) &&
                 $synchconditions[$value["wp_name"]]["user_updation"] &&
                 $value['wp_token']
                 ) {
 
-                    $password = '';
-                    $enciv   = '';
+                    $password    = '';
+                    $enciv       = '';
+                    $newpassword = optional_param('newpassword', '', PARAM_TEXT);
 
                     // If new password in not empty.
-                    if (isset($_POST['newpassword1']) && $_POST['newpassword1']) {
-
+                    if ($newpassword && !empty($newpassword)) {
+                        // if (isset($_POST['newpassword1']) && $_POST['newpassword1']) {
                         $enckey   = openssl_digest($value["wp_token"], 'SHA256', true);
                         $enciv = substr(hash('sha256', $value["wp_token"]), 0, 16);
-                        $password = openssl_encrypt($_POST['newpassword1'], $encmethod, $enckey, 0, $enciv);
+                        $password = openssl_encrypt($newpassword, $encmethod, $enckey, 0, $enciv);
                     }
 
                     $requestdata = array(

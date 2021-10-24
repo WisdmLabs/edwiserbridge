@@ -116,8 +116,10 @@ foreach ($mform as $key => $mformdata) {
         }
     }
 
-        // Display connection form  for the first time.
-    if (isset($_GET["tab"]) && $_GET["tab"] == $key) {
+    $tab = optional_param('tab', '', PARAM_TEXT);
+
+    // Display connection form  for the first time.
+    if ($tab == $key) {
         $object->display();
     }
 }
