@@ -135,8 +135,4 @@ class edwiserbridge_synchronization_form extends moodleform
         );
 
     }
-
-    public function validation($data, $files) {
-        return array();
-    }
 }

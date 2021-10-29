@@ -67,10 +67,10 @@ class edwiserbridge_connection_form extends moodleform
         * Data type of each field.
         */
         $repeateloptions = array();
-        $repeateloptions['wp_name']['type']    = PARAM_TEXT;
-        $repeateloptions['wp_url']['type']     = PARAM_TEXT;
-        $repeateloptions['wp_token']['type']   = PARAM_TEXT;
-        $repeateloptions['wp_remove']['type']  = PARAM_TEXT;
+        $repeateloptions['wp_name']['type']   = PARAM_TEXT;
+        $repeateloptions['wp_url']['type']    = PARAM_TEXT;
+        $repeateloptions['wp_token']['type']  = PARAM_TEXT;
+        $repeateloptions['wp_remove']['type'] = PARAM_TEXT;
 
         /*
         * Name of each field.

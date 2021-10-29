@@ -132,8 +132,4 @@ class edwiserbridge_service_form extends moodleform
             .'</a></div>'
         );
     }
-
-    public function validation($data, $files) {
-        return array();
-    }
 }

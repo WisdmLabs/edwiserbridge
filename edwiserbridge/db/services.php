@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$functions = array(
+/*$functions = array(
     'eb_test_connection' => array(
             'classname'     => 'local_edwiserbridge_external',
             'methodname'    => 'eb_test_connection',
@@ -99,3 +99,68 @@ $functions = array(
             'capabilities'  => 'local/edwiserbridge:view',
     )
 );
+*/
+
+
+$functions = array(
+    'eb_create_service' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_create_service',
+            'description'   => 'Create web service',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_get_course_progress' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_get_course_progress',
+            'description'   => 'Get course wise progress',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_test_connection' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_test_connection',
+            'description'   => 'Course completion status of the user with the given user id',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_get_site_data' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_get_site_data',
+            'description'   => 'Get site wise synchronization settings',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_get_users' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_get_users',
+            'description'   => 'Get Users',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_link_service' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_link_service',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_get_service_info' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_get_service_info',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+    ),
+    'eb_get_edwiser_plugins_info' => array(
+            'classname'     => 'local_edwiserbridge\external\api',
+            'methodname'    => 'eb_get_edwiser_plugins_info',
+            'description'   => 'Link web service',
+            'type'          => 'read',
+            'ajax'          => true,
+    )
+);
+
+
+
+

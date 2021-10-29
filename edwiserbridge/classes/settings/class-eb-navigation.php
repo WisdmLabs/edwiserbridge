@@ -33,10 +33,9 @@ class edwiserbridge_navigation_form extends moodleform
 
         $currenttab = optional_param('tab', '', PARAM_TEXT);
 
-        $summarystatus = eb_get_summary_status();
+        $summarystatus = 'eb-tabs eb_summary_tab summary_tab_' . eb_get_summary_status();
 
-        $summary = 'summary' === $currenttab ? 'active-tab eb-tabs eb_summary_tab summary_tab_'
-        . $summarystatus : 'eb-tabs eb_summary_tab  summary_tab_' . $summarystatus;
+        $summary = 'summary' === $currenttab ? 'active-tab' . $summarystatus : $summarystatus;
 
         $tabs = array(
         array(
@@ -85,9 +84,5 @@ class edwiserbridge_navigation_form extends moodleform
             <?php
         }
         return ob_get_clean();
-    }
-
-    public function validation( $data, $files ) {
-        return array();
     }
 }
