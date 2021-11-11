@@ -31,7 +31,7 @@ use external_single_structure;
 use external_value;
 use core_completion\progress;
 
-// require_once($CFG->libdir.'/externallib.php');
+require_once($CFG->dirroot.'/local/edwiserbridge/classes/class-settings-handler.php');
 
 /**
  * Trait implementing the external function format_remuiformat_course_progress_data
@@ -45,7 +45,7 @@ trait eb_create_service {
      * @return boolean
      */
     public static function eb_create_service($webservicename, $userid) {
-        $settingshandler = new eb_settings_handler();
+        $settingshandler = new \eb_settings_handler();
         $response = $settingshandler->eb_create_externle_service($webservicename, $userid);
         return $response;
     }

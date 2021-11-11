@@ -31,7 +31,7 @@ use external_single_structure;
 use external_value;
 use core_completion\progress;
 
-// require_once($CFG->libdir.'/externallib.php');
+require_once($CFG->dirroot.'/local/edwiserbridge/classes/class-settings-handler.php');
 
 /**
  * Trait implementing the external function format_remuiformat_course_progress_data
@@ -52,7 +52,7 @@ trait eb_link_service {
         $response['status'] = 0;
         $response['msg']    = get_string('eb_link_err', 'local_edwiserbridge');
 
-        $settingshandler = new eb_settings_handler();
+        $settingshandler = new \eb_settings_handler();
         $result           = $settingshandler->eb_link_exitsing_service($serviceid, $token);
         if ($result) {
             $response['status'] = 1;
