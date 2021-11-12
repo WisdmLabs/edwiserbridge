@@ -237,9 +237,13 @@
     color: red;
 }
 
+.eb_summary_tab{
+    flex-grow: 1;
+}
+
 .summary_tab_sucess {
     cursor: pointer;
-    /* padding: 15px; */
+     padding: 10px; 
     color: white;
     background-color: green;
     opacity: 0.8;
@@ -258,6 +262,7 @@
 
 .summary_tab_sucess:hover {
     background-color: #045904;
+    color: white;
 }
 
 .summary_tab_warning:hover {

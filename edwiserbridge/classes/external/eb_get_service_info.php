@@ -31,7 +31,7 @@ use external_single_structure;
 use external_value;
 use core_completion\progress;
 
-// require_once($CFG->libdir.'/externallib.php');
+require_once($CFG->dirroot.'/local/edwiserbridge/lib.php');
 
 /**
  * Trait implementing the external function format_remuiformat_course_progress_data
@@ -48,7 +48,7 @@ trait eb_get_service_info {
         $response['status'] = 1;
         $response['msg']    = '';
 
-        $count = eb_get_service_info($serviceid);
+        $count = eb_get_service_list($serviceid);
         if ($count) {
             $response['status'] = 0;
             $response['msg'] = $count . get_string('eb_service_info_error', 'local_edwiserbridge');

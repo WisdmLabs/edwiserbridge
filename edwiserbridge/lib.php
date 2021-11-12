@@ -241,11 +241,6 @@ function check_if_request_is_from_wp() {
     $required    = 0;
     $enrollments = optional_param('enrolments', 0, PARAM_INT);
 
-    // var_dump('enrollments :::: ');
-    // var_dump($enrollments);
-    // exit();
-
-    // if (isset($_POST) && isset($_POST["enrolments"])) {
     if ($enrollments && !empty($enrollments)) {
         $required = 1;
     }
@@ -354,7 +349,7 @@ function eb_create_token_field($serviceid, $existingtoken = '') {
  * @param int $serviceid service id.
  * @return string count of not available services.
  */
-function eb_get_service_info($serviceid) {
+function eb_get_service_list($serviceid) {
     global $DB;
     $functions = array(
         array('externalserviceid' => $serviceid, 'functionname' => 'core_user_create_users'),

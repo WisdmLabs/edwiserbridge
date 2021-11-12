@@ -35,28 +35,28 @@ class edwiserbridge_navigation_form extends moodleform
 
         $summarystatus = 'eb-tabs eb_summary_tab summary_tab_' . eb_get_summary_status();
 
-        $summary = 'summary' === $currenttab ? 'active-tab' . $summarystatus : $summarystatus;
+        $summary = 'summary' === $currenttab ? 'active-tab ' . $summarystatus : $summarystatus;
 
         $tabs = array(
         array(
         'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings",
         'label' => get_string( 'tab_mdl_required_settings', 'local_edwiserbridge' ),
-        'css'   => 'settings' === $currenttab ? 'active-tab eb-tabs' : 'eb-tabs',
+        'css'   => 'settings' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
         ),
         array(
         'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=service",
         'label' => get_string( 'tab_service', 'local_edwiserbridge' ),
-        'css'   => 'service' === $currenttab ? 'active-tab eb-tabs' : 'eb-tabs',
+        'css'   => 'service' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
         ),
         array(
         'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=connection",
         'label' => get_string( 'tab_conn', 'local_edwiserbridge' ),
-        'css'   => 'connection' === $currenttab ? 'active-tab eb-tabs' : 'eb-tabs',
+        'css'   => 'connection' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
         ),
         array(
         'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=synchronization",
         'label' => get_string( 'tab_synch', 'local_edwiserbridge' ),
-        'css'   => 'synchronization' === $currenttab ? 'active-tab eb-tabs' : 'eb-tabs',
+        'css'   => 'synchronization' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
         ),
         array(
         'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=summary",
