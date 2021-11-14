@@ -64,7 +64,7 @@ trait eb_test_connection {
         $response   = $apihandler->connect_to_wp_with_args($params["wp_url"], $requestdata);
 
         $status = 0;
-        $msg    = $response["msg"];
+        $msg    = isset($response["msg"]) ? $response["msg"] : '';
 
         if (!$response["error"]) {
             $status = $response["data"]->status;
