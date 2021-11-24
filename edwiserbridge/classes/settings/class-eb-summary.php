@@ -14,19 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * settings mod form
- * @package   local_edwiserbridge
- * @author    Wisdmlabs
+ * Settings mod form
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
 /**
- * Used to create web service.
+ * form shown while adding Edwiser Bridge settings.
  */
-class edwiserbridge_summary_form extends moodleform
-{
+class edwiserbridge_summary_form extends moodleform {
+    /**
+     * Defining summary form.
+     */
     public function definition() {
         global $CFG;
 
@@ -37,7 +42,7 @@ class edwiserbridge_summary_form extends moodleform
         $service       = isset($CFG->ebexistingserviceselect) ? $CFG->ebexistingserviceselect : '';
         $missingcapmsg = '<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003;
         </span>';
-        $url           = $CFG->wwwroot."/admin/webservice/service_users.php?id=$service";
+        $url           = $CFG->wwwroot . "/admin/webservice/service_users.php?id=$service";
         $functionspage = "<a href='$url' target='_blank'>here</a>";
 
         // Check web service user have a capability to use the web service.
@@ -77,25 +82,25 @@ class edwiserbridge_summary_form extends moodleform
                     'expected_value' => 'dynamic',
                     'value'          => 1,
                     'error_msg'      => get_string('sum_error_rest_proctocol', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
+                    'error_link'     => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings"
                 ),
                 'enablewebservices'   => array(
                     'expected_value' => 1,
                     'label'          => get_string('sum_web_services', 'local_edwiserbridge'),
                     'error_msg'      => get_string('sum_error_web_services', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
+                    'error_link'     => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings"
                 ),
                 'passwordpolicy'     => array(
                     'expected_value' => 0,
                     'label'          => get_string('sum_pass_policy', 'local_edwiserbridge'),
                     'error_msg'      => get_string('sum_error_pass_policy', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
+                    'error_link'     => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings"
                 ),
                 'extendedusernamechars' => array(
                     'expected_value' => 1,
                     'label'          => get_string('sum_extended_char', 'local_edwiserbridge'),
                     'error_msg'      => get_string('sum_error_extended_char', 'local_edwiserbridge'),
-                    'error_link'     => $CFG->wwwroot."/local/edwiserbridge/edwiserbridge.php?tab=settings"
+                    'error_link'     => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings"
                 ),
                 'uptodatewebservicefunction' => array(
                     'expected_value' => 'static',
@@ -113,33 +118,33 @@ class edwiserbridge_summary_form extends moodleform
                     'label'          => get_string('mdl_url', 'local_edwiserbridge'),
                     'expected_value' => 'static',
                     'value'          => '<div class="eb_copy_text_wrap" data> <span class="eb_copy_text" title="'
-                    . get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->wwwroot .'</span>'
-                    .' <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') .'</span></div>'
+                        . get_string('click_to_copy', 'local_edwiserbridge') . '">' . $CFG->wwwroot . '</span>'
+                        . ' <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') . '</span></div>'
 
                 ),
                 'service_name' => array(
                     'label'          => get_string('web_service_name', 'local_edwiserbridge'),
                     'expected_value' => 'static',
                     'value'          => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'
-                    . get_string('click_to_copy', 'local_edwiserbridge') .'">'. $servicename .'</span>'
-                    .' <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') .'</span></div>'
+                        . get_string('click_to_copy', 'local_edwiserbridge') . '">' . $servicename . '</span>'
+                        . ' <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') . '</span></div>'
                 ),
                 'token' => array(
                     'label'          => get_string('token', 'local_edwiserbridge'),
                     'expected_value' => 'static',
                     'value'          => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'
-                    . get_string('click_to_copy', 'local_edwiserbridge') .'">'. $token
-                    .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
+                        . get_string('click_to_copy', 'local_edwiserbridge') . '">' . $token
+                        . '</span> <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') . '</span></div>'
                 ),
                 'lang_code' => array(
                     'label'          => get_string('lang_label', 'local_edwiserbridge'),
                     'expected_value' => 'static',
                     'value'         => '<div class="eb_copy_text_wrap"> <span class="eb_copy_text" title="'
-                    . get_string('click_to_copy', 'local_edwiserbridge') .'">'. $CFG->lang
-                    .'</span> <span class="eb_copy_btn">'. get_string('copy', 'local_edwiserbridge') .'</span></div>'
-                    ),
+                        . get_string('click_to_copy', 'local_edwiserbridge') . '">' . $CFG->lang
+                        . '</span> <span class="eb_copy_btn">' . get_string('copy', 'local_edwiserbridge') . '</span></div>'
                 ),
-                'edwiser_bridge_plugin_summary'  => array(
+            ),
+            'edwiser_bridge_plugin_summary'  => array(
                 '' => array(
                     'label'          => '',
                     'expected_value' => 'static',
@@ -167,7 +172,7 @@ class edwiserbridge_summary_form extends moodleform
 
         foreach ($summaryarray as $sectionkey => $section) {
             $html .= '<div class="summary_section"> <div class="summary_section_title">'
-            . get_string($sectionkey, 'local_edwiserbridge') .'</div>';
+                . get_string($sectionkey, 'local_edwiserbridge') . '</div>';
             $html .= '<table class="summary_section_tbl">';
 
             foreach ($section as $key => $value) {
@@ -182,8 +187,8 @@ class edwiserbridge_summary_form extends moodleform
                         $activewebservices = empty($CFG->webserviceprotocols) ? array() : explode(',', $CFG->webserviceprotocols);
                         if (!in_array('rest', $activewebservices)) {
                             $html .= '<td class="sum_status">
-								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link'].'" target="_blank" >'
-                                .get_string('here', 'local_edwiserbridge').'</a> </span>
+								<span class="summ_error"> ' . $value['error_msg'] . '<a href="' . $value['error_link'] . '" target="_blank" >'
+                                . get_string('here', 'local_edwiserbridge') . '</a> </span>
 							</td>';
                             $error = 1;
                         } else {
@@ -199,7 +204,6 @@ class edwiserbridge_summary_form extends moodleform
 							</td>';
                         }
                     }
-
                 } else if (isset($CFG->$key) && $value['expected_value'] == $CFG->$key) {
 
                     $successmsg = 'Disabled';
@@ -209,12 +213,12 @@ class edwiserbridge_summary_form extends moodleform
 
                     $html .= '<td class="sum_status">
 								<span class="summ_success" style="font-weight: bolder; color: #7ad03a; font-size: 22px;">&#10003; </span>
-								<span style="color: #7ad03a;"> '. $successmsg .' </span>
+								<span style="color: #7ad03a;"> ' . $successmsg . ' </span>
 							</td>';
                 } else {
-                    $html .= '<td class="sum_status" id="'.$key.'">
-								<span class="summ_error"> '. $value['error_msg'] .'<a href="'.$value['error_link']
-                                .'" target="_blank" >'.get_string('here', 'local_edwiserbridge').'</a> </span>
+                    $html .= '<td class="sum_status" id="' . $key . '">
+								<span class="summ_error"> ' . $value['error_msg'] . '<a href="' . $value['error_link']
+                        . '" target="_blank" >' . get_string('here', 'local_edwiserbridge') . '</a> </span>
 							</td>';
                     $error = 1;
                 }
@@ -227,23 +231,22 @@ class edwiserbridge_summary_form extends moodleform
         }
 
         $mform->addElement(
-        'html',
-        $html
+            'html',
+            $html
         );
     }
 
     /**
      * get plugin fetch link.
      *
-     * @param string $fetchdata
      * @return string
      */
     private function get_plugin_fetch_link() {
         global $CFG;
-        $url = $CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=summary&fetch_data=true';
+        $url = $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=summary&fetch_data=true';
         return "<a href='{$url}'><i class='fa fa-refresh'></i> "
-        .get_string('mdl_edwiser_bridge_fetch_info', 'local_edwiserbridge')
-        . "</a>";
+            . get_string('mdl_edwiser_bridge_fetch_info', 'local_edwiserbridge')
+            . "</a>";
     }
 
     /**
@@ -273,44 +276,46 @@ class edwiserbridge_summary_form extends moodleform
         }
 
         $fetchdata = optional_param('tab', '', PARAM_RAW);
-
-        // $fetchdata               = (isset($_GET['fetch_data']) && 'true' === $_GET['fetch_data']) ? true : false;
         $fetchdata  = 'true' === $fetchdata ? true : false;
         $remotedata = $this->get_remote_plugins_data($fetchdata);
 
         $versioninfo = array(
-        'edwiserbridge'        => $pluginsdata['edwiserbridge']."<span style='padding-left:1rem;color:limegreen;'>"
-        . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
-        'wdmgroupregistration' => $pluginsdata['wdmgroupregistration']."<span style='padding-left:1rem;color:limegreen;'>"
-        . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
-        'wdmwpmoodle'          => $pluginsdata['wdmwpmoodle']."<span style='padding-left:1rem;color:limegreen;'>"
-        . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
+            'edwiserbridge'        => $pluginsdata['edwiserbridge'] . "<span style='padding-left:1rem;color:limegreen;'>"
+                . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
+            'wdmgroupregistration' => $pluginsdata['wdmgroupregistration'] . "<span style='padding-left:1rem;color:limegreen;'>"
+                . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
+            'wdmwpmoodle'          => $pluginsdata['wdmwpmoodle'] . "<span style='padding-left:1rem;color:limegreen;'>"
+                . get_string('mdl_edwiser_bridge_txt_latest', 'local_edwiserbridge') . " </span>",
         );
 
         if (false !== $remotedata) {
-            if (isset($remotedata->moodle_edwiser_bridge->version) &&
-            version_compare($pluginsdata['edwiserbridge'], $remotedata->moodle_edwiser_bridge->version, "<")
+            if (
+                isset($remotedata->moodle_edwiser_bridge->version) &&
+                version_compare($pluginsdata['edwiserbridge'], $remotedata->moodle_edwiser_bridge->version, "<")
             ) {
                 $versioninfo['edwiserbridge'] = $pluginsdata['edwiserbridge'] . "<span  style='padding-left:1rem;'>("
-                . $remotedata->moodle_edwiser_bridge->version.")<a href='".$remotedata->moodle_edwiser_bridge->url."' title='"
-                . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
-                . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
+                    . $remotedata->moodle_edwiser_bridge->version . ")<a href='"
+                    . $remotedata->moodle_edwiser_bridge->url . "' title='"
+                    . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
+                    . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
-            if (isset($remotedata->moodle_edwiser_bridge_bp->version) &&
-            version_compare($pluginsdata['wdmgroupregistration'], $remotedata->moodle_edwiser_bridge_bp->version, "<")
+            if (
+                isset($remotedata->moodle_edwiser_bridge_bp->version) &&
+                version_compare($pluginsdata['wdmgroupregistration'], $remotedata->moodle_edwiser_bridge_bp->version, "<")
             ) {
-                $versioninfo['wdmgroupregistration'] = $pluginsdata['wdmgroupregistration']. "<span  style='padding-left:1rem;'>("
-                . $remotedata->moodle_edwiser_bridge_bp->version . ")<a href='" . $remotedata->moodle_edwiser_bridge_bp->url
-                . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
-                . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
+                $versioninfo['wdmgroupregistration'] = $pluginsdata['wdmgroupregistration'] . "<span  style='padding-left:1rem;'>("
+                    . $remotedata->moodle_edwiser_bridge_bp->version . ")<a href='" . $remotedata->moodle_edwiser_bridge_bp->url
+                    . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
+                    . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
-            if (isset($remotedata->moodle_edwiser_bridge_sso->version) &&
-            version_compare($pluginsdata['wdmwpmoodle'], $remotedata->moodle_edwiser_bridge_sso->version, "<")
+            if (
+                isset($remotedata->moodle_edwiser_bridge_sso->version) &&
+                version_compare($pluginsdata['wdmwpmoodle'], $remotedata->moodle_edwiser_bridge_sso->version, "<")
             ) {
-                $versioninfo['wdmwpmoodle'] = $pluginsdata['wdmwpmoodle']. "<span  style='padding-left:1rem;'>("
-                . $remotedata->moodle_edwiser_bridge_sso->version.")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url
-                . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
-                . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
+                $versioninfo['wdmwpmoodle'] = $pluginsdata['wdmwpmoodle'] . "<span  style='padding-left:1rem;'>("
+                    . $remotedata->moodle_edwiser_bridge_sso->version . ")<a href='" . $remotedata->moodle_edwiser_bridge_sso->url
+                    . "' title='" . get_string('mdl_edwiser_bridge_txt_download_help', 'local_edwiserbridge') . "'>"
+                    . get_string('mdl_edwiser_bridge_txt_download', 'local_edwiserbridge') . "</a></span>";
             }
         }
         return $versioninfo;
@@ -340,19 +345,19 @@ class edwiserbridge_summary_form extends moodleform
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => "https://edwiser.org/edwiserdemoimporter/bridge-free-plugin-info.json",
-            CURLOPT_TIMEOUT => 100,
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => "https://edwiser.org/edwiserdemoimporter/bridge-free-plugin-info.json",
+                CURLOPT_TIMEOUT => 100,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
             ));
             $output = curl_exec($curl);
             $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             curl_close($curl);
             if (200 === $httpcode) {
                 $data = array(
-                 'time' => time() + (60 * 60 * 24),
-                 'data' => $output,
+                    'time' => time() + (60 * 60 * 24),
+                    'data' => $output,
                 );
                 set_config('edwiserbridge_plugins_versions', json_encode($data), 'local_edwiserbridge');
             }

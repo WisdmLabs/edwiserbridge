@@ -14,27 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * settings mod form
- * @package   local_edwiserbridge
- * @author    Wisdmlabs
+ * Settings mod form
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
-
 /**
- * form shown while adding activity.
+ * form shown while adding Edwiser Bridge settings.
  */
-class edwiserbridge_connection_form extends moodleform
-{
+class edwiserbridge_connection_form extends moodleform {
+
+    /**
+     * Defining connection settings form.
+     */
     public function definition() {
         $defaultvalues = get_connection_settings();
         $mform = $this->_form;
         $repeatarray = array();
 
         $repeatarray[] = $mform->createElement('header', 'wp_header', get_string('wp_site_settings_title', 'local_edwiserbridge')
-        . "<div class ='test'> </div>");
+            . "<div class ='test'> </div>");
 
         $repeatarray[] = $mform->createElement(
             'text',
@@ -115,11 +120,20 @@ class edwiserbridge_connection_form extends moodleform
                 value="' . get_string("save", "local_edwiserbridge") . '">
                 <input type="submit" class="btn btn-primary eb_setting_btn" id="conne_submit_continue" name="conne_submit_continue"
                 value="' . get_string("save_cont", "local_edwiserbridge") . '">
-            </div>');
+            </div>'
+        );
 
         // Fill form with the existing values.
     }
 
+    /**
+     * Defining connection settings form.
+     *
+     * @param object $data formdata.
+     * @param object $files if any files uploaded.
+     *
+     * @return array array of errors.
+     */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
@@ -130,33 +144,34 @@ class edwiserbridge_connection_form extends moodleform
             unset($processeddata["wp_url"][$i]);
 
             if (empty($data["wp_name"][$i])) {
-                $errors['wp_name['.$i.']'] = get_string('required', 'local_edwiserbridge');
+                $errors['wp_name[' . $i . ']'] = get_string('required', 'local_edwiserbridge');
             } else if (in_array($data["wp_name"][$i], $processeddata["wp_name"])) {
                 // Checking if the current name value exitsts in array.
-                $errors['wp_name['.$i.']'] = get_string('sitename-duplicate-value', 'local_edwiserbridge');
+                $errors['wp_name[' . $i . ']'] = get_string('sitename-duplicate-value', 'local_edwiserbridge');
             }
 
             if (empty($data["wp_url"][$i])) {
-                $errors['wp_url['.$i.']'] = get_string('required', 'local_edwiserbridge');
+                $errors['wp_url[' . $i . ']'] = get_string('required', 'local_edwiserbridge');
             } else if (in_array($data["wp_url"][$i], $processeddata["wp_url"])) {
                 // Checking if the current URL value exitsts in array.
-                $errors['wp_url['.$i.']'] = get_string('url-duplicate-value', 'local_edwiserbridge');
+                $errors['wp_url[' . $i . ']'] = get_string('url-duplicate-value', 'local_edwiserbridge');
             }
 
             if (empty($data["wp_token"][$i])) {
-                $errors['wp_token['.$i.']'] = get_string('required', 'local_edwiserbridge');
+                $errors['wp_token[' . $i . ']'] = get_string('required', 'local_edwiserbridge');
             }
 
             // If the site settings is removed then remove the validation errors also.
-            if (isset($errors['wp_name['.$i.']']) &&
-            isset($errors['wp_url['.$i.']']) &&
-            isset($errors['wp_token['.$i.']']) &&
-            isset($data['wp_remove'][$i]) &&
-            'yes' == $data['wp_remove'][$i]
+            if (
+                isset($errors['wp_name[' . $i . ']']) &&
+                isset($errors['wp_url[' . $i . ']']) &&
+                isset($errors['wp_token[' . $i . ']']) &&
+                isset($data['wp_remove'][$i]) &&
+                'yes' == $data['wp_remove'][$i]
             ) {
-                unset($errors['wp_name['.$i.']']);
-                unset($errors['wp_url['.$i.']']);
-                unset($errors['wp_token['.$i.']']);
+                unset($errors['wp_name[' . $i . ']']);
+                unset($errors['wp_url[' . $i . ']']);
+                unset($errors['wp_token[' . $i . ']']);
             }
         }
         return $errors;

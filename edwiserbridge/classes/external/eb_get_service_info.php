@@ -16,13 +16,15 @@
 /**
  * Provides format_remuiformat\external\course_progress_data trait.
  *
- * @package     format_remuiformat
+ * @package     local_edwiserbridge
  * @category    external
- * @copyright   2018 Wisdmlabs
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 namespace local_edwiserbridge\external;
+
 defined('MOODLE_INTERNAL') || die();
 
 use external_function_parameters;
@@ -31,7 +33,7 @@ use external_single_structure;
 use external_value;
 use core_completion\progress;
 
-require_once($CFG->dirroot.'/local/edwiserbridge/lib.php');
+require_once($CFG->dirroot . '/local/edwiserbridge/lib.php');
 
 /**
  * Trait implementing the external function format_remuiformat_course_progress_data

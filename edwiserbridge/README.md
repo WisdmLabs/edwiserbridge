@@ -65,7 +65,6 @@ Refer to this documentation for setup: https://edwiser.org/documentation/edwiser
 * Secured and efficient transfer of information across sites,
 * Course Progress of student synced from Moodle to WordPress in real time.
 
-
 [(Back to top)](#table-of-contents)
 
 # Plugin Version
@@ -135,7 +134,6 @@ Together we could make this solution better for your Moodle.
 1. Download the Moodle edwiserbridge plugin from <a href = "https://edwiser.org/wp-content/uploads/edd/2021/09/edwiserbridge.zip">here</a>.
 2. Now unzip and upload the folder in local directory of Moodle using the FTP application of your choice.
 3. The plugin can then be activated by navigating to the Plugins menu in the dashboard.
-
 
  = Moodle Configuration =
 Take a look at the link below and follow the steps provided to configure your Moodle website.

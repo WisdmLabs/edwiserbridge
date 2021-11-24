@@ -16,13 +16,15 @@
 /**
  * Provides format_remuiformat\external\course_progress_data trait.
  *
- * @package     format_remuiformat
+ * @package     local_edwiserbridge
  * @category    external
- * @copyright   2018 Wisdmlabs
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 namespace local_edwiserbridge\external;
+
 defined('MOODLE_INTERNAL') || die();
 
 use external_function_parameters;
@@ -38,7 +40,6 @@ use core_completion\progress;
  */
 trait eb_get_users {
 
-
     /**
      * functionality to get users in chunk.
      * @param  int $offset offset
@@ -51,8 +52,8 @@ trait eb_get_users {
         global $DB;
 
         $params = self::validate_parameters(
-        self::eb_get_users_parameters(),
-        array('offset' => $offset, "limit" => $limit, "search_string" => $searchstring, "total_users" => $totalusers)
+            self::eb_get_users_parameters(),
+            array('offset' => $offset, "limit" => $limit, "search_string" => $searchstring, "total_users" => $totalusers)
         );
 
         $query = "SELECT id, username, firstname, lastname, email FROM {user} WHERE
@@ -136,8 +137,4 @@ trait eb_get_users {
             )
         );
     }
-
-
-
-
 }

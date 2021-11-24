@@ -14,9 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * settings mod form
- * @package   local_edwiserbridge
- * @author    Wisdmlabs
+ * Settings mod form
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -30,8 +33,11 @@ require_once(dirname(__FILE__) . '/classes/settings/class-eb-synchronization-set
 /**
  * Used to create web service.
  */
-class edwiserbridge_settings_form extends moodleform
-{
+class edwiserbridge_settings_form extends moodleform {
+
+    /**
+     * Form definition.
+     */
     public function definition() {
         global $CFG;
         $mform         = $this->_form;
@@ -71,8 +77,10 @@ class edwiserbridge_settings_form extends moodleform
         $mform->addElement(
             'advcheckbox',
             'extended_username',
-            get_string('extended_char_username_cb',
-            'local_edwiserbridge'),
+            get_string(
+                'extended_char_username_cb',
+                'local_edwiserbridge'
+            ),
             get_string("extended_char_username_cb_desc", "local_edwiserbridge"),
             array('group' => 1),
             array(0, 1)
@@ -87,18 +95,25 @@ class edwiserbridge_settings_form extends moodleform
         }
 
         $mform->addElement(
-        'html',
-        '<div class="eb_connection_btns">
+            'html',
+            '<div class="eb_connection_btns">
 				<input type="submit" class="btn btn-primary eb_setting_btn" id="settings_submit"
-                name="settings_submit" value="'.get_string("save", "local_edwiserbridge").'">
+                name="settings_submit" value="' . get_string("save", "local_edwiserbridge") . '">
 				<input type="submit" class="btn btn-primary eb_setting_btn" id="settings_submit_continue"
-                name="settings_submit_continue" value="'.get_string("save_cont", "local_edwiserbridge").'">
+                name="settings_submit_continue" value="' . get_string("save_cont", "local_edwiserbridge") . '">
 			</div>'
         );
     }
 
+    /**
+     * Validate form data.
+     *
+     * @param array $data  Submitted data
+     * @param array $files Submitted files
+     *
+     * @return void
+     */
     public function validation($data, $files) {
         return array();
     }
 }
-

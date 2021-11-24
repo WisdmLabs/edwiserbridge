@@ -16,24 +16,23 @@
 /**
  * Provides format_remuiformat\external\api class.
  *
- * @package     format_remuiformat
- * @category    external
- * @copyright   2018 Wisdmlabs
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 namespace local_edwiserbridge\external;
+
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/externallib.php');
+require_once($CFG->libdir . '/externallib.php');
 
 use external_api;
-
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
 
 /**
  * Provides an external API of the block.

@@ -16,13 +16,15 @@
 /**
  * Provides format_remuiformat\external\course_progress_data trait.
  *
- * @package     format_remuiformat
+ * @package     local_edwiserbridge
  * @category    external
- * @copyright   2018 Wisdmlabs
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 namespace local_edwiserbridge\external;
+
 defined('MOODLE_INTERNAL') || die();
 
 use external_function_parameters;
@@ -45,8 +47,8 @@ trait eb_get_site_data {
      */
     public static function eb_get_site_data($siteindex) {
         $params = self::validate_parameters(
-        self::eb_get_site_data_parameters(),
-        array('site_index' => $siteindex)
+            self::eb_get_site_data_parameters(),
+            array('site_index' => $siteindex)
         );
         return get_synch_settings($params['site_index']);
     }

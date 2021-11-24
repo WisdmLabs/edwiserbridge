@@ -17,24 +17,36 @@
  * Edwiser Bridge - WordPress and Moodle integration.
  * This file is responsible for WordPress connection related functionality.
  *
- * @package local_edwiserbridge
- * @copyright  2016 Wisdmlabs
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Handles API requests and response from WordPress.
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class api_handler {
-    // Returns instance of the class if already created.
+
+    /** @var int  Returns instance of the class if already created */
     protected static $instance = null;
 
-    // Creates insce of the class.
+    /**
+     * Creates insce of the class.
+     *
+     * @return object self object.
+     */
     public static function instance() {
         if (is_null(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
     }
-
 
     /**
      * Create external service with the provided name and the user id
@@ -69,7 +81,7 @@ class api_handler {
         if (curl_error($curl)) {
             $errormsg = curl_error($curl);
             curl_close($curl);
-            return array("error" => 1, "msg" => $errormsg );
+            return array("error" => 1, "msg" => $errormsg);
         } else {
             curl_close($curl);
 

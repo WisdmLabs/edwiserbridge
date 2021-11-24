@@ -15,14 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   local_edwiserbridge
- * @copyright 2019, Wisdmlabs <support@wisdmlabs.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Plugin version file.
+ *
+ * Edwiser Bridge - WordPress and Moodle integration.
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021091200;    // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2021111200;    // The current plugin version (Date: YYYYMMDDXX).
 $plugin->release   = '2.1.2';
 $plugin->requires  = '2016052318'; // Requires this Moodle version (Moodle V3.1.0).
 $plugin->maturity  = MATURITY_STABLE;

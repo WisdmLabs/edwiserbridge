@@ -17,15 +17,14 @@
 /**
  * Plugin administration pages are defined here.
  *
- * @package     local_privatefilemanager
- * @category    admin
- * @copyright   2018 Abhishek Karadbhuje <abhishek.karadbhuje@wisdmlabs.com>
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once(dirname(__FILE__).'/lib.php');
-
+require_once(dirname(__FILE__) . '/lib.php');
 
 global $CFG, $PAGE;
 
@@ -70,13 +69,12 @@ $settings->add(
     new admin_setting_heading(
         'local_edwiserbridge/eb_settings_msg',
         '',
-        '<div class="eb_settings_btn_cont" style="padding:20px;">'.get_string('eb_settings_msg', 'local_edwiserbridge')
-        . '<a target="_blank" class="eb_settings_btn" style="padding: 7px 18px; border-radius: 4px; color: white;
-        background-color: #2578dd; margin-left: 5px;" href="'.$CFG->wwwroot.'/local/edwiserbridge/edwiserbridge.php?tab=service'
-        .'" >' . get_string('click_here', 'local_edwiserbridge') . '</a></div>'
+        '<div class="eb_settings_btn_cont" style="padding:20px;">' . get_string('eb_settings_msg', 'local_edwiserbridge')
+            . '<a target="_blank" class="eb_settings_btn" style="padding: 7px 18px; border-radius: 4px; color: white;
+        background-color: #2578dd; margin-left: 5px;" href="' . $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=service'
+            . '" >' . get_string('click_here', 'local_edwiserbridge') . '</a></div>'
     )
 );
-
 
 // Adding this field so that the setting page will be shown after installation.
 $settings->add(

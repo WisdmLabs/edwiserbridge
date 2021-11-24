@@ -14,19 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * settings mod form
- * @package   local_edwiserbridge
- * @author    Wisdmlabs
+ * Settings mod form
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
 /**
- * form shown while adding activity.
+ * form shown while adding Edwiser Bridge settings.
  */
-class edwiserbridge_navigation_form extends moodleform
-{
+class edwiserbridge_navigation_form extends moodleform {
+
+    /**
+     * Defining Navigation form.
+     */
     public function definition() {
         global $CFG;
         $mform = $this->_form;
@@ -38,34 +44,34 @@ class edwiserbridge_navigation_form extends moodleform
         $summary = 'summary' === $currenttab ? 'active-tab ' . $summarystatus : $summarystatus;
 
         $tabs = array(
-        array(
-        'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings",
-        'label' => get_string( 'tab_mdl_required_settings', 'local_edwiserbridge' ),
-        'css'   => 'settings' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
-        ),
-        array(
-        'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=service",
-        'label' => get_string( 'tab_service', 'local_edwiserbridge' ),
-        'css'   => 'service' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
-        ),
-        array(
-        'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=connection",
-        'label' => get_string( 'tab_conn', 'local_edwiserbridge' ),
-        'css'   => 'connection' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
-        ),
-        array(
-        'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=synchronization",
-        'label' => get_string( 'tab_synch', 'local_edwiserbridge' ),
-        'css'   => 'synchronization' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
-        ),
-        array(
-        'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=summary",
-        'label' => get_string( 'summary', 'local_edwiserbridge' ),
-        'css'   => $summary,
-        ),
+            array(
+                'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=settings",
+                'label' => get_string('tab_mdl_required_settings', 'local_edwiserbridge'),
+                'css'   => 'settings' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
+            ),
+            array(
+                'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=service",
+                'label' => get_string('tab_service', 'local_edwiserbridge'),
+                'css'   => 'service' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
+            ),
+            array(
+                'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=connection",
+                'label' => get_string('tab_conn', 'local_edwiserbridge'),
+                'css'   => 'connection' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
+            ),
+            array(
+                'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=synchronization",
+                'label' => get_string('tab_synch', 'local_edwiserbridge'),
+                'css'   => 'synchronization' === $currenttab ? 'active-tab eb-tabs ' : 'eb-tabs',
+            ),
+            array(
+                'link'  => $CFG->wwwroot . "/local/edwiserbridge/edwiserbridge.php?tab=summary",
+                'label' => get_string('summary', 'local_edwiserbridge'),
+                'css'   => $summary,
+            ),
         );
 
-        $mform->addElement( 'html', '<div class="eb-tabs-cont">' . $this->print_tabs( $tabs ) . '</div>' );
+        $mform->addElement('html', '<div class="eb-tabs-cont">' . $this->print_tabs($tabs) . '</div>');
     }
 
     /**
@@ -74,12 +80,12 @@ class edwiserbridge_navigation_form extends moodleform
      *
      * @param array $tabs an array of settings array.
      */
-    private function print_tabs( $tabs ) {
+    private function print_tabs($tabs) {
         ob_start();
         foreach ($tabs as $tab) {
-         ?>
+            ?>
             <a href="<?php echo $tab['link']; ?>" class="<?php echo $tab['css']; ?>">
-            <?php echo $tab['label']; ?>
+                <?php echo $tab['label']; ?>
             </a>
             <?php
         }

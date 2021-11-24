@@ -14,19 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * settings mod form
- * @package   local_edwiserbridge
- * @author    Wisdmlabs
+ * Settings mod form
+ *
+ * @package     local_edwiserbridge
+ * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author      Wisdmlabs
  */
 
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
 /**
- * form shown while adding activity.
+ * form shown while adding Edwiser Bridge settings.
  */
-class edwiserbridge_synchronization_form extends moodleform
-{
+class edwiserbridge_synchronization_form extends moodleform {
+    
+    /**
+     * Defining synchronization form.
+     */
     public function definition() {
         $mform         = $this->_form;
         $sites         = get_site_list();
@@ -133,6 +139,5 @@ class edwiserbridge_synchronization_form extends moodleform
                 name="sync_submit_continue" value="' . get_string("save_cont", "local_edwiserbridge") . '">
 			</div>'
         );
-
     }
 }
