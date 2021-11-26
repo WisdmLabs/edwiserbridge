@@ -233,7 +233,7 @@ $string['enabled'] = 'Enabled';
 $string['disabled'] = 'Disabled';
 
 $string['mdl_url'] = 'Moodle URL';
-$string['wp_test_connection_failed'] = 'or Wordpress permalink is not postname. Also, check if you have any firewall or security plugin, If yes  Whitelist Moodle URL and IP. If this does not fix then connect with your Hosting providers.';
+$string['wp_test_connection_failed'] = 'Server rewrite rules are not enabled or Wordpress permalink is not postname. Also, check if you have any firewall or security plugin, If yes  Whitelist Moodle URL and IP. If this does not fix then connect with your Hosting providers.';
 /**************/
 
 /*****************************  ADDED FOR SETTINGS PAGE   *****************************/

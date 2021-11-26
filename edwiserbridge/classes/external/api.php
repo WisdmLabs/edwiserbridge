@@ -30,10 +30,6 @@ require_once($CFG->libdir . '/externallib.php');
 
 use external_api;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 /**
  * Provides an external API of the block.
  *

@@ -69,11 +69,13 @@ trait eb_test_connection {
         $msg    = isset($response["msg"]) ? $response["msg"] : '';
 
         if (!$response["error"]) {
-            $status = $response["data"]->status;
-            $msg = $response["data"]->msg;
-            if (!$status) {
+            $msg = isset($response["data"]->msg) ? $response["data"]->msg : get_string('wp_test_connection_failed', 'local_edwiserbridge') ;
+
+            if (!isset($response["data"]->status) || !$response["data"]->status) {
+                $status = isset($response["data"]->status) ? $response["data"]->status : 0;
                 $msg = $response["data"]->msg . get_string('wp_test_connection_failed', 'local_edwiserbridge');
             }
+            $status = $response["data"]->status;
         }
 
         return array("status" => $status, "msg" => $msg);
