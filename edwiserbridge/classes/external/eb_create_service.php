@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Provides format_remuiformat\external\course_progress_data trait.
+ * Provides local_edwiserbridge\external\course_progress_data trait.
  *
  * @package     local_edwiserbridge
  * @category    external
@@ -36,7 +36,7 @@ use core_completion\progress;
 require_once($CFG->dirroot . '/local/edwiserbridge/classes/class-settings-handler.php');
 
 /**
- * Trait implementing the external function format_remuiformat_course_progress_data
+ * Trait implementing the external function local_edwiserbridge_course_progress_data
  */
 trait eb_create_service {
 

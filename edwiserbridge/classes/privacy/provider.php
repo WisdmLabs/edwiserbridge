@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for theme_remui.
+ * Privacy Subsystem implementation for local_edwiserbridge.
  *
  * @package     local_edwiserbridge
  * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
@@ -34,7 +34,7 @@ use core_privacy\local\request\userlist;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The remui theme stores a user preference data.
+ * The edwiserbridge plugin stores a user preference data.
  *
  * @copyright  2018 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

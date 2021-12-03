@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Provides format_remuiformat\external\api class.
+ * Provides local_edwiserbridge\external\api class.
  *
  * @package     local_edwiserbridge
  * @copyright   2021 WisdmLabs (https://wisdmlabs.com/) <support@wisdmlabs.com>
