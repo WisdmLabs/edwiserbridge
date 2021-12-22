@@ -68,14 +68,49 @@ trait eb_test_connection {
         $status = 0;
         $msg    = isset($response["msg"]) ? $response["msg"] : '';
 
-        if (!$response["error"]) {
-            $msg = isset($response["data"]->msg) ? $response["data"]->msg : get_string('wp_test_connection_failed', 'local_edwiserbridge') ;
-
-            if (!isset($response["data"]->status) || !$response["data"]->status) {
-                $status = isset($response["data"]->status) ? $response["data"]->status : 0;
+        if (!$response["error"] && isset($response["data"]->msg) && isset($response["data"]->status)) {
+            $status = $response["data"]->status;
+            $msg = $response["data"]->msg;
+            if (!$status) {
                 $msg = $response["data"]->msg . get_string('wp_test_connection_failed', 'local_edwiserbridge');
             }
-            $status = $response["data"]->status;
+        } else {
+            /**
+             * Test connection error messages.
+             * 1. Wrong token don't show detailed message.
+             * 2. Redirection or other isues will show detailed error message.
+             */
+            $server_msg = isset( $response["data"]->msg ) ? $response["data"]->msg : '';
+
+            $msg = '<div>
+                        <div class="eb_connection_short_msg">
+                            Test Connection failed, To check more information about issue click <span class="eb_test_connection_log_open"> here </span>.
+                        </div>
+                        <div class="eb_test_connection_log">
+                            <div class="eb_connection_err_response">
+                                <h4> An issue was detected. </h4>
+                                <div>Status : Connection  Failed </div>
+                                <div>Url : '. $params['wp_url'] .'/wp-json/edwiser-bridge/wisdmlabs/ </div>
+                                <div>Response : '. $msg .'</div>
+                            </div>
+
+                            <div class="eb_connection_err_recommended_sec">
+                                <h4>Recommended next steps:</h4>
+                                <div> 
+                                    Note: Please perform all steps in incognito or in browser where user is not logged in WordPress
+                                </div>
+                                <div>
+                                    <ol>
+                                        <li> Check if web services are enabled properly and showing response on <i> wordpress_url/wp-json </i>. </li>
+                                        <li> Check if WordPress permalinks are set to Post Name. </li>
+                                        <li> Check if web services are showing response on <b> wordpress_url/index.php/wp-json </b>, if yes then please enable server redirect rules <a href="https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04"> here </a> you can find detailed information. </li>
+                                        <li> Deactivate security plugins one by one and test web services response on <b> wordpress_url/wp-json </b></li>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
         }
 
         return array("status" => $status, "msg" => $msg);

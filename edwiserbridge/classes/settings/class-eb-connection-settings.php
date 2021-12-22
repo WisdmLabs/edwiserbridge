@@ -39,7 +39,7 @@ class edwiserbridge_connection_form extends moodleform {
         $repeatarray = array();
 
         $repeatarray[] = $mform->createElement('header', 'wp_header', get_string('wp_site_settings_title', 'local_edwiserbridge')
-            . "<div class ='test'> </div>");
+        . "<div class ='eb_each_site_container'> </div>");
 
         $repeatarray[] = $mform->createElement(
             'text',
@@ -64,9 +64,10 @@ class edwiserbridge_connection_form extends moodleform {
             'eb_remove_site',
             get_string("wp_test_remove_site", "local_edwiserbridge")
         );
-        $buttonarray[] = $mform->createElement('html', '<div id="eb_test_conne_response"> </div>');
 
+        $buttonarray[] = $mform->createElement('html', '<div id="eb_test_conne_response_old"> </div>');
         $repeatarray[] = $mform->createElement("group", "eb_buttons", "", $buttonarray);
+        $repeatarray[] = $mform->createElement('html', '<div id="eb_test_conne_response"> </div>');
 
         /*
         * Data type of each field.

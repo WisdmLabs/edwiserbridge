@@ -60,23 +60,70 @@
     padding-bottom: 30px;
 }
 
+.eb_test_connection_log_open, .eb_test_connection_log_close{
+    cursor: pointer;
+    color: #0f6fc5;
+    text-decoration: underline;
+}
+
+
+.eb_connection_short_msg{
+    color: red;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.eb_test_connection_log{
+    display: none;
+    border: 1px solid #d6d6d6;
+    padding: 10px 10px 10px 20px;
+    background: #fafafa;
+}
+
+.eb_connection_err_response{
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.eb_connection_err_response h4, .eb_connection_err_recommended_sec h4{
+    font-weight: 400;
+}
+
+.eb_connection_err_response div{
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.eb_connection_err_recommended_sec{
+    padding-top: 10px;
+}
+
+.eb_connection_err_recommended_sec div{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 6px;
+}
+
+.eb_connection_err_recommended_sec ol li{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
 .eb-error-msg {
-    margin: 5px;
-    background: #ff00001a;
-    box-shadow: 1px 0px 2px #ff000021;
+    /*box-shadow: 1px 0px 2px #ff000021;
     border-radius: 0px;
     border: 1px solid #ff000036;
     border-left: 3px solid red;
-    /* display: none; */
     margin-bottom: 0px;
     margin-left: 10px;
+    margin: 5px;
+    color: grey;*/
     padding: 5px 5px 5px 10px;
-    color: grey;
 }
 
 .eb-success-msg {
     margin: 5px;
-    background: #00800030;
+    /*background: #00800030;*/
     box-shadow: 1px 0px 2px #00800052;
     border-radius: 0px;
     border: 1px solid #0080003d;
@@ -168,8 +215,7 @@
     height: 100%;
     vertical-align: middle;
 }
-
-.eb_service_pop_up>div {
+.eb_service_pop_up > div {
     background-color: #fff;
     box-shadow: 10px 10px 60px #555;
     display: inline-block;

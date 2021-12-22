@@ -148,14 +148,28 @@ $functions = array(
     'eb_get_service_info' => array(
         'classname'     => 'local_edwiserbridge\external\api',
         'methodname'    => 'eb_get_service_info',
-        'description'   => 'Link web service',
+        'description'   => 'Get service information',
         'type'          => 'read',
         'ajax'          => true,
     ),
     'eb_get_edwiser_plugins_info' => array(
         'classname'     => 'local_edwiserbridge\external\api',
         'methodname'    => 'eb_get_edwiser_plugins_info',
-        'description'   => 'Link web service',
+        'description'   => 'Get plugins information',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
+    'edwiserbridge_local_get_course_enrollment_method' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'edwiserbridge_local_get_course_enrollment_method',
+        'description'   => 'Get course enrollment methods',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
+    'edwiserbridge_local_update_course_enrollment_method' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'edwiserbridge_local_update_course_enrollment_method',
+        'description'   => 'Update course enrollment method',
         'type'          => 'read',
         'ajax'          => true,
     )
