@@ -55,22 +55,22 @@ define(['jquery', 'core/ajax', 'core/url', 'core/str'], function($, ajax, url) {
                     parent = parent.parent();
 
                     //display none the error div.
-                    parent.find("#eb_test_conne_response").css("display", "none");
+                    parent.find("#eb_test_conne_response_old").css("display", "none");
 
                     var promises = ajax.call([
                         { methodname: 'eb_test_connection', args: { wp_url: url, wp_token: token } }
                     ]);
 
                     promises[0].done(function(response) {
-                        parent.find("#eb_test_conne_response").html(response.msg);
-                        parent.find("#eb_test_conne_response").css("display", "block");
+                        parent.find("#eb_test_conne_response_old").html(response.msg);
+                        parent.find("#eb_test_conne_response_old").css("display", "block");
 
                         if (response.status == 1) {
-                            parent.find("#eb_test_conne_response").addClass("eb-success-msg");
-                            parent.find("#eb_test_conne_response").removeClass("eb-error-msg");
+                            parent.find("#eb_test_conne_response_old").addClass("eb-success-msg");
+                            parent.find("#eb_test_conne_response_old").removeClass("eb-error-msg");
                         } else {
-                            parent.find("#eb_test_conne_response").removeClass("eb-success-msg");
-                            parent.find("#eb_test_conne_response").addClass("eb-error-msg");
+                            parent.find("#eb_test_conne_response_old").removeClass("eb-success-msg");
+                            parent.find("#eb_test_conne_response_old").addClass("eb-error-msg");
                         }
                         $(document.body).css({ 'cursor': 'default' });
                     }).fail(function(ex) {

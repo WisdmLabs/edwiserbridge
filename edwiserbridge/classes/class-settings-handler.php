@@ -176,6 +176,8 @@ class eb_settings_handler {
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_site_data'),
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_course_progress'),
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_edwiser_plugins_info'),
+            array('externalserviceid' => $serviceid, 'functionname' => 'edwiserbridge_local_get_course_enrollment_method'),
+            array('externalserviceid' => $serviceid, 'functionname' => 'edwiserbridge_local_update_course_enrollment_method'),
         );
 
         foreach ($functions as $function) {

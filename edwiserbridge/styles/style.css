@@ -15,6 +15,11 @@
 }
 
 
+.eb_admin_templ_dismiss_notice_message {
+      text-align: right;
+      width: 15%;
+      font-weight: 700;
+   }
 /*#admin-ebnewserviceinp, #admin-ebnewserviceuserselect, #eb_service_form .eb_service_field{
     display: none;
 }

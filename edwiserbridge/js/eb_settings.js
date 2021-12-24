@@ -50,7 +50,20 @@ define("local_edwiserbridge/eb_settings", [
                 console.log(results);
             });*/
 
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+            $(document).on('click', '.eb_test_connection_log_open', function (event) {
+                $('.eb_test_connection_log_open').addClass('eb_test_connection_log_close');
+                $('.eb_test_connection_log_close').removeClass('eb_test_connection_log_open');
+                $(".eb_test_connection_log").slideDown();
+            });
+
+            $(document).on('click', '.eb_test_connection_log_close', function (event) {
+                $('.eb_test_connection_log_close').addClass('eb_test_connection_log_open');
+                $('.eb_test_connection_log_open').removeClass('eb_test_connection_log_close');
+                $(".eb_test_connection_log").slideUp();
+            });
+
             function checkMissingServices(service_id, messge_ele = false) {
                 var promises = ajax.call([{
                     methodname: "eb_get_service_info",
