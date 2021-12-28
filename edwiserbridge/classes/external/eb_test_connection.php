@@ -80,7 +80,7 @@ trait eb_test_connection {
              * 1. Wrong token don't show detailed message.
              * 2. Redirection or other isues will show detailed error message.
              */
-            $server_msg = isset( $response["data"]->msg ) ? $response["data"]->msg : '';
+            $server_msg = isset( $response["data"]->msg ) ? $response["data"]->msg : 'Please check WordPress Site configuration.';
 
             $msg = '<div>
                         <div class="eb_connection_short_msg">
@@ -93,7 +93,7 @@ trait eb_test_connection {
                                     <h4> An issue was detected. </h4>
                                     <div>Status : Connection  Failed </div>
                                     <div>Url : '. $params['wp_url'] .'/wp-json/edwiser-bridge/wisdmlabs/ </div>
-                                    <div>Response : '. $msg .'</div>
+                                    <div>Response : '. $server_msg .'</div>
                                 </div>
 				<div class="eb_admin_templ_dismiss_notice_message">
                                     <span class="eb_test_connection_log_close " style="color:red;"> X </span> 
