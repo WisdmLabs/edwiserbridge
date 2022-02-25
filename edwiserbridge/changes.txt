@@ -35,3 +35,7 @@ Tweak
 Version 2.1.3
 Feature
 * Added functionality to update password through user preference option.
+
+Version 2.1.5
+Feature
+* Added functionality to enable Manual Enrollment method for course when it is disabled.
