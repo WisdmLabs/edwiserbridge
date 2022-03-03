@@ -65,6 +65,16 @@ trait edwiserbridge_local_update_course_enrollment_method {
             // $course = $DB->get_record('course', ['id' => $cm->course]);
             $course = $DB->get_record('course', ['id' => $singlecourseid]);
             $status = $enrolinstance->add_instance($course);
+
+            $instance = enrol_get_instances($course->id, false);
+            //get manual enrolment instance id.
+            //other plugin instances are also available
+            foreach ($instance as $instances) { //CHANGE YET TO COMMIT
+                if($instances->enrol == 'manual'){
+                    $instanceid = $instances->id;
+                }
+            }
+            $enrolinstance->update_status($instance[$instanceid], ENROL_INSTANCE_ENABLED);
             
             $response[] = array(
                 'courseid' => $singlecourseid,
