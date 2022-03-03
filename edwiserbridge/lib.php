@@ -228,8 +228,12 @@ function remove_processed_coures($courseid, $courses) {
 function check_if_request_is_from_wp() {
     $required    = 0;
     $enrollments = optional_param('enrolments', 0, PARAM_INT);
+    $cohort = optional_param('cohort', 0, PARAM_INT);
 
     if ($enrollments && !empty($enrollments)) {
+        $required = 1;
+    }
+    if ($cohort && !empty($cohort)) {
         $required = 1;
     }
     return $required;
