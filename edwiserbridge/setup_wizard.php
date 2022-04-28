@@ -25,7 +25,11 @@
 
 require('../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
-require_once('mod_form.php');
+// require_once('mod_form.php');
+
+require_once('classes/class-setup-wizard.php');
+
+
 
 global $CFG, $COURSE, $PAGE;
 
@@ -66,7 +70,7 @@ $mform = array(
     )
 );
 
-$mformnavigation = new edwiserbridge_navigation_form();
+// $mformnavigation = new edwiserbridge_navigation_form();
 
 /*
  * Necessary page requirements.
@@ -79,46 +83,81 @@ $PAGE->set_context($context);
 $PAGE->set_url('/local/edwiserbridge/edwiserbridge.php?tab=settings');
 
 $PAGE->set_title(get_string('eb-setting-page-title', 'local_edwiserbridge'));
+
+
 $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
+$PAGE->requires->css('/local/edwiserbridge/styles/setup-wizard.css');
+$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_setup_wizard.js'));
+
+
+
 $PAGE->requires->js_call_amd("local_edwiserbridge/edwiser_bridge", "init");
+
 
 echo $OUTPUT->header();
 echo $OUTPUT->container_start();
 
+$setupwizard = new eb_setup_wizard();
+
+
+
+$setupwizard->setup_wizard_header();
+
+?>
+<div class="eb-setup-content-area">
+
+    <div class="eb-setup-sidebar">
+
+        <?php
+
+        $setupwizard->eb_setup_steps_html();
+
+        ?>
+
+    </div>
+
+
+
+    <div class="eb-setup-content <?php echo $content_class; ?>">
+        <?php
+
+        $setupwizard->eb_setup_free_installtion_guide( 0 );
+
+        ?>
+    </div>
+
+</div>
+
+
+
+<?php
+
+
+
+// Content.
+
+
+
+
+
+
+
+$setupwizard->setup_wizard_footer();
+
+
+
+
+
 /*
  * Navigation form
  */
-$mformnavigation->display();
-
-/*
-* Functionality to display tab wise forms
-*/
-$pageurl = $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=';
+// $mformnavigation->display();
 
 
-foreach ($mform as $key => $mformdata) {
-    // Create object.
-    $objectname = 'edwiserbridge_' . $key . '_form';
-    $object     = new $objectname($pageurl . $key, null, 'post', '', array("id" => $mformdata['id']), true, null);
 
-    if ($formdata = $object->get_data()) {
-        // In this case you process validated data. $mform->get_data() returns data posted in form.
 
-        // Calling the save function for each tabn if present.
-        $functionname = 'save_' . $key . '_form_settings';
 
-        if (function_exists($functionname)) {
-            $functionname($formdata);
-        }
-    }
 
-    $tab = optional_param('tab', '', PARAM_TEXT);
-
-    // Display connection form  for the first time.
-    if ($tab == $key) {
-        $object->display();
-    }
-}
 
 echo $OUTPUT->container_end();
 echo $OUTPUT->footer();

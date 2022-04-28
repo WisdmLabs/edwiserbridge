@@ -26,81 +26,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/*$functions = array(
-    'eb_test_connection' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_test_connection',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Course completion status of the user with the given user id',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_get_site_data' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_get_site_data',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Get site wise synchronization settings',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_get_course_progress' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_get_course_progress',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Get course wise progress',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_get_users' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_get_users',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Get Users',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_create_service' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_create_service',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Create web service',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_link_service' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_link_service',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Link web service',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_get_service_info' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_get_service_info',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Link web service',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    ),
-    'eb_get_edwiser_plugins_info' => array(
-            'classname'     => 'local_edwiserbridge_external',
-            'methodname'    => 'eb_get_edwiser_plugins_info',
-            'classpath'     => 'local/edwiserbridge/externallib.php',
-            'description'   => 'Link web service',
-            'type'          => 'read',
-            'ajax'          => true,
-            'capabilities'  => 'local/edwiserbridge:view',
-    )
-);
-*/
 
 $functions = array(
     'eb_create_service' => array(
@@ -172,5 +97,14 @@ $functions = array(
         'description'   => 'Update course enrollment method',
         'type'          => 'read',
         'ajax'          => true,
-    )
+    ),
+    // Setup Wizard
+    'edwiserbridge_local_setup_wizard_save_and_continue' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'edwiserbridge_local_setup_wizard_save_and_continue',
+        'description'   => 'Setup wizard save and continue functionality',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
+
 );

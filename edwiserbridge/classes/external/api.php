@@ -47,4 +47,7 @@ class api extends external_api {
     use eb_test_connection;
     use edwiserbridge_local_get_course_enrollment_method;
     use edwiserbridge_local_update_course_enrollment_method;
+    /* Setup wizard services */
+
+
 }
