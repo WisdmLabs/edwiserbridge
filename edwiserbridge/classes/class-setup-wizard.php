@@ -105,7 +105,6 @@ class eb_setup_wizard {
 
     public function eb_setup_steps_save_handler(){
         
-        error_log(' eb_setup_wizard_template POST :::: '.print_r($_POST, 1));
 
     }
 
@@ -126,39 +125,34 @@ class eb_setup_wizard {
 
         $steps = array(
             
-            'installtion_guide' => array(
+            'installation_guide' => array(
                 'name'    => 'Edwiser Bridge FREE plugin installation guide',
-                'view'    => array( $this, 'eb_setup_free_installtion_guide' ),
-                'function'    => 'eb_setup_free_installtion_guide',
-
-                'sidebar' => 1,
-                'handler' => array( $this, 'eb_setup_free_installtion_guide_save' ),
+                'function'    => 'eb_setup_installation_guide',
             ),
             'mdl_plugin_config' => array(
                 'name'    => 'Edwiser Bridge Moodle Plugin configuration',
-                'sidebar' => 1,
-                'view'    => array( $this, 'eb_setup_test_connection' ),
-                'function'    => 'eb_setup_test_connection',
-
-                'handler' => array( $this, 'eb_setup_' ),
+                'function'    => 'eb_setup_plugin_configuration',
             ),
             'web_service' => array(
-                'sidebar' => 1,
                 'name'    => 'Setting up Web service',
-                'view'    => array( $this, 'eb_setup_course_sync' ),
-                'function'    => 'eb_setup_course_sync',
-
-                'handler' => array( $this, 'eb_setup_' ),
+                'function'    => 'eb_setup_web_service',
+            ),
+            'wordpress_site_details' => array(
+                'name'     => 'Setting up Web service',
+                'function' => 'eb_setup_wordpress_site_details',
+            ),
+            'check_permalink' => array(
+                'name'     => 'Setting up Web service',
+                'function' => 'eb_setup_check_permalink',
             ),
             'user_and_course_sync' => array(
-                'sidebar' => 1,
                 'name'    => 'Setting up User and course sync',
-                'view'    => array( $this, 'eb_setup_user_sync' ),
-                'function'    => 'eb_setup_user_sync',
-
-                'handler' => array( $this, 'eb_setup_recommended_save' ),
+                'function'    => 'eb_setup_user_and_course_sync',
             ),
-
+            'complete_details' => array(
+                'name'     => 'Setting up Web service',
+                'function' => 'eb_setup_complete_details',
+            )
         );
 
 
@@ -233,15 +227,10 @@ class eb_setup_wizard {
         $content_class = "";
 
 
-error_log('eb_setup_wizard_template :::: '.print_r($_POST, 1));
-
 
         if ( ! empty( $_POST['eb_setup_free_initialize'] ) ) {
 
 
-error_log('eb_setup_wizard_template  1111 :::: ');
-
-            
             // save set up data.
             get_option( 'eb_setup_data' );
             $chosen_setup = '';
@@ -249,31 +238,19 @@ error_log('eb_setup_wizard_template  1111 :::: ');
             
             if ( isset( $_POST['eb_free_setup'] ) ) {
 
-
-error_log('eb_setup_wizard_template  2222 :::: ');
-
-
                 $chosen_setup = 'free';
             } elseif ( isset( $_POST['eb_pro_setup'] ) ) {
-
-
-error_log('eb_setup_wizard_template  3333 :::: ');
 
 
                 $chosen_setup = 'pro';
             } elseif ( isset( $_POST['eb_free_and_pro'] ) ) {
 
 
-error_log('eb_setup_wizard_template  4444 :::: ');
-
 
                 $chosen_setup = 'both';
             }
 
             $setup_array = array( 'name' => $chosen_setup );
-
-error_log('eb_setup_wizard_template 222 UPDATING :::: '.print_r($setup_array, 1));
-
 
             update_option( 'eb_setup_data', $setup_array );
             $step = 'installation';
@@ -364,10 +341,10 @@ error_log('eb_setup_wizard_template 222 UPDATING :::: '.print_r($setup_array, 1)
         <!DOCTYPE html>
         <html >
         <head>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
             <meta name="viewport" content="width=device-width" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title><?php  ?></title>
-
 
         </head>
 
@@ -383,13 +360,11 @@ error_log('eb_setup_wizard_template 222 UPDATING :::: '.print_r($setup_array, 1)
             </div>
 
             <div class="eb-setup-header-title-wrap">
-
                 <div class="eb-setup-header-title">
 
 Title
                 
                 </div>
-
             </div>
         
         </header>
@@ -423,34 +398,59 @@ Title
     }
 
 
+    public function get_next_step( $current_step ) {
+
+        $steps = $this->eb_setup_wizard_get_steps();
+        $step = '';
+        $found_step = 0;
+        foreach ($steps as $key => $value) {
+
+            if ( $found_step ) { 
+                $step = $key;
+                break;
+            }
+
+            if ( $current_step == $key ) {
+                $found_step = 1;
+            }
+
+        }
+
+
+        return $step;
+    }
 
 
 
 
-    public function eb_setup_free_installtion_guide( $ajax = 1 ) {
+    public function eb_setup_installation_guide( $ajax = 1 ) {
 
         if ( $ajax ) {
             ob_start();
         }
+        $step = 'installation_guide';
+        $is_next_sub_step  = 0;
 
+
+        $next_step = $this->get_next_step( $step );
         ?>
         <div class="eb_setup_installation_guide">
             <div>
-                <span> <?php echo get_string( 'setup_installation_note1', 'local_edwiserbridge' ); ?> </span>
+                <p class="eb_setup_p"> <?php echo get_string( 'setup_installation_note1', 'local_edwiserbridge' ); ?> </p>
 
-                <div>
+                <div class="eb_setup_p_wrap">
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'modulename', 'local_edwiserbridge') . ' ' . get_string( 'setup_free', 'local_edwiserbridge') . ' ' . get_string( 'setup_wp_plugin', 'local_edwiserbridge' ); ?> <p>
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'modulename', 'local_edwiserbridge') . ' ' . get_string( 'setup_free', 'local_edwiserbridge') . ' ' . get_string( 'setup_wp_plugin', 'local_edwiserbridge' ); ?> </p>
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'modulename', 'local_edwiserbridge') . ' ' . get_string( 'setup_free', 'local_edwiserbridge' ) . ' ' . get_string( 'setup_mdl_plugin', 'local_edwiserbridge' ); ?> <p>
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'modulename', 'local_edwiserbridge') . ' ' . get_string( 'setup_free', 'local_edwiserbridge' ) . ' ' . get_string( 'setup_mdl_plugin', 'local_edwiserbridge' ); ?> </p>
 
                 </div>
 
 
-                <span> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
+                <p class="eb_setup_p"> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </p>
 
                 <div class="eb_setup_btn_wrap">
-                    <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                    <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>'> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                 </div>
 
             </div>
@@ -462,11 +462,11 @@ Title
                     <div class="panel">
 
                         <div>
-                            <button class="eb_setup_sec_btn"> <?php echo get_string( 'setup_download_plugin', 'local_edwiserbridge' ); ?> </button>
+                            <button class="eb_setup_sec_btn"> <?php echo get_string( 'mdl_edwiser_bridge_txt_download', 'local_edwiserbridge' ); ?> </button>
                         </div>
 
                         <p>
-                            <span> <?php echo get_string( 'setup_faq_steps', 'local_edwiserbridge' ); ?> </span>
+                            <p> <?php echo get_string( 'setup_faq_steps', 'local_edwiserbridge' ); ?> </p>
 
                             <ul>
                                 <li> <?php echo get_string( 'setup_faq_step1', 'local_edwiserbridge' ); ?></li>
@@ -486,9 +486,8 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
+             
         }
 
 
@@ -505,25 +504,39 @@ Title
             ob_start();
         }
 
+        $step = 'mdl_plugin_config';
+        $is_next_sub_step  = 0;
+
+
+        $next_step = $this->get_next_step( $step );
+
+
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_plugin_configuration">
             <div>
-                <span> <?php echo get_string( 'setup_mdl_plugin_note1', 'local_edwiserbridge' ); ?> </span>
+                <p> <?php echo get_string( 'setup_mdl_plugin_note1', 'local_edwiserbridge' ); ?> </p>
 
-                <div>
+                <div class="eb_plugin_configuration_checks">
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> </p>
+                    <p class="eb_setup_h3"> <i class="fa-solid fa-circle-check eb_enable_rest_protocol"></i><?php echo get_string( 'no_1', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?> <i class="fa-solid fa-circle-exclamation"></i> </p>
+
+                    <p class="eb_setup_h3"> <i class="fa-solid fa-circle-check eb_enable_web_service"></i> <?php echo get_string( 'no_2', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?> <i class="fa-solid fa-circle-exclamation"></i> </p>
+
+                    <p class="eb_setup_h3"> <i class="fa-solid fa-circle-check eb_disable_pwd_policy"></i> <?php echo get_string( 'no_3', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?> <i class="fa-solid fa-circle-exclamation"></i> </p>
+
+                    <p class="eb_setup_h3"> <i class="fa-solid fa-circle-check eb_allow_extended_char"></i> <?php echo get_string( 'no_4', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> <i class="fa-solid fa-circle-exclamation"></i> </p>
 
                 </div>
 
-
-                <span> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
-
                 <div class="eb_setup_btn_wrap">
-                    <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                    <span class="eb_enable_plugin_settings_label"> <?php echo get_string( 'setup_mdl_plugin_note2', 'local_edwiserbridge' ); ?> </span>
+
+                    <button class="eb_setup_btn eb_enable_plugin_settings" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_enble_settings', 'local_edwiserbridge' ); ?> </button>
+
+                    <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+
+                    <div class="eb_setup_settings_success_msg"> <i class="fa-solid fa-circle-check"></i> <?php echo get_string( 'setup_mdl_settings_success_msg', 'local_edwiserbridge' ); ?> </div>
+
                 </div>
 
             </div>
@@ -533,11 +546,8 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
         }
-
 
     }
 
@@ -556,36 +566,61 @@ Title
             ob_start();
         }
 
+        $step = 'web_service';
+        $is_next_sub_step  = 1;
+
+        $next_step = $this->get_next_step( $step );
+
+        $existingservices = eb_get_existing_services();
+
+
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_setup_web_service">
             <div>
-                <span> <?php echo get_string( 'setup_web_service_note1', 'local_edwiserbridge' ); ?> </span>
+                <p> <?php echo get_string( 'setup_web_service_note1', 'local_edwiserbridge' ); ?> </p>
 
-                <div>
+                <div class="eb_setup_p_wrap">
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_web_service_h1', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_web_service_h1', 'local_edwiserbridge'); ?> </p>
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_web_service_h1', 'local_edwiserbridge'); ?> </p>
+
+                    <div class="eb_setup_separator">
+                        <div class="eb_setup_hr"><hr></div>
+                        <div> <span> <?php echo get_string( 'or', 'local_edwiserbridge'); ?> </span> </div>
+                        <div class="eb_setup_hr"><hr></div>
+                    </div>
+
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_web_service_h1', 'local_edwiserbridge'); ?> </p>
 
                 </div>
 
 
-                <span> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
+                <p> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </p>
 
 
                 <div>
 
                     <div class="eb_setup_conn_url_inp_wrap">
                         <p><label class="eb_setup_h2"> <?php echo get_string( 'sum_web_services', 'local_edwiserbridge' ); ?></label></p>
-                        <input class="eb_setup_inp" type="text" >
+
+                        <select name="eb_setup_web_service_list" class="eb_setup_inp eb_setup_web_service_list" >
+                            <?php
+                            foreach ( $existingservices as $key => $value ) {
+                            ?>
+                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+
                     </div>
 
                     <div class="eb_setup_conn_url_inp_wrap">
                         <p><label class="eb_setup_h2"> <?php echo get_string( 'new_service_inp_lbl', 'local_edwiserbridge' ); ?></label></p>
-                        <input class="eb_setup_inp" type="text" >
+                        <input class="eb_setup_inp eb_setup_web_service_name" name="eb_setup_web_service_name" type="text" >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
-                        <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
@@ -597,9 +632,8 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
+            
         }
 
 
@@ -611,40 +645,54 @@ Title
 
 
 
-    public function eb_setup_wordpress_site_details( $ajax = 1 ){
+    public function eb_setup_wordpress_site_details( $ajax = 1 ) {
 
         if ( $ajax ) {
             ob_start();
         }
+        $step     = 'wordpress_site_details';
+        $is_next_sub_step  = 1;
+        $sites         = get_site_list();
+
+        $next_step = $this->get_next_step( $step );
+
 
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_setup_wordpress_site_details">
             <div>
-
-                <span> <?php echo get_string( 'setup_wp_site_note1', 'local_edwiserbridge' ); ?> </span>
-
 
                 <div>
 
                     <div class="eb_setup_conn_url_inp_wrap">
+                        <p> <?php echo get_string( 'setup_wp_site_note1', 'local_edwiserbridge' ); ?> </p>
+        
                         <p><label class="eb_setup_h2"> <?php echo get_string( 'setup_wp_site_dropdown', 'local_edwiserbridge' ); ?></label></p>
-                        <input class="eb_setup_inp" type="text" >
+
+                        <select name="eb_setup_wp_sites" class="eb_setup_inp eb_setup_wp_sites" >
+                            <?php
+                            foreach ( $sites as $key => $value ) {
+                            ?>
+                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
 
-                    <div class="eb_setup_conn_url_inp_wrap">
+                    <div class=" eb_setup_conn_url_inp_wrap">
                         <span> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
 
-                        <p><label class="eb_setup_h2"> <?php echo get_string( 'sum_web_services', 'local_edwiserbridge' ); ?></label></p>
-                        <input class="eb_setup_inp" type="text" >
+                        <p><label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label></p>
+                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" >
                     </div>
 
                     <div class="eb_setup_conn_url_inp_wrap">
-                        <p><label class="eb_setup_h2"> <?php echo get_string( 'new_service_inp_lbl', 'local_edwiserbridge' ); ?></label></p>
-                        <input class="eb_setup_inp" type="text" >
+                        <p><label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label></p>
+                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
-                        <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
@@ -656,9 +704,8 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
+            
         }
 
 
@@ -671,26 +718,30 @@ Title
             ob_start();
         }
 
+        $step      = 'check_permalink';
+        $is_next_sub_step  = 0;
+
+        $next_step = $this->get_next_step( $step );
+
+
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_setup_check_permalink">
             <div>
 
                 <div>
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_permalink_note2', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </p>
+                    <p class=""> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge'); ?> </p>
+                    <p class=""> <?php echo get_string( 'setup_permalink_note2', 'local_edwiserbridge'); ?> </p>
+                    <p class=""> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </p>
 
                 </div>
-
-                <span> <?php echo get_string( 'setup_wp_site_note1', 'local_edwiserbridge' ); ?> </span>
 
 
                 <div>
 
                     <div class="eb_setup_btn_wrap">
                         <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button>
-                        <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'confirmed', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
@@ -702,80 +753,82 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
+            
         }
     }
 
 
 
 
-    public function eb_setup_user_and_course_sync(){
+    public function eb_setup_user_and_course_sync($ajax = 1) {
 
         if ( $ajax ) {
             ob_start();
         }
+        $step     = 'user_and_course_sync';
+        $is_next_sub_step  = 1;
+
+        $next_step = $this->get_next_step( $step );
+
 
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_setup_user_and_course_sync">
             <div>
 
                 <div>
 
-                    <span> <?php echo get_string( 'setup_sync_note1', 'local_edwiserbridge' ); ?> </span>
+                    <p> <?php echo get_string( 'setup_sync_note1', 'local_edwiserbridge' ); ?> </p>
 
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'select_all', 'local_edwiserbridge' ); ?></label>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_all' id='eb_setup_sync_all' >
+                        <label class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?></label>
                     </div>
 
                     <hr>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'user_enrollment', 'local_edwiserbridge' ); ?></label>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'user_enrollment', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'user_unenrollment', 'local_edwiserbridge' ); ?></label>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'user_unenrollment', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'user_creation', 'local_edwiserbridge' ); ?></label>
-                        <hr>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'user_creation', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'user_deletion', 'local_edwiserbridge' ); ?></label>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'user_deletion', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'user_update', 'local_edwiserbridge' ); ?></label>
-                        <hr>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'user_update', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'course_creation', 'local_edwiserbridge' ); ?></label>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'course_creation', 'local_edwiserbridge' ); ?></label>
                     </div>
 
-                    <div class="eb_setup_user_sync_inp_wrap">
-                        <input type="checkbox" >
-                        <label> <?php get_string( 'course_deletion', 'local_edwiserbridge' ); ?></label>
-                        <hr>
+                    <div class="eb_setup_inp_wrap">
+                        <input type="checkbox" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'>
+                        <label class="eb_setup_h2"> <?php echo get_string( 'course_deletion', 'local_edwiserbridge' ); ?></label>
                     </div>
 
 
                     <div class="eb_setup_btn_wrap">
+
                         <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button>
                         <button class="eb_setup_sec_btn"> <?php echo get_string( 'skip', 'local_edwiserbridge' ); ?> </button>
-                        <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
@@ -787,71 +840,76 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();            
         }
 
     }
 
 
 
-        public function eb_setup_complete( $ajax = 1 ){
+    public function eb_setup_complete_details( $ajax = 1 ) {
+        global $CFG;
+
         if ( $ajax ) {
             ob_start();
         }
+        $step      = 'complete_details';
+        $is_next_sub_step  = 0;
+
+        $next_step = $this->get_next_step( $step );
+        $sitename =  $CFG->eb_setup_wp_site_name;
+
+        $connectionsettings = get_connection_settings();
+        $connectionsettings = $connectionsettings[$sitename];
 
         ?>
-        <div class="eb_setup_installation_guide">
+        <div class="eb_setup_complete_details">
             <div>
 
                 <div>
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?> </p>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_completion_note1', 'local_edwiserbridge'); ?> </p>
+                    <span class='eb_setup_h2' > <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?> </span>
+                    <p class='' > <?php echo get_string( 'setup_completion_note1', 'local_edwiserbridge'); ?> </p>
 
                 </div>
 
 
-                <div>
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_completion_note2', 'local_edwiserbridge'); ?> </p>
+                <div class="eb_setup_complete_card_wrap">
 
-                    <div>
-                        <div>
-                            <p>
-                                <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?>
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note2', 'local_edwiserbridge'); ?> </p>
+
+                    <div class="eb_setup_complete_cards">
+
+                        <div class="eb_setup_complete_card">
+                            <p class="eb_setup_h2">
+                                <?php echo get_string( 'mdl_url', 'local_edwiserbridge'); ?>
                             </p>
-                            <p>
-                                url
-                            </p>
+                            <p> <?php echo $connectionsettings['wp_name'] ?> </p>
                         </div>
 
-                        <div>
-                            <p>
-                                <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?>
+                        <div class="eb_setup_complete_card">
+                            <p class="eb_setup_h2">
+                                <?php echo get_string( 'wp_token', 'local_edwiserbridge'); ?>
                             </p>
-                            <p>
-                                token
-                            </p>
+                            <p> <?php echo $connectionsettings['wp_token'] ?> </p>
+
                         </div>
 
-                        <div>
-                            <p>
-                                <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?>
+                        <div class="eb_setup_complete_card">
+                            <p class="eb_setup_h2">
+                                <?php echo get_string( 'eb_mform_lang_desc', 'local_edwiserbridge'); ?>
                             </p>
-                            <p>
-                                en
-                            </p>
+
+                            <p> <?php echo $CFG->lang; ?> </p>
+
                         </div>
 
                     </div>
 
 
+                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note3', 'local_edwiserbridge'); ?> </p>
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_completion_note3', 'local_edwiserbridge'); ?> </p>
-
-                    <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button>
-
+                    <button class="eb_setup_sec_btn"> <?php echo get_string( 'mdl_edwiser_bridge_txt_download', 'local_edwiserbridge' ); ?> </button>
 
                 </div>
 
@@ -859,10 +917,10 @@ Title
 
                 <div>
 
-                    <p class="eb_setup_h2"> <span class="dashicons dashicons-arrow-right-alt2"></span> <?php echo get_string( 'setup_completion_note4', 'local_edwiserbridge'); ?> </p>
+                    <p class=""> <?php echo get_string( 'setup_completion_note4', 'local_edwiserbridge'); ?> </p>
                         
                     <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button>
-                    <button class="eb_setup_btn eb_setup_save_and_continue"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                    <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
 
                 </div>
 
@@ -873,9 +931,8 @@ Title
         <?php
 
         if ( $ajax ) {
-            $html = ob_get_clean();
-            $return = array('content' => $html);
-            wp_send_json_success($return);
+            return ob_get_clean();
+            
         }
     }
 

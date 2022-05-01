@@ -21,13 +21,15 @@
  * @author      Wisdmlabs
  */
 "use strict";
-define("local_edwiserbridge/eb_settings", [
+define("local_edwiserbridge/eb_setup_wizard", [
     "jquery",
     "core/ajax",
     "core/url",
     "core/str",
 ], function($, ajax, url, str) {
-	function load_settings() {
+	return {
+        init: function($params) {
+	// function load_settings() {
         // var translation = str.get_strings([
         //     { key: "dailog_title", component: "local_edwiserbridge" },
         //     { key: "site_url", component: "local_edwiserbridge" },
@@ -258,13 +260,11 @@ console.log( data );
 
             promises[0].done(function(response) {
                 $("body").css("cursor", "default");
-                if (response.status) {
-                    $(common_success_fld).text(response.msg);
-                    $(common_success_fld).css("display", "block");
-                } else {
-                    $(common_errr_fld).text(response.msg);
-                    $(common_success_fld).css("display", "block");
-                }
+                
+
+                $('.eb-setup-content').html(response.html);
+
+
 
                 return response;
             }).fail(function(response) {
@@ -289,7 +289,7 @@ console.log( data );
             // Clicking save continue
         // 
         // 
-        $('.eb_setup_save_and_continue').click(function(){
+        $('.eb_setup_save_and').click(function(){
 
             // Create loader.
             var current = $(this);
@@ -427,23 +427,16 @@ console.log( data );
 
 
 
-
-
-
-
-
-
-
-
-
-
     });
     
 
-	}
-    return { init: load_settings };
-});
+	// }
+ //    return { init: load_settings };
 
+        }
+    };
+
+});
 
 
 

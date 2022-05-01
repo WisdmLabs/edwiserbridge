@@ -614,11 +614,247 @@ define("local_edwiserbridge/eb_settings", [
 
 
 
-            /******************       *****************/
+        /******************    SETUP wizard   *****************/
 
 
 
 
+            // ajax xall to save data and get new tab at the same time.
+        
+            // Clicking save continue
+            // 
+            // 
+            $(document).on('click', '.eb_setup_save_and_continue', function (event) {
+
+                // Create loader.
+                var current = $(this);
+                var current_step = $(this).data('step');
+                var next_step = $(this).data('next-step');
+                var is_next_sub_step = $(this).data('is-next-sub-step');
+
+console.log(current_step);
+
+
+                // get current step.
+                // get next step.
+                // get data which will be saved.
+
+                // Creating swicth case.
+                
+                var data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+                switch ( current_step ) {
+                    case 'installtion_guide':
+                        // Get required data and create array
+    console.log('FIRST ');
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+                        break;
+
+                    case 'mdl_plugin_config':
+                        
+    console.log('SECOND ');
+
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+                        
+                        break;
+                
+                    case 'web_service':
+                        // Course sync process.
+                        // Call course sync callback and after completing the process, call this callback.
+
+    console.log('THIRD ');
+                        var service_name = $('.eb_setup_web_service_list').val();
+                        var existing_service = 1;
+
+                        if ( service_name != 'create' || service_name != '' ) {
+                            service_name = $('.eb_setup_web_service_name').val();
+                            existing_service = 0;
+
+                        }
+
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
+
+                        break;
+
+
+                    case 'wordpress_site_details':
+                        // Course sync process.
+                        // Call course sync callback and after completing the process, call this callback.
+
+    console.log('THIRD ');
+
+                        
+                        var site_name = $('.eb_setup_wp_sites').val();
+                        var url       = '';
+                        var existing_site = 1;
+
+
+                        if ( service_name != 'create' || service_name != '' ) {
+                            site_name = $('.eb_setup_site_name').val();
+                            url       = $('.eb_setup_site_url').val();
+                            existing_site = 0;
+
+                        }
+
+
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, site_name : site_name, url : url /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
+
+                        break;
+
+
+
+                    case 'user_and_course_sync':
+
+console.log('4th');
+                        var user_enrollment   = $('#eb_setup_sync_user_enrollment').val();
+                        var user_unenrollment = $('#eb_setup_sync_user_unenrollment').val();
+                        var user_creation = $('#eb_setup_sync_user_creation').val();
+                        var user_deletion = $('#eb_setup_sync_user_deletion').val();
+                        var user_update = $('#eb_setup_sync_user_update').val();
+                        var course_creation = $('#eb_setup_sync_course_creation').val();
+                        var course_deletion = $('.eb_setup_sync_course_deletion').val();
+
+
+                        // If user checkbox is clicked start user sync otherwise just procedd to next screen.
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, user_enrollment: user_enrollment, user_unenrollment: user_unenrollment, user_creation: user_creation, user_deletion: user_deletion, user_update: user_update, course_creation: course_creation, course_deletion: course_deletion };
+
+                        break;
+
+
+                    default:
+
+console.log('DEFAULT ::: ');
+
+                        break;
+                }
+
+
+
+
+            // $.ajax({
+            //     method: "post",
+            //     url: eb_setup_wizard.ajax_url,
+            //     dataType: "json",
+            //     data: {
+            //         // 'step': 'eb_setup_save_and_continue',
+            //         // 'action': 'eb_setup_' + step,
+            //         'data': data,
+            //         // '_wpnonce_field': eb_admin_js_object.nonce,
+            //     },
+            //     success: function (response) {
+
+            //         //prepare response for user
+            //         if (response.success == 1) {
+            //             $('.eb-setup-content').html(response.data.content);
+
+            //         } else {
+    
+            //         }
+            //     }
+            // });
+
+
+console.log(data);
+            
+            data = JSON.stringify(data);
+
+
+
+
+
+                var promises = ajax.call([{
+                    methodname: "edwiserbridge_local_setup_wizard_save_and_continue",
+                    args: { data : data },
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("body").css("cursor", "default");
+
+                    $('.eb-setup-content').html(response.html_data);
+
+                    return response;
+                }).fail(function(response) {
+                    $("body").css("cursor", "default");
+                    return 0;
+                }); //promise end
+
+
+
+
+            });
+
+
+
+            /*
+            * Ajax call to enable settings. 
+            */
+            $(document).on('click', '.eb_enable_plugin_settings', function (event) {
+                // start loader
+
+console.log('CLICKED ::: ');
+
+                var promises = ajax.call([{
+                    methodname: 'edwiserbridge_local_enable_plugin_settings',
+                    args: {},
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("body").css("cursor", "default");
+
+                    // stop loader.
+
+                    // change icon colors
+                    $('.eb_enable_rest_protocol').css( 'color', '#1AB900' );
+                    $('.eb_enable_web_service').css( 'color', '#1AB900' );
+                    $('.eb_disable_pwd_policy').css( 'color', '#1AB900' );
+                    $('.eb_allow_extended_char').css( 'color', '#1AB900' );
+
+                    // show success message.
+                    $('.eb_setup_settings_success_msg').css( 'display', 'block' );
+
+
+                    // Hide current button and show save and continue button
+                    $('.eb_enable_plugin_settings').css( 'display', 'none' );
+                    $('.eb_enable_plugin_settings_label').css( 'display', 'none' );
+                    $('.eb_setup_save_and_continue').css( 'display', 'initial' );
+
+                    return response;
+                }).fail(function(response) {
+                    $("body").css("cursor", "default");
+                    return 0;
+                }); //promise end
+
+
+            });
+
+
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                /* Toggle between adding and removing the "active" class,
+                to highlight the button that controls the panel */
+                this.classList.toggle("active");
+
+                /* Toggle between hiding and showing the active panel */
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                  panel.style.display = "none";
+                } else {
+                  panel.style.display = "block";
+                }
+              });
+            }
+
+
+
+
+
+
+            /***************************/
 
 
 

@@ -106,5 +106,12 @@ $functions = array(
         'type'          => 'read',
         'ajax'          => true,
     ),
+    'edwiserbridge_local_enable_plugin_settings' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'edwiserbridge_local_enable_plugin_settings',
+        'description'   => 'Enables default plugin settings.',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
 
 );

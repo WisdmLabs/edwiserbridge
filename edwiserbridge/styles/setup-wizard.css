@@ -244,34 +244,43 @@
     text-align: center;
     color: #FFFFFF;
     cursor: pointer;
+    margin: 10px;
 }
 
 .eb_setup_btn:hover{
     background: #133F3F;
-    /* identical to box height */
 }
 
-.eb_setup_h2{
-    padding-left: 10px;
+.eb_setup_h2, .eb_setup_h3{
+    /*padding-left: 10px;*/
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 26px;
-    /* identical to box height, or 162% */
-
     color: #666666;
 }
 
-.eb_setup_h2 span{
-    font-size: 12px;
+.eb_setup_h2 i{
+    font-size: 16px;
     line-height: 20px;
-    background: #00A1A8;
-    color: white;
+    /* background: #00A1A8; */
+    color: #00A1A8;
     padding: 0px;
     border-radius: 100%;
     margin: auto;
-
 }
+
+.eb_setup_h3 i{
+    font-size: 16px;
+    line-height: 20px;
+    /* background: #00A1A8; */
+    color: #E5E5E5;
+
+    padding: 0px;
+    border-radius: 100%;
+    margin: auto;
+}
+
 
 .eb_setup_sec_btn{
     padding: 10px 25px;
@@ -341,9 +350,19 @@
 }
 
 
-.eb_setup_conn_url_inp_wrap{
+.eb_setup_conn_url_inp_wrap, .eb_setup_user_and_course_sync {
     /* text-align: center; */
     width: 50%;
+    text-align: left;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.eb_setup_user_and_course_sync{
+    width: 45%;
+}
+
+.eb_setup_inp_wrap{
     text-align: left;
     margin: auto;
     padding-top: 10px;
@@ -368,6 +387,7 @@
 
 .eb_setup_separator{
     display: flex;
+    padding-bottom: 20px; 
 }
 
 .eb_setup_hr{
@@ -672,3 +692,75 @@ cursor: pointer;
   }
 
 /* --------------- */
+
+
+
+.eb_plugin_configuration_checks{
+    width: 50%;
+    margin: auto;
+}
+
+
+.eb_setup_web_service, .eb_plugin_configuration, .eb_plugin_configuration, .eb_setup_check_permalink, .eb_setup_complete_details{
+    padding: 50px 40px;
+}
+
+
+.eb_setup_complete_cards{
+    display: flex;
+    padding: 20px;
+}
+
+.eb_setup_complete_card{
+    width: 30%;
+    margin-right: 10px;
+    padding: 10px;
+    /* border: 1px solid grey; */
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 12px rgb(0 0 0 / 18%);
+    border-radius: 4px;
+}
+
+
+.eb_setup_complete_card_wrap{
+    /*padding: 10px;*/
+    margin: 40px 10px;
+}
+
+.eb_setup_p_wrap{
+    padding-left: 20px
+}
+
+.eb_setup_settings_success_msg{
+    width: 60%;
+    margin: auto;
+    background: linear-gradient(0deg, rgba(26, 185, 0, 0.1), rgba(26, 185, 0, 0.1)), #FFFFFF;
+    border: 1px solid rgba(26, 185, 0, 0.3);
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: linear-gradient(0deg, rgba(26, 185, 0, 0.1), rgba(26, 185, 0, 0.1)), linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #1AB900;
+    flex: none;
+    /* order: 1; */
+    /* flex-grow: 0; */
+    font-style: italic;
+    /* margin: 0px 5px; */
+    padding: 5px 10px;
+    display: none;
+}
+
+
+
+
+
+/*****  Css to Hide elements temporarily   ****/
+
+.eb_plugin_configuration .eb_setup_save_and_continue{
+    display: none;
+}
+

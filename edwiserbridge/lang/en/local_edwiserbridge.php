@@ -271,10 +271,6 @@ $string['eb_no_sites'] = "--- No Sites Available ---";
 
 
 
-
-
-
-
 /* ----------
 Setup wizard strings.
 --------------*/
@@ -304,12 +300,21 @@ $string['setup_faq_step3'] = 'Upload the Edwiser Bridge FREE Moodle plugin here'
 $string['setup_faq_step4'] = 'We will assist you with the rest of the setup from there 🙂';
 
 
+$string['no_1'] = '1';
+$string['no_2'] = '2';
+$string['no_3'] = '3';
+$string['no_4'] = '4';
+
+
 
 $string['setup_mdl_plugin_note1'] = 'These are mandatory Moodle settings for Edwiser Bridge to work flawlessly on your end.';
+$string['setup_mdl_plugin_note2'] = 'Once you are ready, please click on.';
 $string['setup_mdl_plugin_check1'] = 'Enabling Rest Protocol';
 $string['setup_mdl_plugin_check2'] = 'Enabling Web Service';
 $string['setup_mdl_plugin_check3'] = 'Disable Password Policy';
 $string['setup_mdl_plugin_check4'] = 'Allow extended characters in usernames';
+$string['setup_mdl_settings_success_msg'] = 'The mandatory Moodle settings has been enabled successfully!';
+$string['setup_enble_settings'] = 'Enable the Settings';
 
 
 
@@ -320,15 +325,16 @@ $string['setup_web_service_h1'] = 'Select an existing web service from the dropd
 
 $string['setup_wp_site_note1'] = 'Select the WordPress site that needs to be connected to your Moodle site';
 $string['setup_wp_site_note2'] = 'Add your WordPress website name and URL';
-$string['setup_wp_site_dropdown'] = 'Add your WordPress website name and URL';
+$string['setup_wp_site_dropdown'] = 'The WordPress Site';
 $string['name'] = 'Name';
 $string['url'] = 'URL';
-
 
 
 $string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to ‘Postname’.';
 $string['setup_permalink_note2'] = 'Click on the https://wordpressshop.com/permalink.php link. It will open in a new tab and check the permalink structure.';
 $string['setup_permalink_note3'] = 'Click on “Confirmed” once checked.';
+
+$string['confirmed'] = 'Confirmed';
 $string['back'] = 'Back';
 $string['skip'] = 'Skip';
 
@@ -349,6 +355,10 @@ $string['setup_completion_note1'] = 'You need to add Moodle credentials to Edwis
 $string['setup_completion_note2'] = 'Copy and Save the following moodle credential to add details on Edwiser Bridge FREE WordPress plugin setup ';
 $string['setup_completion_note3'] = 'Alternately, you can download the Edwiser Bridge Moodle ‘Credentials file’ from here. ';
 $string['setup_completion_note4'] = 'Once you have saved the details please continue with the Edwiser Bridge FREE WordPress setup by clicking on “Continue the setup”. ';
-$string['setup_completion_label1'] = 'Moodle URL';
-$string['setup_completion_label1'] = 'Moodle URL';
+
+
+$string['or'] = 'OR';
+
+
+
 

@@ -87,7 +87,8 @@ $PAGE->set_title(get_string('eb-setting-page-title', 'local_edwiserbridge'));
 
 $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
 $PAGE->requires->css('/local/edwiserbridge/styles/setup-wizard.css');
-$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_setup_wizard.js'));
+// $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_setup_wizard.js'));
+// $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 
 
 
@@ -118,10 +119,10 @@ $setupwizard->setup_wizard_header();
 
 
 
-    <div class="eb-setup-content <?php echo $content_class; ?>">
+    <div class="eb-setup-content">
         <?php
 
-        $setupwizard->eb_setup_free_installtion_guide( 0 );
+        $setupwizard->eb_setup_installation_guide( 0 );
 
         ?>
     </div>
