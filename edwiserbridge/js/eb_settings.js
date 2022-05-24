@@ -991,7 +991,8 @@ define("local_edwiserbridge/eb_settings", [
 
 
             // Code to create json file and download it.
-            $(".eb_setup_download_creds").click(function() {
+            // $(".").click(function() {
+            $(document).on("click", ".eb_setup_download_creds", function(event) {
 
                 var obj = {
                     url: $('.eb_setup_copy_url').html(),

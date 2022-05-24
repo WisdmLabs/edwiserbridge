@@ -829,6 +829,7 @@ class eb_setup_wizard {
 
 
     public function eb_setup_user_and_course_sync($ajax = 1) {
+        global $CFG;
 
         if ( $ajax ) {
             ob_start();
@@ -938,17 +939,14 @@ class eb_setup_wizard {
         $next_step = $this->get_next_step( $step );
         $sitename =  $CFG->eb_setup_wp_site_name;
 
-        // $connectionsettings = get_connection_settings();
-        // $connectionsettings = $connectionsettings[$sitename];
-
         $sites = get_connection_settings();
         $sites = $sites['eb_connection_settings'];
 
 
-        $url   = '';
+        $url   = $CFG->wwwroot;
         $token = '';
         if (isset($sites[$sitename])) {
-            $url   = $sites[$sitename]['wp_url'];
+            // $url   = $sites[$sitename]['wp_url'];
             $token = $sites[$sitename]['wp_token'];
         }
 
