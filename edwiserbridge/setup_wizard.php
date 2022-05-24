@@ -23,15 +23,41 @@
  * @author      Wisdmlabs
  */
 
+
+
 require('../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 // require_once('mod_form.php');
-
 require_once('classes/class-setup-wizard.php');
-
-
+require_once(dirname(__FILE__) . '/lib.php');
 
 global $CFG, $COURSE, $PAGE;
+
+
+if ( isset( $_POST['eb_setup_completed'] ) ) {
+
+    $sitename =  $CFG->eb_setup_wp_site_name;
+
+    $sites = get_connection_settings();
+    $sites = $sites['eb_connection_settings'];
+
+    $url   = '';
+    if (isset($sites[$sitename])) {
+        $url   = $sites[$sitename]['wp_url'];
+    }
+
+    if(substr($url , -1)=='/') {
+        redirect( $url . 'wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
+    } else {
+        redirect( $url . '/wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
+    }
+
+    // redirect('http://localhost/wp/wp-admin/admin.php?page=eb-setup-wizard');
+    die();
+    // header($url . '/wp-admin/admin.php?page=eb-setup-wizard');
+}
+
+
 
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
@@ -44,38 +70,18 @@ $stringmanager = get_string_manager();
 $strings = $stringmanager->load_component_strings('local_edwiserbridge', 'en');
 $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 
+
+
 // Require Login.
 require_login();
 $context = context_system::instance();
 $baseurl = $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=connection';
 
-/*
-* Creating array of the objects which will be created.
-*/
-$mform = array(
-    'service' => array(
-        'id'  => 'eb_service_form'
-    ),
-    'connection' => array(
-        'id'  => 'eb_connection_form'
-    ),
-    'synchronization' => array(
-        'id'  => 'eb_synch_form'
-    ),
-    'settings' => array(
-        'id'  => 'eb_settings_form'
-    ),
-    'summary' => array(
-        'id'  => 'eb_summary_form'
-    )
-);
 
-// $mformnavigation = new edwiserbridge_navigation_form();
 
 /*
  * Necessary page requirements.
  */
-// $PAGE->set_pagelayout('admin');
 
 $PAGE->set_pagelayout("popup");
 
@@ -87,13 +93,17 @@ $PAGE->set_title(get_string('eb-setting-page-title', 'local_edwiserbridge'));
 
 $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
 $PAGE->requires->css('/local/edwiserbridge/styles/setup-wizard.css');
+$PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
+
 // $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_setup_wizard.js'));
-// $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
+// $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 
 
 
-$PAGE->requires->js_call_amd("local_edwiserbridge/edwiser_bridge", "init");
+// $PAGE->requires->js_call_amd("local_edwiserbridge/edwiser_bridge", "init");
 
+
+/*----------*/
 
 echo $OUTPUT->header();
 echo $OUTPUT->container_start();
@@ -101,64 +111,34 @@ echo $OUTPUT->container_start();
 $setupwizard = new eb_setup_wizard();
 
 
-
-$setupwizard->setup_wizard_header();
+/*$setupwizard->setup_wizard_header();
 
 ?>
 <div class="eb-setup-content-area">
-
     <div class="eb-setup-sidebar">
-
         <?php
-
         $setupwizard->eb_setup_steps_html();
-
         ?>
-
     </div>
-
-
 
     <div class="eb-setup-content">
         <?php
-
         $setupwizard->eb_setup_installation_guide( 0 );
-
         ?>
     </div>
-
 </div>
 
-
-
 <?php
+$setupwizard->setup_wizard_footer();*/
 
 
-
-// Content.
-
-
-
-
-
-
-
-$setupwizard->setup_wizard_footer();
-
-
-
-
-
-/*
- * Navigation form
- */
-// $mformnavigation->display();
-
-
-
-
-
+$setupwizard->eb_setup_wizard_template();
 
 
 echo $OUTPUT->container_end();
 echo $OUTPUT->footer();
+
+
+
+
+

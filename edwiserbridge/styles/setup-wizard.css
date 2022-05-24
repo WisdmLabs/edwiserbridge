@@ -11,34 +11,76 @@
     background: #F7F7F7;
     overflow-x: hidden;
     padding-top: 10px;
-    /* padding-left: 30px; */
+}
+
+
+.eb_setup_check_permalink a{
+    color: #f98012;
+}
+
+.eb_setup_h3 .eb-tooltip{
+    color: #f98012;
+}
+
+/* Tooltip */
+.eb-tooltip {
+    position: relative;
+    display: inline-block;
+    line-height: unset;
+    font-size: 15px;
+    color: #f98012;
+    cursor: pointer;
 }
   
+.eb-tooltip .eb-tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-family: serif;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 11px;
+    color: #FFF;
+    padding: 0.5em;
+    background: none repeat scroll 0% 0% #3C3C3C;
+    border-radius: 3px;
+    text-align: center;
+    max-width: 200px;
+    line-height: normal;
+}
+  
+.eb-tooltip:hover .eb-tooltiptext {
+    visibility: visible;
+}
+
 
 
 .eb-setup-content{
-    /* padding: 5% 10%; */
-
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
-    /* identical to box height */
-
     color: #444444;
-
     width: 73%;
     margin-left: 27%;
     top: 90px;
-    padding-top: 50px;
-    /*position: relative;*/
+    padding-top: 45px;
 }
 
 .eb-setup-content.eb_setup_full_width{
     margin-left: 0 ;
     width: 100%;
 }
-
+/*****/
   
 .eb-setup-header-logo{
     background: #F7F7F7;
@@ -251,7 +293,7 @@
     background: #133F3F;
 }
 
-.eb_setup_h2, .eb_setup_h3{
+.eb_setup_h2{
     /*padding-left: 10px;*/
     font-style: normal;
     font-weight: 700;
@@ -259,6 +301,16 @@
     line-height: 26px;
     color: #666666;
 }
+
+.eb_setup_h3{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #444444;
+}
+
 
 .eb_setup_h2 i{
     font-size: 16px;
@@ -295,7 +347,7 @@
     /* identical to box height */
 
     text-align: center;
-
+    margin-right: 10px;
     color: #F98012;
 
 }
@@ -387,7 +439,7 @@
 
 .eb_setup_separator{
     display: flex;
-    padding-bottom: 20px; 
+    padding-bottom: 5px; 
 }
 
 .eb_setup_hr{
@@ -435,30 +487,72 @@
 
 /* ---- accordion */
 /* Style the buttons that are used to open and close the accordion panel */
+/* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-    background-color: #eee;
+    background-color: #F7F7F7;
     color: #444;
     cursor: pointer;
     padding: 18px;
-    width: 100%;
+    /* width: 100%; */
     text-align: left;
-    border: none;
+    border: 1px solid #E5E5E5;
     outline: none;
     transition: 0.4s;
-  }
-  
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active, .accordion:hover {
-    background-color: #ccc;
-  }
-  
-  /* Style the accordion panel. Note: hidden by default */
-  .panel {
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active {
+    /* background-color: #ccc; */
+    border-bottom: none;
+}
+
+
+.accordion .fa-solid.fa-circle-question{
+    color: #00A1A8;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.accordion i.fa-solid.fa-chevron-down,
+.accordion i.fa-solid.fa-chevron-up {
+    color: #F98012 !important;
+    float: right;
+    font-size: 20px !important;
+    vertical-align: middle;
+    line-height: 32px;
+}
+
+.accordion:hover i.fa-solid.fa-chevron-down,
+.accordion:hover i.fa-solid.fa-chevron-up {
+    /* background: #F98012; */
+    /* color: white !important; */
+}
+.accordion i.fa-solid.fa-chevron-up{
+    display: none;
+}
+
+.accordion.active i.fa-solid.fa-chevron-up {
+    display: block;
+    float: right;
+} 
+.accordion.active i.fa-solid.fa-chevron-down {
+    display: none;
+}
+
+.accordion:hover {
+    /* background-color: #ccc; */
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
     padding: 0 18px;
     background-color: white;
     display: none;
     overflow: hidden;
-  }
+    border: 1px solid #E5E5E5;
+    border-top: none;
+    text-align: left;
+}
 
 
 /* ----- */
@@ -568,11 +662,47 @@
 
 
 
-
-
-
-
 /* ------------- */
+
+
+.eb-loader-progsessing-anim {
+  border: 5px solid #ffffff;
+  border-top: 5px solid #07a3c3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+  display: inline-block;
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.eb-lading-parent-wrap {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.73);
+  z-index: 99999;
+}
+
 
 
 .eb-setup-steps li { 
@@ -648,7 +778,22 @@ cursor: pointer;
     width: 20%;
 }
 
-  
+
+.eb_setup_web_service_name_wrap{
+    display: none;
+}
+
+
+
+.eb_setup_btn.disabled{
+    background: #F7F7F7;
+    border: 1px solid #E5E5E5;
+    background: #C4C4C4;
+    cursor: not-allowed ;
+}
+
+
+
 .eb-setup-steps .eb-setup-steps-title {
     /* padding: 0 1.5em 1.5em 1.5em; */
     padding: 10px 5px 10px 20px;
@@ -664,14 +809,94 @@ cursor: pointer;
 .eb-setup-steps .eb-setup-steps-title::before {
     content: "";
     position: absolute;
-    top: 15px;
-
+    top: 25px;
     z-index: 1;
     left: 0;
     height: 100%;
     border-left: 1px #ccc solid;
 }
   
+
+.eb-setup-step .eb-setup-step-active {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #00A1A8;
+    opacity: 1;
+}
+
+.eb-setup-step .eb-setup-step-completed{
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #133F3F;
+}
+
+.eb_setup_sidebar_progress_icons{
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    border-radius: 100%;
+    text-align: center;
+    left: 11px;
+    flex: none;
+    z-index: 10;
+}
+
+.eb-setup-step-completed-wrap .eb_setup_sidebar_progress_icons{
+    color: #1AB900;
+}
+
+.eb-setup-step-active-wrap .eb_setup_sidebar_progress_icons{
+    /*font-size: 12px;
+    line-height: 20px;
+    background: #00A1A8;*/
+    color: #00A1A8;
+    /* padding: 0px; 
+    border-radius: 100%;*/
+}
+
+.eb-setup-step-active-wrap{
+    background: #FFFFFF;
+    border-radius: 30px 0px 0px 30px;
+}
+
+.eb-setup-steps .eb-setup-step-active-wrap .eb-setup-step-active{
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #00A1A8;
+    opacity: 1;
+    left: 4px;
+}
+
+.eb-setup-step-active {
+    background: #FFFFFF;
+    border-radius: 30px 0px 0px 30px;
+}
+
+.eb-setup-step-circle-wrap{
+    width: 20%;
+}
+
+.eb-setup-steps .eb-setup-step-completed-wrap .eb-setup-step-completed{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #133F3F;
+    opacity: 1;
+    left: 4px;
+}
+
+
+
 .eb-setup-steps strong {
     display: block;
     font-weight: bolder;
@@ -679,13 +904,16 @@ cursor: pointer;
   
 .eb-setup-steps {
     /* margin: 1em; width: 50%; */
-    padding: 5px 0px 5px 30px;
+    padding: 5px 0px 5px 20px;
 }
 
 
 .eb-setup-steps, 
 .eb-setup-steps *::before, 
-.eb-setup-steps *::after { box-sizing: border-box; font-family: arial; }
+.eb-setup-steps *::after {
+    /*box-sizing: border-box;
+    font-family: arial;*/
+}
 
 .eb-setup-step:last-child .eb-setup-steps-title::before {
     display: none
@@ -702,7 +930,7 @@ cursor: pointer;
 
 
 .eb_setup_web_service, .eb_plugin_configuration, .eb_plugin_configuration, .eb_setup_check_permalink, .eb_setup_complete_details{
-    padding: 50px 40px;
+    padding: 20px 30px 50px 30px;
 }
 
 
@@ -712,7 +940,7 @@ cursor: pointer;
 }
 
 .eb_setup_complete_card{
-    width: 30%;
+    width: 33%;
     margin-right: 10px;
     padding: 10px;
     /* border: 1px solid grey; */
@@ -734,8 +962,7 @@ cursor: pointer;
 }
 
 .eb_setup_settings_success_msg{
-    width: 60%;
-    margin: auto;
+    margin-top: 10px;
     background: linear-gradient(0deg, rgba(26, 185, 0, 0.1), rgba(26, 185, 0, 0.1)), #FFFFFF;
     border: 1px solid rgba(26, 185, 0, 0.3);
     box-sizing: border-box;
@@ -746,21 +973,54 @@ cursor: pointer;
     line-height: 22px;
     color: #1AB900;
     flex: none;
-    /* order: 1; */
-    /* flex-grow: 0; */
     font-style: italic;
-    /* margin: 0px 5px; */
     padding: 5px 10px;
     display: none;
 }
 
 
-
+.eb_setup_error_msg_box{
+    margin-top: 10px;
+    background: linear-gradient(0deg, rgb(185 0 0 / 10%), rgb(185 0 0 / 10%)), #FFFFFF;
+    border: 1px solid rgb(185 0 0 / 30%);
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: red;
+    flex: none;
+    font-style: italic;
+    padding: 5px 10px;
+    display: none;
+}
 
 
 /*****  Css to Hide elements temporarily   ****/
 
-.eb_plugin_configuration .eb_setup_save_and_continue{
+.eb_plugin_configuration .eb_setup_save_and_continue, .eb_setup_wp_site_details_wrap, .eb_setup_test_connection_continue_btn{
     display: none;
 }
+
+.eb_setup_complete_card .eb_setup_copy{
+    color: #666666;
+    padding-top: 5px;
+    width: 5%;
+    cursor: pointer;
+    color: #F98012;
+}
+
+.eb_setup_complete_card{
+    display: flex;
+}
+
+
+.eb_setup_complete_card > div{
+    width: 95%;
+}
+
+
+
+
+
 

@@ -140,6 +140,7 @@ $string['token'] = 'Token ';
 $string['copy'] = 'Copy';
 $string['copied'] = 'Copied !!!';
 $string['create'] = 'Create Web Service';
+$string['create_wp_site'] = '- Create -';
 $string['link'] = 'Update Web Service';
 $string['click_to_copy'] = 'Click to copy.';
 $string['pop_up_info'] = 'Copy Moodle site URL and the token to your Wordpress site Edwiser Bridge connection settings.';
@@ -331,7 +332,9 @@ $string['url'] = 'URL';
 
 
 $string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to ‘Postname’.';
-$string['setup_permalink_note2'] = 'Click on the https://wordpressshop.com/permalink.php link. It will open in a new tab and check the permalink structure.';
+$string['setup_permalink_click'] = 'Click on the ';
+$string['setup_permalink_note2'] = ' link. It will open in a new tab and check the permalink structure.';
+
 $string['setup_permalink_note3'] = 'Click on “Confirmed” once checked.';
 
 $string['confirmed'] = 'Confirmed';
@@ -356,9 +359,37 @@ $string['setup_completion_note2'] = 'Copy and Save the following moodle credenti
 $string['setup_completion_note3'] = 'Alternately, you can download the Edwiser Bridge Moodle ‘Credentials file’ from here. ';
 $string['setup_completion_note4'] = 'Once you have saved the details please continue with the Edwiser Bridge FREE WordPress setup by clicking on “Continue the setup”. ';
 
+$string['wp_site_details_note'] = 'Click on ‘Test connection’ once you have added the details.';
 
 $string['or'] = 'OR';
+$string['select'] = 'Select';
+$string['setup_test_conn_succ'] = 'Moodle to WordPress connection successful';
+$string['setup_test_conn_error'] = 'Please check WordPress site configuration.';
 
+
+/*  Tooltip  */
+$string['enabling_rest_tip'] = 'Enables Moodle Site to communicate with the Wordpress site via API (Recommended)';
+$string['enabling_service_tip'] = "Moodle's API service to enable connection from WordPress to Moodle (Recommended)";
+$string['disable_passw_policy_tip'] = '- We Recommend disabling this setting.
+- If enabled, it will check user passwords against the password policy as specified in the settings.
+- ​Enabling the password policy will not affect existing users until they decide to, or are required to, change their password.';
+$string['allow_exte_char_tip'] = 'Enabling this will allow users to use any characters in their usernames (note this does not affect their actual names). 
+The default is "false" which restricts usernames to be alphanumeric lowercase characters, underscore (_), hyphen (-), period (.), or at symbol (@).';
+$string['web_service_tip'] = 'Its an API service which enables proper communication between WordPress and Moodle sites.';
+$string['name_web_service_tip'] = 'Setup a name for the Web Service for e.g. "EdwiserBridge"';
+$string['wp_site_tip'] = 'Select the WordPress site you wish to integrate with the Moodle site.';
+
+$string['wp_site_name_tip'] = 'Key in your WordPress sites name.';
+$string['wp_site_url_tip'] = 'Ensure there is no blank space. And it should follow the URL with Hypertext Transfer Protocol "https://"';
+$string['user_enrollment_tip'] = 'This will auto-create user in linked Wordpress site.';
+$string['user_unenrollment_tip'] = 'Deletes the user in the linked Wordpress site when deleted in Moodle Site.';
+$string['user_creation_tip'] = 'This will auto-create user in linked Wordpress site.';
+$string['user_deletion_tip'] = 'Deletes the user in the linked Wordpress site when deleted in Moodle Site.';
+$string['user_update_tip'] = "This will update user first name, last name and password and won't update Username and Email.";
+$string['course_creation_tip'] = 'This will draft the course on the linked WordPress site and the course will have to publised.';
+$string['course_deletion_tip'] = 'It will mark the course as deleted in the linked WordPress site.';
+// $string['mdl_url_tip'] = 'Setup a name for the Web Service for e.g. "EdwiserBridge"';
+// $string['msl_acc_token_tip'] = 'Setup a name for the Web Service for e.g. "EdwiserBridge"';
 
 
 

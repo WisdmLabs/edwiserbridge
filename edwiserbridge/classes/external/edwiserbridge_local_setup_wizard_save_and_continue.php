@@ -85,10 +85,6 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
         return $response;*/
 
-// var_dump($current_step);
-// var_dump($next_step);
-// var_dump($is_next_sub_step);
-
 
 
         $data = json_decode( $data );
@@ -100,11 +96,8 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
         $setup_wizard_handler = new \eb_setup_wizard();
         $steps = $setup_wizard_handler->eb_setup_wizard_get_steps();
 
-
         // Check if there are any sub steps available. 
         $function = $steps[$next_step]['function'];
-
-
 
 
        switch ( $current_step ) {
@@ -123,8 +116,7 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
             case 'wordpress_site_details':
 
-                if ( isset( $data->site_name ) && isset( $data->url ) && ! $data->existing_service ) {
-
+                if ( isset( $data->site_name ) && ! empty( $data->site_name ) && isset( $data->url ) && ! empty( $data->url ) ) {
                     $token = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
                    // Update Moodle Wordpress site details.
                     $connectionsettings[$data->site_name] = array(
@@ -134,6 +126,8 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
                     );
 
                     set_config( 'eb_connection_settings', serialize( $connectionsettings ) );
+                    set_config( 'eb_setup_wp_site_name', $data->site_name );
+                } elseif( isset( $data->site_name ) ){
                     set_config( 'eb_setup_wp_site_name', $data->site_name );
                 }
 
@@ -165,29 +159,17 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
                break;
 
-
-           
            default:
 
                break;
        }
 
 
-
-
-// var_dump($function);
-
-        // Check current step.
-        // Check if there is any data to be saved.
-
+       // Save progress data.
+        set_config('eb_setup_progress', $current_step);
 
 
         // get next step.
-
-        // $next_step_html = $setup_wizard_handler->eb_setup_plugin_configuration( 1 );
-
-// var_dump($next_step_html);
-
 
         /*
         * There are multiple steps inside 1 step which are listed below.
@@ -199,26 +181,13 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
         *    a. User and course sync
         *    b. success screens
         */
-
-
-
         $next_step_html = $setup_wizard_handler->$function( 1 );
-
-
-
-// var_dump($next_step_html);
-
-
-
-        // get next step html
-
-        // check if we need to vhange step.
-
-        // return html and step id.
+        $title          = $setup_wizard_handler->eb_get_step_title( $next_step );
 
 
         $response = array(
             'html_data' => $next_step_html,
+            'title'     => $title
         );
 
         return $response;
@@ -233,7 +202,8 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
     public static function edwiserbridge_local_setup_wizard_save_and_continue_returns() {
         new external_single_structure(
             array(
-                'html_data' => new external_value(PARAM_RAW, 'id of course'),
+                'html_data' => new external_value(PARAM_RAW, 'Setup wizards next step html content'),
+                'title' => new external_value(PARAM_RAW, 'Setup wizards next step title'),
             )
         );
     }

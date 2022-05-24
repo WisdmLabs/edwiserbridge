@@ -23,6 +23,8 @@
  * @author      Wisdmlabs
  */
 
+
+
 require('../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once('mod_form.php');
@@ -71,9 +73,9 @@ $mformnavigation = new edwiserbridge_navigation_form();
 /*
  * Necessary page requirements.
  */
-// $PAGE->set_pagelayout('admin');
+$PAGE->set_pagelayout('admin');
 
-$PAGE->set_pagelayout("popup");
+// $PAGE->set_pagelayout("popup");
 
 $PAGE->set_context($context);
 $PAGE->set_url('/local/edwiserbridge/edwiserbridge.php?tab=settings');

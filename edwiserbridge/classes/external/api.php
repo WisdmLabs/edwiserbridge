@@ -50,5 +50,6 @@ class api extends external_api {
     /* Setup wizard services */
     use edwiserbridge_local_setup_wizard_save_and_continue;
     use edwiserbridge_local_enable_plugin_settings;
+    use edwiserbridge_local_setup_test_connection;
 
 }

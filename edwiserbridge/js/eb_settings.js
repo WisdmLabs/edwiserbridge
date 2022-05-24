@@ -614,46 +614,88 @@ define("local_edwiserbridge/eb_settings", [
 
 
 
-        /******************    SETUP wizard   *****************/
+            /******************    SETUP wizard   *****************/
+
+            var loader = '<div id="eb-lading-parent" class="eb-lading-parent-wrap"><div class="eb-loader-progsessing-anim"></div></div>';
+            $("body").append(loader);
 
 
 
+            function change_url( step ) {
+                var url = new URL(document.location);
+                url.searchParams.set('current_step', step);
+                window.history.replaceState( null, null, url );
+            }
+
+            function handle_step_progress( current_step, next_step ) {
+                /**
+                 * 1. Mark current step as active and 
+                 * 2. Mark previous step as completed.
+                 */
+                // Add completed class to the sidebar steps
+                var temp1 = $('.eb-setup-step-' + current_step).addClass('eb-setup-step-completed-wrap');
+                if( $('.eb-setup-step-' + current_step).hasClass('eb-setup-step-active-wrap') ) {
+                    $('.eb-setup-step-' + current_step).removeClass('eb-setup-step-active-wrap');
+                }
+
+                // Chnage step names class
+                var step_title = $('.eb-setup-step-' + current_step).children('.eb-setup-steps-title');
+                step_title.addClass('eb-setup-step-completed');
+                if(step_title.hasClass('eb-setup-step-active')){
+                    step_title.removeClass('eb-setup-step-active');
+                }
+
+                // Change icons class
+                var icon = $('.eb-setup-step-' + current_step).children('.eb_setup_sidebar_progress_icons');
+                icon.addClass('fa-circle-check');
+
+                if( icon.hasClass('fa-circle-chevron-right') ) {
+                    icon.removeClass('fa-circle-chevron-right');
+                }
+
+
+                var temp2 = $('.eb-setup-step-' + next_step).addClass('eb-setup-step-active-wrap');
+                
+                var step_title1 = $('.eb-setup-step-' + next_step).children('.eb-setup-steps-title');
+                step_title1.addClass('eb-setup-step-active');
+
+                var icon = $('.eb-setup-step-' + next_step).children('.eb_setup_sidebar_progress_icons');
+                icon.addClass('fa-solid fa-circle-chevron-right');
+
+                if(icon.hasClass('eb-setup-step-circle')){
+                    icon.removeClass('eb-setup-step-circle');
+                }
+
+            }
 
             // ajax xall to save data and get new tab at the same time.
         
             // Clicking save continue
             // 
-            // 
             $(document).on('click', '.eb_setup_save_and_continue', function (event) {
-
                 // Create loader.
                 var current = $(this);
                 var current_step = $(this).data('step');
                 var next_step = $(this).data('next-step');
                 var is_next_sub_step = $(this).data('is-next-sub-step');
 
-console.log(current_step);
+                $("#eb-lading-parent").show();
 
 
                 // get current step.
                 // get next step.
                 // get data which will be saved.
-
                 // Creating swicth case.
-                
                 var data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
 
                 switch ( current_step ) {
                     case 'installtion_guide':
                         // Get required data and create array
-    console.log('FIRST ');
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
 
                         break;
 
                     case 'mdl_plugin_config':
-                        
-    console.log('SECOND ');
 
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
                         
@@ -663,7 +705,6 @@ console.log(current_step);
                         // Course sync process.
                         // Call course sync callback and after completing the process, call this callback.
 
-    console.log('THIRD ');
                         var service_name = $('.eb_setup_web_service_list').val();
                         var existing_service = 1;
 
@@ -682,19 +723,14 @@ console.log(current_step);
                         // Course sync process.
                         // Call course sync callback and after completing the process, call this callback.
 
-    console.log('THIRD ');
-
-                        
                         var site_name = $('.eb_setup_wp_sites').val();
                         var url       = '';
-                        var existing_site = 1;
+                        // var existing_site = 1;
 
-
-                        if ( service_name != 'create' || service_name != '' ) {
+                        if ( service_name == 'create' ) {
                             site_name = $('.eb_setup_site_name').val();
                             url       = $('.eb_setup_site_url').val();
-                            existing_site = 0;
-
+                            // existing_site = 0;
                         }
 
 
@@ -706,7 +742,6 @@ console.log(current_step);
 
                     case 'user_and_course_sync':
 
-console.log('4th');
                         var user_enrollment   = $('#eb_setup_sync_user_enrollment').val();
                         var user_unenrollment = $('#eb_setup_sync_user_unenrollment').val();
                         var user_creation = $('#eb_setup_sync_user_creation').val();
@@ -724,43 +759,13 @@ console.log('4th');
 
                     default:
 
-console.log('DEFAULT ::: ');
-
                         break;
                 }
 
 
 
-
-            // $.ajax({
-            //     method: "post",
-            //     url: eb_setup_wizard.ajax_url,
-            //     dataType: "json",
-            //     data: {
-            //         // 'step': 'eb_setup_save_and_continue',
-            //         // 'action': 'eb_setup_' + step,
-            //         'data': data,
-            //         // '_wpnonce_field': eb_admin_js_object.nonce,
-            //     },
-            //     success: function (response) {
-
-            //         //prepare response for user
-            //         if (response.success == 1) {
-            //             $('.eb-setup-content').html(response.data.content);
-
-            //         } else {
-    
-            //         }
-            //     }
-            // });
-
-
-console.log(data);
             
-            data = JSON.stringify(data);
-
-
-
+                data = JSON.stringify(data);
 
 
                 var promises = ajax.call([{
@@ -769,17 +774,21 @@ console.log(data);
                 }, ]);
 
                 promises[0].done(function(response) {
-                    $("body").css("cursor", "default");
+                    $("#eb-lading-parent").hide();
 
+                    change_url( next_step );
+
+                    handle_step_progress( current_step, next_step );
+
+                    $('.eb-setup-header-title').html(response.title);
                     $('.eb-setup-content').html(response.html_data);
 
                     return response;
                 }).fail(function(response) {
+                    $("#eb-lading-parent").hide();
                     $("body").css("cursor", "default");
                     return 0;
                 }); //promise end
-
-
 
 
             });
@@ -791,8 +800,7 @@ console.log(data);
             */
             $(document).on('click', '.eb_enable_plugin_settings', function (event) {
                 // start loader
-
-console.log('CLICKED ::: ');
+                $("#eb-lading-parent").show();
 
                 var promises = ajax.call([{
                     methodname: 'edwiserbridge_local_enable_plugin_settings',
@@ -801,9 +809,9 @@ console.log('CLICKED ::: ');
 
                 promises[0].done(function(response) {
                     $("body").css("cursor", "default");
+                    $("#eb-lading-parent").hide();
 
                     // stop loader.
-
                     // change icon colors
                     $('.eb_enable_rest_protocol').css( 'color', '#1AB900' );
                     $('.eb_enable_web_service').css( 'color', '#1AB900' );
@@ -821,6 +829,8 @@ console.log('CLICKED ::: ');
 
                     return response;
                 }).fail(function(response) {
+                    $("#eb-lading-parent").hide();
+
                     $("body").css("cursor", "default");
                     return 0;
                 }); //promise end
@@ -851,19 +861,155 @@ console.log('CLICKED ::: ');
 
 
 
+            // Handle Setup web service dropdown.
+            // $(".eb_setup_web_service_list").change(function() {
+            $(document).on('change', '.eb_setup_web_service_list', function (event) {
 
+                if('' != $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_web_service_btn').removeClass('disabled');
+                    $('.eb_setup_web_service_btn').removeAttr("disabled");
+                } else {
+                    $('.eb_setup_web_service_btn').attr("disabled", "disabled");
+                    $('.eb_setup_web_service_btn').addClass('disabled');
+                }
+
+
+                if('create' == $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_web_service_name_wrap').css('display', 'block');
+                } else {
+                    $('.eb_setup_web_service_name_wrap').css('display', 'none');
+                }
+            });
+
+
+            // Handle Wp site drop down
+            // $(".eb_setup_wp_sites").change(function() {
+            $(document).on('change', '.eb_setup_wp_sites', function (event) {
+
+                if('' != $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_wp_details_btn').removeClass('disabled');
+                    $('.eb_setup_wp_details_btn').removeAttr("disabled");
+                } else {
+                    $('.eb_setup_wp_details_btn').attr("disabled", "disabled");
+                    $('.eb_setup_wp_details_btn').addClass('disabled');
+                }
+
+
+                if('create' == $(".eb_setup_wp_sites").val()){
+                    $('.eb_setup_wp_site_details_wrap').css('display', 'block');
+                    // var name = $(this).data('name');
+                    // $('.eb_setup_site_name').val(name);
+                    // var token = $(this).data('url');
+                    // $('.eb_setup_site_name').val(token);
+                } else {
+                    $('.eb_setup_wp_site_details_wrap').css('display', 'none');
+                }
+            });
+
+
+
+
+            $(document).on('click', '.eb_setup_test_connection_btn', function (event) {
+
+                var url = $('.eb_setup_site_url').val();
+                $("body").css("cursor", "wait");
+
+                $("#eb-lading-parent").show();
+
+
+                var promises = ajax.call([{
+                    methodname: 'edwiserbridge_local_setup_test_connection',
+                    args: { wp_url: url },
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("#eb-lading-parent").hide();
+                    $("body").css("cursor", "default");
+
+
+                    $('.eb_setup_test_conn_resp_msg').css('display', 'block');
+
+                    // Parse response.
+                    if(response.status == 1){
+                        $('.eb_setup_test_connection_continue_btn').css('display', 'inline-block');
+                        $('.eb_setup_test_connection_btn').css('display', 'none');
+
+                        $('.eb_setup_test_conn_resp_msg').addClass('eb_setup_settings_success_msg');
+                        $('.eb_setup_test_conn_resp_msg').html('<i class="fa-solid fa-circle-check"></i> ' + response.msg);
+                        $('.eb_setup_test_conn_resp_msg').removeClass('eb_setup_error_msg_box');
+                    }else{
+                        $('.eb_setup_test_conn_resp_msg').addClass('eb_setup_error_msg_box');
+                        $('.eb_setup_test_conn_resp_msg').html('<i class="fa-solid fa-circle-check"></i> ' + response.msg);
+                        $('.eb_setup_test_conn_resp_msg').removeClass('eb_setup_settings_success_msg');
+                    }
+
+                    return response;
+                }).fail(function(response) {
+                    $("body").css("cursor", "default");
+                    $("#eb-lading-parent").hide();
+
+                    return 0;
+                });
+
+
+            });
+
+
+            
+            $(document).on('click', '#eb_setup_sync_all', function (event) {
+                if(this.checked){
+                    $('.eb_setup_sync_cb').prop('checked', true);
+                }
+            });
+
+
+
+            /**
+             * Copy to clipboard functionality.
+             */
+            $(document).on("click", ".eb_setup_copy", function(event) {
+                event.preventDefault();
+
+                var copyText = $(this).data('copy');
+                var temp = document.createElement("textarea");
+                temp.textContent = copyText;
+
+                document.body.appendChild(temp);
+                var selection = document.getSelection();
+                var range = document.createRange();
+                //  range.selectNodeContents(textarea);
+                range.selectNode(temp);
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                document.execCommand("copy");
+
+                temp.remove();
+                toaster("Title", 400);
+            });
+
+
+
+            // Code to create json file and download it.
+            $(".eb_setup_download_creds").click(function() {
+
+                var obj = {
+                    url: $('.eb_setup_copy_url').html(),
+                    token: $('.eb_setup_copy_token').html(),
+                    lang_code: $('.eb_setup_copy_lang').html(),
+                };
+
+
+                $("<a />", {
+                    "download": "creds.json",
+                    "href" : "data:application/json," + encodeURIComponent(JSON.stringify( obj ) )
+                }).appendTo("body").click(function() {
+                    $(this).remove();
+                })[0].click()
+            });
 
 
             /***************************/
-
-
-
-
-
-
-
-
-
 
 
         });
