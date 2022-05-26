@@ -704,17 +704,19 @@ define("local_edwiserbridge/eb_settings", [
                     case 'web_service':
                         // Course sync process.
                         // Call course sync callback and after completing the process, call this callback.
-
                         var service_name = $('.eb_setup_web_service_list').val();
                         var existing_service = 1;
 
-                        if ( service_name != 'create' || service_name != '' ) {
+                        if ( service_name == 'create' && service_name != '' ) {
                             service_name = $('.eb_setup_web_service_name').val();
                             existing_service = 0;
-
                         }
 
+
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
+
+console.log(data);
+
 
                         break;
 
@@ -725,12 +727,10 @@ define("local_edwiserbridge/eb_settings", [
 
                         var site_name = $('.eb_setup_wp_sites').val();
                         var url       = '';
-                        // var existing_site = 1;
 
-                        if ( service_name == 'create' ) {
+                        if ( 'create' == site_name ) {
                             site_name = $('.eb_setup_site_name').val();
                             url       = $('.eb_setup_site_url').val();
-                            // existing_site = 0;
                         }
 
 
@@ -742,17 +742,21 @@ define("local_edwiserbridge/eb_settings", [
 
                     case 'user_and_course_sync':
 
-                        var user_enrollment   = $('#eb_setup_sync_user_enrollment').val();
-                        var user_unenrollment = $('#eb_setup_sync_user_unenrollment').val();
-                        var user_creation = $('#eb_setup_sync_user_creation').val();
-                        var user_deletion = $('#eb_setup_sync_user_deletion').val();
-                        var user_update = $('#eb_setup_sync_user_update').val();
-                        var course_creation = $('#eb_setup_sync_course_creation').val();
-                        var course_deletion = $('.eb_setup_sync_course_deletion').val();
+                        var user_enrollment   = $('#eb_setup_sync_user_enrollment').prop('checked') ? 1 : 0;
+                        var user_unenrollment = $('#eb_setup_sync_user_unenrollment').prop('checked') ? 1 : 0;
+                        var user_creation     = $('#eb_setup_sync_user_creation').prop('checked') ? 1 : 0;
+                        var user_deletion     = $('#eb_setup_sync_user_deletion').prop('checked') ? 1 : 0;
+                        var user_update       = $('#eb_setup_sync_user_update').prop('checked') ? 1 : 0;
+                        var course_creation   = $('#eb_setup_sync_course_creation').prop('checked') ? 1 : 0;
+                        var course_deletion   = $('#eb_setup_sync_course_deletion').prop('checked') ? 1 : 0;
+
 
 
                         // If user checkbox is clicked start user sync otherwise just procedd to next screen.
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, user_enrollment: user_enrollment, user_unenrollment: user_unenrollment, user_creation: user_creation, user_deletion: user_deletion, user_update: user_update, course_creation: course_creation, course_deletion: course_deletion };
+
+
+console.log(data);
 
                         break;
 
@@ -959,6 +963,8 @@ define("local_edwiserbridge/eb_settings", [
             $(document).on('click', '#eb_setup_sync_all', function (event) {
                 if(this.checked){
                     $('.eb_setup_sync_cb').prop('checked', true);
+                } else{
+                    $('.eb_setup_sync_cb').prop('checked', false);
                 }
             });
 
@@ -1009,6 +1015,19 @@ define("local_edwiserbridge/eb_settings", [
                 })[0].click()
             });
 
+            /**
+         * Close setup.
+         */
+        $('.eb-setup-close-icon').click(function(){
+            // Create loader.
+            $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_popup_content_wrap').html() + ' </div>');
+
+        });
+
+
+        $(document).on('click', '.eb_setup_do_not_close', function (event) {
+            $('.eb_setup_popup').remove();
+        });
 
             /***************************/
 

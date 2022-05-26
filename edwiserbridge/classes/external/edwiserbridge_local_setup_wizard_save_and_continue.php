@@ -65,27 +65,6 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
     public static function edwiserbridge_local_setup_wizard_save_and_continue( $data ) {
         global $DB,$CFG;
 
-        /*// self::validate_context(context_system::instance());
-
-        // Check if Moodle manual enrollment plugin is disabled.
-        $enrolplugins = explode(',', $CFG->enrol_plugins_enabled);
-        if (! in_array('manual', $enrolplugins)) {
-            throw new \moodle_exception('plugininactive');
-        }
-
-        $response = array();
-        $result = $DB->get_records('enrol', array('status'=> 0, 'enrol'=>'manual'), 'sortorder,id');
-
-        foreach ($result as $instance) {
-            $response[] = array(
-                'courseid' => $instance->courseid,
-                'enabled'  => 1
-            );
-        }
-
-        return $response;*/
-
-
 
         $data = json_decode( $data );
 
@@ -108,8 +87,18 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
                 $adminuser = get_admin();
 
-                if ( isset( $data->service_name ) ) {
+                if ( isset( $data->service_name ) && isset( $data->existing_service ) && ! $data->existing_service ) {
                     $response = $settingshandler->eb_create_externle_service( $data->service_name , $adminuser->id );
+                } elseif ( isset( $data->service_name ) && isset( $data->existing_service ) && $data->existing_service ) {
+                    // Set Service. edwiser_bridge_last_created_token
+                    set_config('ebexistingserviceselect', $data->service_name);
+
+                    // select token update web services and set token.
+                    // If token is not created dreate token.
+                    $token = $settingshandler->eb_create_token( $data->service_name, $adminuser->id );
+
+                    // Set last created token.
+                    set_config('edwiser_bridge_last_created_token', $token);
                 }
 
                break;
@@ -145,13 +134,13 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
                     $sitename =  $CFG->eb_setup_wp_site_name;
 
                     $synchsettings[$sitename] = array(
-                        "course_enrollment"    => $data->course_enrollment,
-                        "course_un_enrollment" => $data->course_unenrollment,
+                        "course_enrollment"    => $data->user_enrollment,
+                        "course_un_enrollment" => $data->user_unenrollment,
                         "user_creation"        => $data->user_creation,
                         "user_deletion"        => $data->user_deletion,
                         "course_creation"      => $data->course_creation,
                         "course_deletion"      => $data->course_deletion,
-                        "user_updation"        => $data->user_updation,
+                        "user_updation"        => $data->user_update,
                     );
 
                     set_config( 'eb_synch_settings', serialize( $synchsettings ) );

@@ -33,25 +33,6 @@ defined('MOODLE_INTERNAL') || die();
  */
 class eb_setup_wizard {
 
-
-
-    /*---------------------------------------------------------------------*/
-
-
-    /**
-     * Current step
-     *
-     * @var string
-     */
-    private $step = '';
-
-    /**
-     * Steps for the setup wizard
-     *
-     * @var array
-     */
-    private $steps = array();
-
     /**
      * Hook in tabs.
      */
@@ -293,23 +274,23 @@ class eb_setup_wizard {
 
         <body class="wc-setup wp-core-ui ">
 
-        <header class="eb-setup-wizard-header">
+            <header class="eb-setup-wizard-header">
 
-            <div class="eb-setup-header-logo">
-                <div class="eb-setup-header-logo-img-wrap">
-                    <img src="<?php echo 'images/moodle-logo.png' ?>" />
-                    <!-- <img src="<?php echo $CFG->dirroot . '/local/edwiserbridge/images/moodle-logo.png' ?>" /> -->
-                    <!-- <img src="<?php echo  '../images/moodle-logo.png' ?>" /> -->
+                <div class="eb-setup-header-logo">
+                    <div class="eb-setup-header-logo-img-wrap">
+                        <img src="<?php echo 'images/moodle-logo.png' ?>" />
+                        <!-- <img src="<?php echo $CFG->dirroot . '/local/edwiserbridge/images/moodle-logo.png' ?>" /> -->
+                        <!-- <img src="<?php echo  '../images/moodle-logo.png' ?>" /> -->
+                    </div>
                 </div>
-            </div>
 
-            <div class="eb-setup-header-title-wrap">
-                <div class="eb-setup-header-title">
-                    <?php echo $title; ?>
+                <div class="eb-setup-header-title-wrap">
+                    <div class="eb-setup-header-title"><?php echo $title; ?></div>
+                    <div class='eb-setup-close-icon'> <i class="fa-solid fa-xmark"></i> </div>
+
                 </div>
-            </div>
-        
-        </header>
+            
+            </header>
         <?php
     }
 
@@ -318,17 +299,19 @@ class eb_setup_wizard {
      */
     public function setup_wizard_footer() {
         ?>
-            <footer class="eb-setup-wizard-footer">
+            <footer class='eb-setup-wizard-footer'>
 
-                <div class="eb-setup-footer-copyright">
+                <div class='eb-setup-footer-copyright'>
                     <?php echo get_string( 'setup_footer', 'local_edwiserbridge' ); ?>
                 </div>
 
-                <div class="eb-setup-footer-button">
+                <div class='eb-setup-footer-button'>
                     <a>
                         <?php echo get_string( 'setup_contact_us', 'local_edwiserbridge' ); ?>
                     </a>
                 </div>
+
+                <div> <?php echo $this->eb_setup_close_setup(); ?> </div>
 
             </footer>
 
@@ -451,8 +434,6 @@ class eb_setup_wizard {
             return ob_get_clean();
              
         }
-
-
     }
 
     
@@ -523,7 +504,6 @@ class eb_setup_wizard {
         if ( $ajax ) {
             return ob_get_clean();
         }
-
     }
 
 
@@ -603,11 +583,9 @@ class eb_setup_wizard {
         </div>
 
         <?php
-
         if ( $ajax ) {
             return ob_get_clean();
         }
-
     }
 
 
@@ -821,7 +799,6 @@ class eb_setup_wizard {
 
         if ( $ajax ) {
             return ob_get_clean();
-            
         }
     }
 
@@ -841,6 +818,7 @@ class eb_setup_wizard {
 
         $prevstep = $this->get_prev_step( $step );
         $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
+        $nexturl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $next_step;
 
         ?>
         <div class="eb_setup_user_and_course_sync">
@@ -905,9 +883,10 @@ class eb_setup_wizard {
 
                     <div class="eb_setup_btn_wrap">
                         <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
+                        <a class="eb_setup_sec_btn" href="<?php echo $nexturl; ?>"> <?php echo get_string( 'skip', 'local_edwiserbridge' ); ?> </a>
 
                         <!-- <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button> -->
-                        <button class="eb_setup_sec_btn"> <?php echo get_string( 'skip', 'local_edwiserbridge' ); ?> </button>
+                        <!-- <button class="eb_setup_sec_btn"> <?php echo get_string( 'skip', 'local_edwiserbridge' ); ?> </button> -->
                         <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
@@ -1034,4 +1013,54 @@ class eb_setup_wizard {
             return ob_get_clean();
         }
     }
+
+
+
+
+
+
+    /**
+     * Setup Wizard close setup.
+     */
+    public function eb_setup_close_setup() {
+        global $CFG;
+        ob_start();
+        ?>
+        <div class='eb_setup_popup_content_wrap' style='display: none;'>
+            <div class='eb_setup_popup_content'>
+
+                <div class=''>
+                    <p> <i class="fa-solid fa-triangle-exclamation eb_setup_pupup_warning_icon"></i> </p>
+
+                    <p class='eb_setup_h2'> <?php echo get_string( 'close_quest', 'local_edwiserbridge'); ?></p>
+
+                    <div class="eb_setup_user_sync_btn_wrap">
+                        <a href=' <?php echo $CFG->wwwroot; ?>' class='eb_setup_btn' > <?php echo get_string( 'yes', 'local_edwiserbridge'); ?> </a>
+                        <button class='eb_setup_sec_btn eb_setup_do_not_close'> <?php echo get_string( 'no', 'local_edwiserbridge'); ?> </button>
+                    </div>
+
+                </div>
+
+                <div>
+                    <fieldset>
+                        <legend> <?php echo get_string( 'note', 'local_edwiserbridge' ); ?> </legend>
+                        <div>
+                            <?php echo get_string( 'close_note', 'local_edwiserbridge' ); ?>
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
+
+
+
+
+
+
+
 }

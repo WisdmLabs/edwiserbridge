@@ -393,3 +393,12 @@ $string['course_deletion_tip'] = 'It will mark the course as deleted in the link
 
 
 
+/*****  Pop up close button  *****/
+
+$string['close_quest'] = 'Are you sure you want to close the Edwiser Bridge Moodle setup wizard?';
+$string['yes'] = 'Yes';
+$string['no'] = 'No';
+$string['note'] = 'Note';
+$string['close_note'] = 'You can run the setup wizard again by navigating to Moodle Adminstration > Plugins > Edwiser Bridge > Run Setup wizard.';
+
+
