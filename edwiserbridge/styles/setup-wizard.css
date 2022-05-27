@@ -1,4 +1,14 @@
 
+/* Css to solve conflict in remui as this is page specific css applying 1 important  */
+
+#page{
+    margin-top: 60px;
+}
+
+#page-wrapper{
+    padding-top: 0px !important;
+}
+/**/
 
 .eb-setup-sidebar{
     height: 100%;
