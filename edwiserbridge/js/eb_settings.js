@@ -715,9 +715,6 @@ define("local_edwiserbridge/eb_settings", [
 
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
 
-console.log(data);
-
-
                         break;
 
 
@@ -754,9 +751,6 @@ console.log(data);
 
                         // If user checkbox is clicked start user sync otherwise just procedd to next screen.
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, user_enrollment: user_enrollment, user_unenrollment: user_unenrollment, user_creation: user_creation, user_deletion: user_deletion, user_update: user_update, course_creation: course_creation, course_deletion: course_deletion };
-
-
-console.log(data);
 
                         break;
 

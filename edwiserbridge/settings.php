@@ -61,6 +61,22 @@ $ADMIN->add(
     )
 );
 
+$ADMIN->add(
+    'edwisersettings',
+    new admin_externalpage(
+        'edwiserbridge_setup',
+        new lang_string(
+            'run_setup',
+            'local_edwiserbridge'
+        ),
+        "$CFG->wwwroot/local/edwiserbridge/setup_wizard.php",
+        array(
+            'moodle/user:update',
+            'moodle/user:delete'
+        )
+    )
+);
+
 // Adding settings page.
 $settings = new admin_settingpage('edwiserbridge_settings', new lang_string('pluginname', 'local_edwiserbridge'));
 $ADMIN->add('localplugins', $settings);

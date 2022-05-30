@@ -46,10 +46,6 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
     public static function edwiserbridge_local_setup_wizard_save_and_continue_parameters() {
         return new external_function_parameters(
             array(
-                // 'data' => new external_value(PARAM_RAW, get_string('web_service_name', 'local_edwiserbridge')),
-                /*'current_step' => new external_value(PARAM_RAW, get_string('web_service_name', 'local_edwiserbridge')),
-                'next_step' => new external_value(PARAM_RAW, get_string('web_service_name', 'local_edwiserbridge')),
-                'is_next_sub_step' => new external_value(PARAM_RAW, get_string('web_service_name', 'local_edwiserbridge')),*/
                 'data' => new external_value(PARAM_RAW, get_string('web_service_name', 'local_edwiserbridge')),
             )
         );
@@ -104,8 +100,12 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
                break;
 
             case 'wordpress_site_details':
-
                 if ( isset( $data->site_name ) && ! empty( $data->site_name ) && isset( $data->url ) && ! empty( $data->url ) ) {
+                    // Get existing data
+                    $sites = get_connection_settings();
+                    $connectionsettings = $sites['eb_connection_settings'];
+
+
                     $token = isset($CFG->edwiser_bridge_last_created_token) ? $CFG->edwiser_bridge_last_created_token : ' - ';
                    // Update Moodle Wordpress site details.
                     $connectionsettings[$data->site_name] = array(
@@ -119,7 +119,6 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
                 } elseif( isset( $data->site_name ) ){
                     set_config( 'eb_setup_wp_site_name', $data->site_name );
                 }
-
 
                break;
 

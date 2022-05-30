@@ -49,6 +49,8 @@ $string['lang_label'] = 'Language Code';
 $string["wp_site_settings_title"] = "Site Settings :";
 $string["nav_name"] = "Settings";
 $string["default_settings_nav"] = "Settings";
+$string["run_setup"] = "Run Setup Wizard";
+
 
 $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
@@ -400,5 +402,4 @@ $string['yes'] = 'Yes';
 $string['no'] = 'No';
 $string['note'] = 'Note';
 $string['close_note'] = 'You can run the setup wizard again by navigating to Moodle Adminstration > Plugins > Edwiser Bridge > Run Setup wizard.';
-
 
