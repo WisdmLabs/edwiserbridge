@@ -294,7 +294,7 @@ class local_edwiserbridge_observer {
             $synchconditions = unserialize($CFG->eb_synch_settings);
 
             foreach ($sites as $value) {
-                if ($synchconditions[$value["wp_name"]]["user_deletion"] && $value['wp_token']) {
+                if (isset( $synchconditions[$value["wp_name"]]["user_deletion"] ) && $synchconditions[$value["wp_name"]]["user_deletion"] && $value['wp_token']) {
                     // Adding Token for verification in WP from Moodle.
                     $requestdata['secret_key'] = $value['wp_token'];
 

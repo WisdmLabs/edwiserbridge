@@ -56,6 +56,9 @@ $string["edwiserbridge"] = "Edwiser Bridge";
 $string["eb-setting-page-title"] = "Edwiser Bridge Two Way Synchronization Settings";
 $string["eb-setting-page-title_help"] = "Edwiser Bridge Two Way Synchronization Settings";
 
+$string["eb-setup-page-title"] = "Edwiser Bridge Setup Wizard";
+$string["eb-setup-page-title_help"] = "Edwiser Bridge Setup Wizard";
+
 $string["enrollment_checkbox"] = "Enable User Enrollment.";
 $string["enrollment_checkbox_desc"] = "Enroll user from Moodle to Wordpress for linked users.";
 $string["unenrollment_checkbox"] = "Enable User Un-enrollment.";

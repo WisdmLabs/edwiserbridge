@@ -88,7 +88,7 @@ $PAGE->set_pagelayout("popup");
 $PAGE->set_context($context);
 $PAGE->set_url('/local/edwiserbridge/edwiserbridge.php?tab=settings');
 
-$PAGE->set_title(get_string('eb-setting-page-title', 'local_edwiserbridge'));
+$PAGE->set_title(get_string('eb-setup-page-title', 'local_edwiserbridge'));
 
 
 $PAGE->requires->css('/local/edwiserbridge/styles/style.css');

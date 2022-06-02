@@ -265,6 +265,7 @@ class eb_setup_wizard {
         <!DOCTYPE html>
         <html >
         <head>
+            <title><?php echo get_string( 'edwiserbridge', 'local_edwiserbridge' ); ?></title>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
             <meta name="viewport" content="width=device-width" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
