@@ -970,9 +970,14 @@ define("local_edwiserbridge/eb_settings", [
             $(document).on("click", ".eb_setup_copy", function(event) {
                 event.preventDefault();
 
+console.log($(this));
+
                 var copyText = $(this).data('copy');
                 var temp = document.createElement("textarea");
                 temp.textContent = copyText;
+
+console.log('bbCOPY :::: ');
+console.log(copyText);
 
                 document.body.appendChild(temp);
                 var selection = document.getSelection();
@@ -983,8 +988,8 @@ define("local_edwiserbridge/eb_settings", [
                 selection.addRange(range);
 
                 document.execCommand("copy");
-
-                temp.remove();
+console.log('Removing ::: ');
+                // temp.remove();
                 toaster("Title", 400);
             });
 

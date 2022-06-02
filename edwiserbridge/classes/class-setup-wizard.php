@@ -408,18 +408,19 @@ class eb_setup_wizard {
                     <div class="panel">
 
                         <div>
-                            <button class="eb_setup_sec_btn"> <?php echo get_string( 'mdl_edwiser_bridge_txt_download', 'local_edwiserbridge' ); ?> </button>
+                            <!-- <button class="eb_setup_sec_btn"> <?php echo get_string( 'setup_faq_download_plugin', 'local_edwiserbridge' ); ?> </button> -->
+                            <a class="eb_setup_sec_btn" href='https://downloads.wordpress.org/plugin/edwiser-bridge.zip'> <?php echo get_string( 'setup_faq_download_plugin', 'local_edwiserbridge' ); ?> </a>
                         </div>
 
                         <p>
-                            <p> <?php echo get_string( 'setup_faq_steps', 'local_edwiserbridge' ); ?> </p>
+                            <p class='es-p-t-10'> <?php echo get_string( 'setup_faq_steps', 'local_edwiserbridge' ); ?> </p>
 
-                            <ul>
-                                <li> <?php echo get_string( 'setup_faq_step1', 'local_edwiserbridge' ); ?></li>
-                                <li><?php echo get_string( 'setup_faq_step2', 'local_edwiserbridge' ); ?></li>
-                                <li><?php echo get_string( 'setup_faq_step3', 'local_edwiserbridge' ); ?></li>
-                                <li><?php echo get_string( 'setup_faq_step4', 'local_edwiserbridge' ); ?></li>
-                            </ul>
+                            <ol>
+                                <li class='es-p-b-10'> <?php echo get_string( 'setup_faq_step1', 'local_edwiserbridge' ); ?></li>
+                                <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step2', 'local_edwiserbridge' ); ?></li>
+                                <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step3', 'local_edwiserbridge' ); ?></li>
+                                <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step4', 'local_edwiserbridge' ); ?></li>
+                            </ol>
 
                         </p>
                     </div>
@@ -486,10 +487,14 @@ class eb_setup_wizard {
 
                 </div>
 
-                <div class="eb_setup_btn_wrap">
+                <div>
                     <span class="eb_enable_plugin_settings_label"> <?php echo get_string( 'setup_mdl_plugin_note2', 'local_edwiserbridge' ); ?> </span>
 
                     <button class="eb_setup_btn eb_enable_plugin_settings" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_enble_settings', 'local_edwiserbridge' ); ?> </button>
+                </div>
+
+                <div class="eb_setup_btn_wrap">
+                    
 
                     <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
 
@@ -949,31 +954,31 @@ class eb_setup_wizard {
 
                     <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note2', 'local_edwiserbridge'); ?> </p>
 
-                    <div class="eb_setup_complete_cards">
+                    <div class="eb_setup_complete_cards" data-copy='<?php echo $url; ?>'>
 
                         <div class="eb_setup_complete_card">
                             <div>
                                 <span class="eb_setup_h2"><?php echo get_string( 'mdl_url', 'local_edwiserbridge'); ?></span>
                                 <div class="eb_setup_copy_url"> <?php echo $url; ?> </div>
                             </div>
-                            <div class="eb_setup_copy" data-copy='<?php echo $url; ?>' ><i class="fa-solid fa-copy"></i></div>
+                            <div class="eb_setup_copy_icon" data-copy='<?php echo $url; ?>' ><i class="fa-solid fa-copy"></i></div>
                         </div>
 
-                        <div class="eb_setup_complete_card">
+                        <div class="eb_setup_complete_card eb_setup_copy" data-copy='<?php echo $token; ?>'>
                             <div>
                                 <span class="eb_setup_h2"><?php echo get_string( 'wp_token', 'local_edwiserbridge'); ?></span>
                                 <div class="eb_setup_copy_token" style="word-break:break-all;"> <?php echo $token; ?> </div>
                             </div>
-                            <div class="eb_setup_copy" data-copy='<?php echo $token; ?>' ><i class="fa-solid fa-copy"></i></div>
+                            <div class="eb_setup_copy_icon" data-copy='<?php echo $token; ?>' ><i class="fa-solid fa-copy"></i></div>
 
                         </div>
 
-                        <div class="eb_setup_complete_card">
+                        <div class="eb_setup_complete_card eb_setup_copy" data-copy='<?php echo $CFG->lang; ?>'>
                             <div>
                                 <span class="eb_setup_h2"><?php echo get_string( 'eb_mform_lang_desc', 'local_edwiserbridge'); ?></span>
                                 <div class="eb_setup_copy_lang" > <?php echo $CFG->lang; ?> </div>
                             </div>
-                            <div class="eb_setup_copy" data-copy='<?php echo $CFG->lang; ?>' ><i class="fa-solid fa-copy"></i></div>
+                            <div class="eb_setup_copy_icon" data-copy='<?php echo $CFG->lang; ?>' ><i class="fa-solid fa-copy"></i></div>
 
                         </div>
 

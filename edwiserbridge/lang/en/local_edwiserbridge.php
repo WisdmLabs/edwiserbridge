@@ -293,16 +293,16 @@ $string['setup_free'] = 'Free';
 $string['setup_continue_btn'] = 'Continue the setup';
 
 
-
 $string['setup_installation_faq'] = 'What to do if I have not installed Wordpress Plugin ';
 
 $string['setup_faq_download_plugin'] = 'Download the plugin now';
 $string['setup_faq_steps'] = 'After download please follow the steps below;';
 
 
-$string['setup_faq_step1'] = 'Login to your Moodle site with Adminstrative access';
-$string['setup_faq_step2'] = 'Navigate to Site adminstration > Plugins > Install plugins';
-$string['setup_faq_step3'] = 'Upload the Edwiser Bridge FREE Moodle plugin here';
+
+$string['setup_faq_step1'] = 'Login to your WordPress site with Adminstrative access';
+$string['setup_faq_step2'] = 'Navigate to Admin dashboard > Plugins > Install plugins ';
+$string['setup_faq_step3'] = 'Upload the Edwiser Bridge FREE WordPress plugin here';
 $string['setup_faq_step4'] = 'We will assist you with the rest of the setup from there 🙂';
 
 
