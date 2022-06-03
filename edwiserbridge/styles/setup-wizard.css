@@ -36,6 +36,10 @@
     margin: auto;
 }
 
+.es-p-t-b-30{
+    padding: 30px 0px;
+}
+
 .eb_setup_popup fieldset{
     display: block;
     margin-inline-start: 2px;
@@ -127,7 +131,8 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    font-family: serif;
+    font-family: sans-serif;
+
     
     /* Position the tooltip */
     position: absolute;
@@ -228,6 +233,10 @@
     display: flex;
 }
 
+a.es_text_links{
+    font-weight: 500;
+    text-decoration: revert;
+}
 
 .eb-setup-wizard-footer{
     position: fixed;
@@ -269,6 +278,12 @@
     color: #F98012;
     cursor: pointer;
 }
+
+.eb-setup-footer-button a:hover{
+    background: linear-gradient(0deg, #F98012, #F98012), #FFFFFF;
+    color: #FFFFFF;
+}
+
 
 .eb_setup_free_initialize{
     text-align: center;
@@ -380,6 +395,7 @@
 
 .eb_setup_btn:hover{
     background: #133F3F;
+    color: white;
 }
 
 .eb_setup_h2{
@@ -957,24 +973,23 @@ cursor: pointer;
     display: none
   }
 
+
 /* --------------- */
-
-
 
 .eb_plugin_configuration_checks{
     width: 50%;
     margin: auto;
 }
 
-
 .eb_setup_web_service, .eb_plugin_configuration, .eb_plugin_configuration, .eb_setup_check_permalink, .eb_setup_complete_details{
     padding: 20px 30px 50px 30px;
 }
 
-
 .eb_setup_complete_cards{
     display: flex;
     padding: 20px 0px;
+    font-size: 14px !important;
+    line-height: 19px;
 }
 
 .eb_setup_complete_card{
@@ -987,6 +1002,10 @@ cursor: pointer;
     box-sizing: border-box;
     box-shadow: 0px 8px 12px rgb(0 0 0 / 18%);
     border-radius: 4px;
+}
+
+.eb_setup_complete_cards .eb_setup_h2{
+    font-size: 14px !important;
 }
 
 
@@ -1015,7 +1034,6 @@ cursor: pointer;
     padding: 5px 10px;
     display: none;
 }
-
 
 .eb_setup_error_msg_box{
     margin-top: 10px;

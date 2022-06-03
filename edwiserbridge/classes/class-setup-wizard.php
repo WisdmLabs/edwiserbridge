@@ -307,7 +307,7 @@ class eb_setup_wizard {
                 </div>
 
                 <div class='eb-setup-footer-button'>
-                    <a>
+                    <a href='https://edwiser.org/contact-us/' target='_blank'>
                         <?php echo get_string( 'setup_contact_us', 'local_edwiserbridge' ); ?>
                     </a>
                 </div>
@@ -706,9 +706,9 @@ class eb_setup_wizard {
             <div>
 
                 <div>
-                    <p class=""> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge'); ?> </p>
+                    <p class=""> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge') . '<b>' . get_string( 'es_postname', 'local_edwiserbridge') . '</b>' ; ?> </p>
                     <p class="">
-                    <?php echo get_string( 'setup_permalink_click', 'local_edwiserbridge') . '  <a href="' . $url . '">' . $url . '</a>  ' . get_string( 'setup_permalink_note2', 'local_edwiserbridge') ; ?> </p>
+                    <?php echo get_string( 'setup_permalink_click', 'local_edwiserbridge') . '  <a class="es_text_links" href="' . $url . '">' . $url . '</a>  ' . get_string( 'setup_permalink_note2', 'local_edwiserbridge') ; ?> </p>
                     <p class=""> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </p>
                 </div>
 
@@ -827,7 +827,7 @@ class eb_setup_wizard {
         $nexturl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $next_step;
 
         ?>
-        <div class="eb_setup_user_and_course_sync es-w-80">
+        <div class="eb_setup_user_and_course_sync es-p-t-b-30 es-w-80">
             <div>
 
                 <div>
@@ -928,15 +928,24 @@ class eb_setup_wizard {
         $sites = $sites['eb_connection_settings'];
 
 
-        $url   = $CFG->wwwroot;
-        $token = '';
+        $url    = $CFG->wwwroot;
+        $wp_url = '';
+        $token  = '';
         if (isset($sites[$sitename])) {
-            // $url   = $sites[$sitename]['wp_url'];
-            $token = $sites[$sitename]['wp_token'];
+            $wp_url = $sites[$sitename]['wp_url'];
+            $token  = $sites[$sitename]['wp_token'];
         }
 
         $prevstep = $this->get_prev_step( $step );
         $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
+
+
+        if(substr($wp_url , -1)=='/') {
+            $wp_url = $wp_url . 'wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection';
+        } else {
+            $wp_url = $wp_url . '/wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection';
+        }
+
 
         ?>
         <div class="eb_setup_complete_details es-w-80">
@@ -956,7 +965,7 @@ class eb_setup_wizard {
 
                     <div class="eb_setup_complete_cards" data-copy='<?php echo $url; ?>'>
 
-                        <div class="eb_setup_complete_card">
+                        <div class="eb_setup_complete_card eb_setup_copy">
                             <div>
                                 <span class="eb_setup_h2"><?php echo get_string( 'mdl_url', 'local_edwiserbridge'); ?></span>
                                 <div class="eb_setup_copy_url"> <?php echo $url; ?> </div>
@@ -1000,11 +1009,13 @@ class eb_setup_wizard {
                     <!-- <button class="eb_setup_sec_btn"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </button> -->
                     <div class="eb_setup_btn_wrap">
 
-                        <form method='POST'>
+                        <!-- <form method='POST'> -->
                             <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
 
-                            <input type="submit" class="eb_setup_btn" name="eb_setup_completed" value='<?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?>' >
-                        </form>
+                        <a class="eb_setup_btn" target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
+
+                            <!-- <input type="submit" class="eb_setup_btn" name="eb_setup_completed" value='<?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?>' > -->
+                        <!-- </form> -->
                     </div>
 
                     <!-- <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button> -->

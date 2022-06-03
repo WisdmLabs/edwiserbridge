@@ -34,28 +34,28 @@ require_once(dirname(__FILE__) . '/lib.php');
 global $CFG, $COURSE, $PAGE;
 
 
-if ( isset( $_POST['eb_setup_completed'] ) ) {
+// if ( isset( $_POST['eb_setup_completed'] ) ) {
 
-    $sitename =  $CFG->eb_setup_wp_site_name;
+//     $sitename =  $CFG->eb_setup_wp_site_name;
 
-    $sites = get_connection_settings();
-    $sites = $sites['eb_connection_settings'];
+//     $sites = get_connection_settings();
+//     $sites = $sites['eb_connection_settings'];
 
-    $url   = '';
-    if (isset($sites[$sitename])) {
-        $url   = $sites[$sitename]['wp_url'];
-    }
+//     $url   = '';
+//     if (isset($sites[$sitename])) {
+//         $url   = $sites[$sitename]['wp_url'];
+//     }
 
-    if(substr($url , -1)=='/') {
-        redirect( $url . 'wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
-    } else {
-        redirect( $url . '/wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
-    }
+//     if(substr($url , -1)=='/') {
+//         redirect( $url . 'wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
+//     } else {
+//         redirect( $url . '/wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
+//     }
 
-    // redirect('http://localhost/wp/wp-admin/admin.php?page=eb-setup-wizard');
-    die();
-    // header($url . '/wp-admin/admin.php?page=eb-setup-wizard');
-}
+//     // redirect('http://localhost/wp/wp-admin/admin.php?page=eb-setup-wizard');
+//     die();
+//     // header($url . '/wp-admin/admin.php?page=eb-setup-wizard');
+// }
 
 
 

@@ -336,7 +336,8 @@ $string['name'] = 'Name';
 $string['url'] = 'URL';
 
 
-$string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to ‘Postname’.';
+$string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to .';
+$string['es_postname'] = '‘Postname’';
 $string['setup_permalink_click'] = 'Click on the ';
 $string['setup_permalink_note2'] = ' link. It will open in a new tab and check the permalink structure.';
 
@@ -386,8 +387,8 @@ $string['wp_site_tip'] = 'Select the WordPress site you wish to integrate with t
 
 $string['wp_site_name_tip'] = 'Key in your WordPress sites name.';
 $string['wp_site_url_tip'] = 'Ensure there is no blank space. And it should follow the URL with Hypertext Transfer Protocol "https://"';
-$string['user_enrollment_tip'] = 'This will auto-create user in linked Wordpress site.';
-$string['user_unenrollment_tip'] = 'Deletes the user in the linked Wordpress site when deleted in Moodle Site.';
+$string['user_enrollment_tip'] = 'It will auto enroll the users from Moodle to Wordpress. Only applies to linked users.';
+$string['user_unenrollment_tip'] = 'It will auto unenroll the users from Moodle to Wordpress. Only applies to linked users.';
 $string['user_creation_tip'] = 'This will auto-create user in linked Wordpress site.';
 $string['user_deletion_tip'] = 'Deletes the user in the linked Wordpress site when deleted in Moodle Site.';
 $string['user_update_tip'] = "This will update user first name, last name and password and won't update Username and Email.";
