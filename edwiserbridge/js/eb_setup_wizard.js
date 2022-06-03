@@ -101,18 +101,12 @@ define("local_edwiserbridge/eb_setup_wizard", [
             },
             success: function (response) {
 
-                console.log('AAAAAAAAAA');
-                console.log(response);
-
-
                 current.find('.eb-load-response').remove();
                 //prepare response for user
                 if (response.success == 1) {
                     $('.eb-setup-content').html(response.data.content);
 
                 } else {
-
-
 
                 }
             }
@@ -168,11 +162,8 @@ define("local_edwiserbridge/eb_setup_wizard", [
 
 
 
-    // ajax xall to save data and get new tab at the same time.
-        
-            // Clicking save continue
-        // 
-        // 
+        // ajax xall to save data and get new tab at the same time.
+        // Clicking save continue
         $('.eb_setup_save_and_continue').click(function(){
 
             // Create loader.
@@ -224,33 +215,6 @@ define("local_edwiserbridge/eb_setup_wizard", [
                     break;
             }
 
-
-
-console.log( 'data ::: ' );
-console.log( data );
-
-
-            // $.ajax({
-            //     method: "post",
-            //     url: eb_setup_wizard.ajax_url,
-            //     dataType: "json",
-            //     data: {
-            //         // 'step': 'eb_setup_save_and_continue',
-            //         // 'action': 'eb_setup_' + step,
-            //         'data': data,
-            //         // '_wpnonce_field': eb_admin_js_object.nonce,
-            //     },
-            //     success: function (response) {
-
-            //         //prepare response for user
-            //         if (response.success == 1) {
-            //             $('.eb-setup-content').html(response.data.content);
-
-            //         } else {
-    
-            //         }
-            //     }
-            // });
 
 
             var promises = ajax.call([{
