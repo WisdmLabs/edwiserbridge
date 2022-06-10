@@ -599,7 +599,7 @@ class eb_setup_wizard {
 
 
     public function eb_setup_wordpress_site_details( $ajax = 1 ) {
-
+        global $CFG;
         if ( $ajax ) {
             ob_start();
         }
@@ -609,6 +609,8 @@ class eb_setup_wizard {
         // $sites1 = get_connection_settings();
 
         $next_step = $this->get_next_step( $step );
+        $prevstep = $this->get_prev_step( $step );
+        $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
 
         ?>
         <div class="eb_setup_wordpress_site_details es-w-80">
@@ -658,6 +660,7 @@ class eb_setup_wizard {
                     </div>
 
                     <div class="eb_setup_btn_wrap">
+                        <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
                         <button class="eb_setup_btn disabled eb_setup_wp_details_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
