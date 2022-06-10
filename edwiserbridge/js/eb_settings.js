@@ -984,7 +984,13 @@ define("local_edwiserbridge/eb_settings", [
 
                 document.execCommand("copy");
                 // temp.remove();
-                toaster("Title", 400);
+                // toaster("Title", 400);
+                var parent = $(this).parent();
+                var copy_success = '<p class="eb_setup_copy_success"><i class="fa fa-check" aria-hidden="true"></i>Copied !!</p>';
+                parent.append(copy_success);
+                setTimeout(function(){
+                    $('.eb_setup_copy_success').remove();
+                }, 2000);
             });
 
 

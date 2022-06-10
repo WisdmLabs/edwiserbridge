@@ -455,6 +455,7 @@ a.es_text_links{
 .eb_setup_sec_btn:hover{
     border: 1px solid #133F3F;
     color: #133F3F;
+    text-decoration: none;
 }
 
 .eb_setup_installation_guide .eb_setup_sec_btn{
@@ -990,6 +991,7 @@ cursor: pointer;
     padding: 20px 0px;
     font-size: 14px !important;
     line-height: 19px;
+    margin-bottom: 15px;
 }
 
 .eb_setup_complete_card{
@@ -1070,8 +1072,24 @@ cursor: pointer;
     cursor: pointer;
 }
 
+.eb_setup_copy_success{
+    position: absolute;
+    width: auto;
+    bottom: -30px;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #1AB900;
+    font-weight: bold;
+    margin: 0;
+}
+
 .eb_setup_complete_card{
     display: flex;
+    position: relative;
 }
 
 
