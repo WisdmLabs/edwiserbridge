@@ -465,22 +465,22 @@ class eb_setup_wizard {
 
                     <p class="eb_setup_h3">
                         <i class="fa-solid fa-circle-check eb_enable_rest_protocol"></i> <?php echo get_string( 'no_1', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_rest_tip', 'local_edwiserbridge'); ?></span></i> 
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_rest_tip', 'local_edwiserbridge'); ?></span></i> 
                      </p>
 
                     <p class="eb_setup_h3">
                         <i class="fa-solid fa-circle-check eb_enable_web_service"></i> <?php echo get_string( 'no_2', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_service_tip', 'local_edwiserbridge'); ?></span></i> 
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_service_tip', 'local_edwiserbridge'); ?></span></i> 
                     </p>
 
                     <p class="eb_setup_h3">
                         <i class="fa-solid fa-circle-check eb_disable_pwd_policy"></i> <?php echo get_string( 'no_3', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'disable_passw_policy_tip', 'local_edwiserbridge'); ?></span></i>
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'disable_passw_policy_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
 
                     <p class="eb_setup_h3">
                         <i class="fa-solid fa-circle-check eb_allow_extended_char"></i> <?php echo get_string( 'no_4', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> 
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'allow_exte_char_tip', 'local_edwiserbridge'); ?></span></i>
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'allow_exte_char_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
 
                     <div class="eb_setup_settings_success_msg"> <i class="fa-solid fa-circle-check"></i> <?php echo get_string( 'setup_mdl_settings_success_msg', 'local_edwiserbridge' ); ?> </div>
@@ -554,7 +554,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_conn_url_inp_wrap">
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'sum_web_services', 'local_edwiserbridge' ); ?></label>
-                            <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'web_service_tip', 'local_edwiserbridge'); ?></span></i>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'web_service_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
 
                         <select name="eb_setup_web_service_list" class="eb_setup_inp eb_setup_web_service_list" >
@@ -573,7 +573,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_conn_url_inp_wrap eb_setup_web_service_name_wrap">
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'new_service_inp_lbl', 'local_edwiserbridge' ); ?></label>
-                            <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'name_web_service_tip', 'local_edwiserbridge'); ?></span></i>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'name_web_service_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
                         <input class="eb_setup_inp eb_setup_web_service_name" name="eb_setup_web_service_name" type="text" >
                     </div>
@@ -623,7 +623,7 @@ class eb_setup_wizard {
         
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'setup_wp_site_dropdown', 'local_edwiserbridge' ); ?></label>
-                            <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_tip', 'local_edwiserbridge'); ?></span></i>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
 
                         <select name="eb_setup_wp_sites" class="eb_setup_inp eb_setup_wp_sites" >
@@ -646,7 +646,7 @@ class eb_setup_wizard {
 
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
-                            <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
                         <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" >
                     </div>
@@ -654,7 +654,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_conn_url_inp_wrap eb_setup_wp_site_details_wrap">
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
-                            <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
                         <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" >
                     </div>
@@ -774,7 +774,7 @@ class eb_setup_wizard {
 
                     <p>
                         <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
                     <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value="<?php echo $name; ?>" >
                 </div>
@@ -782,7 +782,7 @@ class eb_setup_wizard {
                 <div class="eb_setup_conn_url_inp_wrap">
                     <p>
                         <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
+                        <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
                     <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="url" value="<?php echo $url; ?>">
 
@@ -838,55 +838,94 @@ class eb_setup_wizard {
                     <p> <?php echo get_string( 'setup_sync_note1', 'local_edwiserbridge' ); ?> </p>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" name='eb_setup_sync_all' id='eb_setup_sync_all' >
-                        <label class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?></label>
+                        <!-- <input type="checkbox" name='eb_setup_sync_all' id='eb_setup_sync_all' > -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' name='eb_setup_sync_all' id='eb_setup_sync_all'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?></span>
+                        </label>
+
                     </div>
 
                     <hr>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'user_enrollment', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'user_enrollment_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'user_enrollment', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_enrollment_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>                     
                         
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'user_unenrollment', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'user_unenrollment_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'user_unenrollment', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_unenrollment_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
                         
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'user_creation', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'user_creation_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'user_creation', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_creation_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
                         
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'user_deletion', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'user_deletion_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'user_deletion', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_deletion_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
+
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'user_update', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'user_update_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'user_update', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_update_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
+
+                        
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'course_creation', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'course_creation_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'course_creation', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'course_creation_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
+                        
+
                     </div>
 
                     <div class="eb_setup_inp_wrap">
-                        <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'>
-                        <label class="eb_setup_h2"> <?php echo get_string( 'course_deletion', 'local_edwiserbridge' ); ?></label>
-                        <i class="fa-solid fa-circle-exclamation eb-tooltip"><span class='eb-tooltiptext'><?php echo get_string( 'course_deletion_tip', 'local_edwiserbridge'); ?></span></i>
+                        <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'> -->
+                        <label class='esw-cb-container' >
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'>
+                            <span class='esw-cb-checkmark'></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'course_deletion', 'local_edwiserbridge' ); ?></span>
+                            <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'course_deletion_tip', 'local_edwiserbridge'); ?></span></i>
+                        </label>
+
                     </div>
 
 
@@ -1013,14 +1052,16 @@ class eb_setup_wizard {
 
                         <!-- <form method='POST'> -->
                         <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
-
-                        <a class="eb_setup_btn" target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
-
+                        <a class='eb_setup_btn eb_redirect_to_wp' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
+                        <a style='display: none;' class='eb_setup_btn eb_redirect_to_wp_btn' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
                     </div>
 
                 </div>
 
             </div>
+
+            <div> <?php echo $this->eb_setup_redirection_popup(); ?> </div>
+
 
         </div>
 
@@ -1076,8 +1117,50 @@ class eb_setup_wizard {
 
 
 
+    /**
+     * Setup Wizard close setup.
+     */
+    public function eb_setup_redirection_popup() {
+        global $CFG;
+        ob_start();
+        ?>
+        <div class='eb_setup_wp_redirection_popup' style='display: none;'>
+            <div class='eb_setup_popup_content'>
 
+                <div class='eb_setup_h2 es-p-t-20'>
+                    <?php echo 'WooCommerce products of your Moodle courses creating'; ?>
+                </div>
 
+                <div class='eb_setup_product_sync_progress_images'>
+
+                    <div class='eb_setup_users_sync_wp_img'>
+                        <img src="<?php echo 'images/moodle-logo.png'; ?>" />
+                    </div>
+
+                    <div class='eb_setup_product_sync_progress_arrows'>
+                        <div class="animated  animated--on-hover mt-2">
+                            <span class="animated__text">
+                                <i class="fa-solid fa-angle-right" style='color:#bedbe2;width:7px;'></i>
+                                <i class="fa-solid fa-angle-right" style='color:#76bccc;width:7px;'></i>
+                                <i class="fa-solid fa-angle-right" style='color:#5abec3;width:7px;'></i>
+                                <i class="fa-solid fa-angle-right" style='color:#14979d;width:7px;'></i>
+                                <i class="fa-solid fa-angle-right" style='color:#007075;width:7px;'></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class='eb_setup_users_sync_mdl_img'>
+                        <img src="<?php echo 'images/wp-logo.png'; ?>" />
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
 
 
 }

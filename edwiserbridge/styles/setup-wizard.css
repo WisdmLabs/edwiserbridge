@@ -40,6 +40,11 @@
     padding: 30px 0px;
 }
 
+.es-p-t-20{
+    padding-top: 20px;
+}
+
+
 .eb_setup_popup fieldset{
     display: block;
     margin-inline-start: 2px;
@@ -59,6 +64,80 @@
     color: #FFD21E;
     font-size: 40px;
 }
+
+
+.eb_setup_wp_redirection_popup .eb_setup_popup_content{
+    width: 80%;
+}
+
+
+/* ---- Animated arrows ---- */
+.animated {
+    position: relative;
+    margin-right: 20px;
+    margin-left: 20px;
+    max-width: 200px;
+    overflow: hidden;
+    line-height: 3rem;
+    height: 3rem;
+}
+
+
+.animated__text .fa-solid.fa-angle-right{
+    width: 7px;
+    vertical-align: top;
+}
+
+
+.animated__text {
+    font-size: 21px;
+    color: #00A1A8;
+    position: absolute;
+    animation: 1s bounce ease-in-out infinite paused;
+    white-space: nowrap;
+    top: 0;
+    padding: 0 0.5rem;
+    animation-play-state: running;
+}
+
+
+@keyframes bounce {
+    0%, 5%, 95%, 100% {
+        left: 0%;
+        transform: translate(0, 0);
+    }
+    45%, 55% {
+        left: 100%;
+        transform: translate(-100%, 0);
+    }
+}
+
+/* ----------------------------- */
+
+
+
+.eb_setup_product_sync_progress_images{
+    display: flex;
+    padding: 22px 30px;
+}
+
+/*.eb_setup_users_sync_progress_images > div{
+    width: 33%;
+}*/
+
+.eb_setup_product_sync_progress_images > div{
+    width: 30%;
+}
+
+.eb_setup_product_sync_progress_images > div:first-child{
+    width: 40%;
+}
+
+.eb_setup_wp_redirection_popup{
+
+}
+
+
 
 
 .eb_setup_popup legend{
@@ -132,6 +211,7 @@
     border-radius: 6px;
     padding: 5px 0;
     font-family: sans-serif;
+    font-weight: 400;
 
     
     /* Position the tooltip */
@@ -175,13 +255,102 @@
     width: 100%;
 }
 /*****/
+ 
+
+/* ****  Checkbox styling.    **** */
+
+.esw-cb-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
   
+
+  /* Hide the browser's default checkbox */
+  .esw-cb-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .esw-cb-checkmark {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    height: 20px;
+    width: 20px;
+    /* background-color: #eee; */
+    background-color: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
+    border-radius: 4px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .esw-cb-container:hover input ~ .esw-cb-checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .esw-cb-container input:checked ~ .esw-cb-checkmark {
+    /* background-color: #2196F3; */
+    background-color: #f98012;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .esw-cb-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .esw-cb-container input:checked ~ .esw-cb-checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .esw-cb-container .esw-cb-checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 4px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+
+/* *****   END Checkbox styling  ***** */
+
+
 .eb-setup-header-logo{
     background: #F7F7F7;
     width: 27%;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);   
 }
 
+.es-info-icon{
+    border: 2px solid #fa9336;
+    width: 18px;
+    height: 18px;
+    padding: 5px 5px 5px 5px !important;
+    border-radius: 20px;
+    font-size: 10px !important;
+    line-height: 4px !important;
+}
 
 .eb-setup-header-logo-img-wrap{
     height: 100%;
@@ -455,7 +624,7 @@ a.es_text_links{
 .eb_setup_sec_btn:hover{
     border: 1px solid #133F3F;
     color: #133F3F;
-    text-decoration: none;
+    /*text-decoration: none;*/
 }
 
 .eb_setup_installation_guide .eb_setup_sec_btn{

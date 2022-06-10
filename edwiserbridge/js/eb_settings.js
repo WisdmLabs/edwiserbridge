@@ -1028,6 +1028,26 @@ define("local_edwiserbridge/eb_settings", [
             $('.eb_setup_popup').remove();
         });
 
+
+        $(document).on('click', '.eb_redirect_to_wp', function (event) {
+
+            event.preventDefault();
+            // Create loader.
+            $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_redirection_popup').html() + ' </div>');
+
+            setTimeout( function(){
+                $('.eb_setup_popup').remove();
+                // window.location.replace($(this).attr('href'));
+                $('.eb_redirect_to_wp_btn').trigger('click');
+
+                var redirect = window.open($('.eb_redirect_to_wp').attr('href'), "_blank");
+                redirect.focus();
+            }, 2000 );
+
+        });
+
+
+
             /***************************/
 
 
