@@ -124,26 +124,24 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
 
             case 'user_and_course_sync':
-                if ( ! $data->existing_site ) {
-                    global $CFG;
+                global $CFG;
 
-                   // Update Moodle Wordpress site details.
-                    $existingsynchsettings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
-                    $synchsettings = $existingsynchsettings;
-                    $sitename =  $CFG->eb_setup_wp_site_name;
+                // Update Moodle Wordpress site details.
+                $existingsynchsettings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
+                $synchsettings = $existingsynchsettings;
+                $sitename =  $CFG->eb_setup_wp_site_name;
 
-                    $synchsettings[$sitename] = array(
-                        "course_enrollment"    => $data->user_enrollment,
-                        "course_un_enrollment" => $data->user_unenrollment,
-                        "user_creation"        => $data->user_creation,
-                        "user_deletion"        => $data->user_deletion,
-                        "course_creation"      => $data->course_creation,
-                        "course_deletion"      => $data->course_deletion,
-                        "user_updation"        => $data->user_update,
-                    );
+                $synchsettings[$sitename] = array(
+                    "course_enrollment"    => $data->user_enrollment,
+                    "course_un_enrollment" => $data->user_unenrollment,
+                    "user_creation"        => $data->user_creation,
+                    "user_deletion"        => $data->user_deletion,
+                    "course_creation"      => $data->course_creation,
+                    "course_deletion"      => $data->course_deletion,
+                    "user_updation"        => $data->user_update,
+                );
 
-                    set_config( 'eb_synch_settings', serialize( $synchsettings ) );
-                }
+                set_config( 'eb_synch_settings', serialize( $synchsettings ) );
 
                break;
 
