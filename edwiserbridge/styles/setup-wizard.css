@@ -339,17 +339,17 @@
 .eb-setup-header-logo{
     background: #F7F7F7;
     width: 27%;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);   
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .es-info-icon{
     border: 2px solid #fa9336;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     padding: 5px 5px 5px 5px !important;
     border-radius: 20px;
-    font-size: 10px !important;
-    line-height: 4px !important;
+    font-size: 8px !important;
+    line-height: 3px !important;
 }
 
 .eb-setup-header-logo-img-wrap{
@@ -958,7 +958,7 @@ a.es_text_links{
 
 .eb-setup-step.eb-setup-step-active,
 .eb-setup-step .eb-setup-step-completed {
-cursor: pointer;
+/*cursor: pointer;*/
 }
 
 .eb-setup-step  {

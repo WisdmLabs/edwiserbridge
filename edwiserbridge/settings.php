@@ -87,7 +87,7 @@ $settings->add(
         '',
         '<div class="eb_settings_btn_cont" style="padding:20px;">' . get_string('eb_settings_msg', 'local_edwiserbridge')
             . '<a target="_blank" class="eb_settings_btn" style="padding: 7px 18px; border-radius: 4px; color: white;
-        background-color: #2578dd; margin-left: 5px;" href="' . $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=service'
+        background-color: #2578dd; margin-left: 5px;" href="' . $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php'
             . '" >' . get_string('click_here', 'local_edwiserbridge') . '</a></div>'
     )
 );

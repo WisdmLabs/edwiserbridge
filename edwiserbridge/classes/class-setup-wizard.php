@@ -1093,7 +1093,7 @@ class eb_setup_wizard {
                     <p class='eb_setup_h2'> <?php echo get_string( 'close_quest', 'local_edwiserbridge'); ?></p>
 
                     <div class="eb_setup_user_sync_btn_wrap">
-                        <a href=' <?php echo $CFG->wwwroot; ?>' class='eb_setup_btn' > <?php echo get_string( 'yes', 'local_edwiserbridge'); ?> </a>
+                        <a href=' <?php echo $CFG->wwwroot; ?>' class='eb_setup_sec_btn' > <?php echo get_string( 'yes', 'local_edwiserbridge'); ?> </a>
                         <button class='eb_setup_sec_btn eb_setup_do_not_close'> <?php echo get_string( 'no', 'local_edwiserbridge'); ?> </button>
                     </div>
 
