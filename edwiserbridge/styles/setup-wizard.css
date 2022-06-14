@@ -1052,7 +1052,7 @@ a.es_text_links{
 }
 
 .eb-setup-step .eb-setup-step-completed{
-    cursor: pointer;
+    /*cursor: pointer;*/
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
