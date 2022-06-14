@@ -205,7 +205,7 @@ define("local_edwiserbridge/eb_settings", [
                     M.util.get_string("eb_settings_msg", "local_edwiserbridge") +
                     ' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="' +
                     M.cfg.wwwroot +
-                    '/local/edwiserbridge/edwiserbridge.php?tab=service"> ' +
+                    '/local/edwiserbridge/setup_wizard.php"> ' +
                     M.util.get_string("click_here", "local_edwiserbridge") +
                     " </a></div>"
                 );
@@ -983,11 +983,11 @@ define("local_edwiserbridge/eb_settings", [
                 selection.addRange(range);
 
                 document.execCommand("copy");
-                // temp.remove();
+                temp.remove();
                 // toaster("Title", 400);
-                var parent = $(this).parent();
+                // var parent = $(this).parent();
                 var copy_success = '<p class="eb_setup_copy_success"><i class="fa fa-check" aria-hidden="true"></i>Copied !!</p>';
-                parent.append(copy_success);
+                $(this).append(copy_success);
                 setTimeout(function(){
                     $('.eb_setup_copy_success').remove();
                 }, 2000);
