@@ -623,7 +623,7 @@ a.es_text_links{
 
 .eb_setup_sec_btn:hover{
     border: 1px solid #133F3F;
-    color: #133F3F;
+    color: #133F3F !important;
     /*text-decoration: none;*/
 }
 
