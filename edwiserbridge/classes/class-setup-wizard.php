@@ -545,7 +545,7 @@ class eb_setup_wizard {
                         <div class="eb_setup_hr"><hr></div>
                     </div>
 
-                    <div class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_web_service_h1', 'local_edwiserbridge'); ?> </div>
+                    <div class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_web_service_h2', 'local_edwiserbridge'); ?> </div>
 
                 </div>
 
@@ -702,7 +702,14 @@ class eb_setup_wizard {
             $url = $sites[$sitename]['wp_url'];
         }
 
-        $url = $url . '/wp-admin/options-permalink.php';
+        if(substr($url , -1)=='/') {
+            $url = $url . 'wp-admin/options-permalink.php';
+        } else {
+            $url = $url . '/wp-admin/options-permalink.php';
+        }
+
+
+        // $url = $url . '/wp-admin/options-permalink.php';
 
         ?>
         <div class='eb_setup_check_permalink es-w-80'>
@@ -711,7 +718,7 @@ class eb_setup_wizard {
                 <div>
                     <p class=""> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge') . '<b>' . get_string( 'es_postname', 'local_edwiserbridge') . '</b>' ; ?> </p>
                     <p class="">
-                    <?php echo get_string( 'setup_permalink_click', 'local_edwiserbridge') . '  <a class="es_text_links" href="' . $url . '">' . $url . '</a>  ' . get_string( 'setup_permalink_note2', 'local_edwiserbridge') ; ?> </p>
+                    <?php echo get_string( 'setup_permalink_click', 'local_edwiserbridge') . '  <a class="es_text_links" target="_blank" href="' . $url . '">' . $url . '</a>  ' . get_string( 'setup_permalink_note2', 'local_edwiserbridge') ; ?> </p>
                     <p class=""> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </p>
                 </div>
 

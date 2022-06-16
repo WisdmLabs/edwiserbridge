@@ -326,7 +326,9 @@ $string['setup_enble_settings'] = 'Enable the Settings';
 
 $string['setup_web_service_note1'] = 'Web service configuration is required for connecting Moodle with your WordPress site. ';
 $string['setup_web_service_h1'] = 'You can ‘create a new web service’ by selecting from the dropdown if you are configuring for the first time.';
-$string['setup_web_service_h1'] = 'Select an existing web service from the dropdown if you have previously configured Edwiser Bridge plugin';
+$string['setup_web_service_h2'] = 'Select an existing web service from the dropdown if you have previously configured Edwiser Bridge plugin';
+
+
 
 
 $string['setup_wp_site_note1'] = 'Select the WordPress site that needs to be connected to your Moodle site';
