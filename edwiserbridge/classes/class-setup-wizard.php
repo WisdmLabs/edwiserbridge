@@ -1135,7 +1135,7 @@ class eb_setup_wizard {
             <div class='eb_setup_popup_content'>
 
                 <div class='eb_setup_h2 es-p-t-20'>
-                    <?php echo 'WooCommerce products of your Moodle courses creating'; ?>
+                    <?php echo 'Redirecting to WordPress Setup wizard...'; ?>
                 </div>
 
                 <div class='eb_setup_product_sync_progress_images'>

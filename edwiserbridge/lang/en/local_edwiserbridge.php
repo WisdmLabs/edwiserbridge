@@ -338,8 +338,8 @@ $string['name'] = 'Name';
 $string['url'] = 'URL';
 
 
-$string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to .';
-$string['es_postname'] = '‘Postname’';
+$string['setup_permalink_note1'] = 'Check and confirm if the permalink sturcture is set to ';
+$string['es_postname'] = '‘Postname’.';
 $string['setup_permalink_click'] = 'Click on the ';
 $string['setup_permalink_note2'] = ' link. It will open in a new tab and check the permalink structure.';
 
