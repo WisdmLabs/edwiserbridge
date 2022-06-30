@@ -187,7 +187,7 @@ class eb_setup_wizard {
      * Setup Wizard Page submission or refresh handler
      */
     public function eb_setup_handle_page_submission_or_refresh() {
-
+        global $CFG;
         $steps = $this->eb_setup_wizard_get_steps();
         $step  = 'installation_guide';
 
@@ -196,6 +196,9 @@ class eb_setup_wizard {
          */
         if ( isset( $_GET['current_step'] ) && ! empty( $_GET['current_step'] ) ) {
             $step = $_GET['current_step'];
+        }
+        if( isset($CFG->eb_setup_progress) && !empty($CFG->eb_setup_progress) ) {
+            $step = $this->get_next_step($CFG->eb_setup_progress);
         }
 
         return $step;
