@@ -197,7 +197,7 @@ class eb_setup_wizard {
         if ( isset( $_GET['current_step'] ) && ! empty( $_GET['current_step'] ) ) {
             $step = $_GET['current_step'];
         }
-        if( isset($CFG->eb_setup_progress) && !empty($CFG->eb_setup_progress) ) {
+        if( isset($CFG->eb_setup_progress) && !empty($CFG->eb_setup_progress) && !isset($step) ) {
             $step = $this->get_next_step($CFG->eb_setup_progress);
         }
 
@@ -839,6 +839,20 @@ class eb_setup_wizard {
         $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
         $nexturl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $next_step;
 
+        $synchsettings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
+        $sitename =  $CFG->eb_setup_wp_site_name;
+        $data = $synchsettings[$sitename];
+        $oldsettings = array(
+            "course_enrollment"    => isset($data['course_enrollment']) ? $data['course_enrollment'] : 0,
+            "course_un_enrollment" => isset($data['course_un_enrollment']) ? $data['course_un_enrollment'] : 0,
+            "user_creation"        => isset($data['user_creation']) ? $data['user_creation'] : 0,
+            "user_deletion"        => isset($data['user_deletion']) ? $data['user_deletion'] : 0,
+            "course_creation"      => isset($data['course_creation']) ? $data['course_creation'] : 0,
+            "course_deletion"      => isset($data['course_deletion']) ? $data['course_deletion'] : 0,
+            "user_updation"        => isset($data['user_updation']) ? $data['user_updation'] : 0,
+        );
+        $sum = array_sum($oldsettings);
+        
         ?>
         <div class="eb_setup_user_and_course_sync es-p-t-b-30 es-w-80">
             <div>
@@ -850,7 +864,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" name='eb_setup_sync_all' id='eb_setup_sync_all' > -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' name='eb_setup_sync_all' id='eb_setup_sync_all'>
+                            <input type='checkbox' name='eb_setup_sync_all' id='eb_setup_sync_all' <?php echo $sum == 7 ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?></span>
                         </label>
@@ -862,7 +876,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment'>
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_enrollment' id='eb_setup_sync_user_enrollment' <?php echo $oldsettings['course_enrollment'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'user_enrollment', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_enrollment_tip', 'local_edwiserbridge'); ?></span></i>
@@ -873,7 +887,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment'>
+                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_user_unenrollment' id='eb_setup_sync_user_unenrollment' <?php echo $oldsettings['course_un_enrollment'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'user_unenrollment', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_unenrollment_tip', 'local_edwiserbridge'); ?></span></i>
@@ -884,7 +898,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation'>
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_creation' id='eb_setup_sync_user_creation' <?php echo $oldsettings['user_creation'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'user_creation', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_creation_tip', 'local_edwiserbridge'); ?></span></i>
@@ -895,7 +909,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion'>
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_deletion' id='eb_setup_sync_user_deletion' <?php echo $oldsettings['user_deletion'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'user_deletion', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_deletion_tip', 'local_edwiserbridge'); ?></span></i>
@@ -906,7 +920,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update'>
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_user_update' id='eb_setup_sync_user_update' <?php echo $oldsettings['user_updation'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'user_update', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'user_update_tip', 'local_edwiserbridge'); ?></span></i>
@@ -918,7 +932,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation'>
+                            <input type='checkbox' class='eb_setup_sync_cb' name='eb_setup_sync_course_creation' id='eb_setup_sync_course_creation' <?php echo $oldsettings['course_creation'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'course_creation', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'course_creation_tip', 'local_edwiserbridge'); ?></span></i>
@@ -930,7 +944,7 @@ class eb_setup_wizard {
                     <div class="eb_setup_inp_wrap">
                         <!-- <input type="checkbox" class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'> -->
                         <label class='esw-cb-container' >
-                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion'>
+                            <input type='checkbox' class="eb_setup_sync_cb" name='eb_setup_sync_course_deletion' id='eb_setup_sync_course_deletion' <?php echo $oldsettings['course_deletion'] ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
                             <span class="eb_setup_h2"> <?php echo get_string( 'course_deletion', 'local_edwiserbridge' ); ?></span>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'course_deletion_tip', 'local_edwiserbridge'); ?></span></i>
