@@ -162,6 +162,10 @@ class eb_setup_wizard {
                         </li>
 
                         <?php
+                    } else{
+                        if ( $key === $progress ) {
+                            $completed = 0;
+                        }
                     }
                 }
                 ?>
@@ -196,9 +200,10 @@ class eb_setup_wizard {
          */
         if ( isset( $_GET['current_step'] ) && ! empty( $_GET['current_step'] ) ) {
             $step = $_GET['current_step'];
-        }
-        if( isset($CFG->eb_setup_progress) && !empty($CFG->eb_setup_progress) && !isset($step) ) {
+        } elseif ( isset($CFG->eb_setup_progress) && !empty($CFG->eb_setup_progress) && !isset($step) ) {
             $step = $this->get_next_step($CFG->eb_setup_progress);
+        } else{
+            $step = 'installation_guide';
         }
 
         return $step;
