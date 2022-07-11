@@ -452,6 +452,7 @@ class eb_setup_wizard {
 
 
     public function eb_setup_plugin_configuration($ajax = 1){
+        global $CFG;
 
         if ( $ajax ) {
             ob_start();
@@ -460,6 +461,24 @@ class eb_setup_wizard {
         $step = 'mdl_plugin_config';
         $is_next_sub_step  = 0;
 
+        $setting_enabled = "style='color:#1AB900;'";
+        $protocols = $CFG->webserviceprotocols;
+        if ( in_array( 'rest', explode(',', $protocols) ) ) {
+            $protocols = 1;
+        }
+        else{
+            $protocols = 0;
+        }
+        $webservice = $CFG->enablewebservices === '1' ? 1 : 0;
+        $password_policy = $CFG->passwordpolicy === '0' ? 1 : 0;
+        $extended_char = $CFG->extendedusernamechars === '1' ? 1 : 0;
+
+        if($protocols == 1 && $webservice == 1 && $password_policy == 1 && $extended_char == 1){
+            $all_enabled = 1;
+        }
+        else{
+            $all_enabled = 0;
+        }
 
         $next_step = $this->get_next_step( $step );
 
@@ -472,22 +491,22 @@ class eb_setup_wizard {
                 <div class="eb_plugin_configuration_checks">
 
                     <p class="eb_setup_h3">
-                        <i class="fa-solid fa-circle-check eb_enable_rest_protocol"></i> <?php echo get_string( 'no_1', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?>
+                        <i class="fa-solid fa-circle-check eb_enable_rest_protocol" <?php echo $protocols === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_1', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_rest_tip', 'local_edwiserbridge'); ?></span></i> 
                      </p>
 
                     <p class="eb_setup_h3">
-                        <i class="fa-solid fa-circle-check eb_enable_web_service"></i> <?php echo get_string( 'no_2', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?>
+                        <i class="fa-solid fa-circle-check eb_enable_web_service" <?php echo $webservice === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_2', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_service_tip', 'local_edwiserbridge'); ?></span></i> 
                     </p>
 
                     <p class="eb_setup_h3">
-                        <i class="fa-solid fa-circle-check eb_disable_pwd_policy"></i> <?php echo get_string( 'no_3', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?>
+                        <i class="fa-solid fa-circle-check eb_disable_pwd_policy" <?php echo $password_policy === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_3', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'disable_passw_policy_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
 
                     <p class="eb_setup_h3">
-                        <i class="fa-solid fa-circle-check eb_allow_extended_char"></i> <?php echo get_string( 'no_4', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> 
+                        <i class="fa-solid fa-circle-check eb_allow_extended_char" <?php echo $extended_char === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_4', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> 
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'allow_exte_char_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
 
@@ -495,7 +514,7 @@ class eb_setup_wizard {
 
                 </div>
 
-                <div>
+                <div <?php echo $all_enabled === 1 ? 'style="display:none;"' : '' ?> >
                     <span class="eb_enable_plugin_settings_label"> <?php echo get_string( 'setup_mdl_plugin_note2', 'local_edwiserbridge' ); ?> </span>
 
                     <button class="eb_setup_btn eb_enable_plugin_settings" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_enble_settings', 'local_edwiserbridge' ); ?> </button>
@@ -504,7 +523,7 @@ class eb_setup_wizard {
                 <div class="eb_setup_btn_wrap">
                     
 
-                    <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                    <button class="eb_setup_btn eb_setup_save_and_continue" <?php echo $all_enabled === 1 ? 'style="display:initial;"' : '' ?> data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
 
 
                 </div>
@@ -846,17 +865,33 @@ class eb_setup_wizard {
 
         $synchsettings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
         $sitename =  $CFG->eb_setup_wp_site_name;
-        $data = $synchsettings[$sitename];
-        $oldsettings = array(
-            "course_enrollment"    => isset($data['course_enrollment']) ? $data['course_enrollment'] : 0,
-            "course_un_enrollment" => isset($data['course_un_enrollment']) ? $data['course_un_enrollment'] : 0,
-            "user_creation"        => isset($data['user_creation']) ? $data['user_creation'] : 0,
-            "user_deletion"        => isset($data['user_deletion']) ? $data['user_deletion'] : 0,
-            "course_creation"      => isset($data['course_creation']) ? $data['course_creation'] : 0,
-            "course_deletion"      => isset($data['course_deletion']) ? $data['course_deletion'] : 0,
-            "user_updation"        => isset($data['user_updation']) ? $data['user_updation'] : 0,
-        );
-        $sum = array_sum($oldsettings);
+        if(isset($synchsettings[$sitename])){
+        
+            $data = $synchsettings[$sitename];
+            $oldsettings = array(
+                "course_enrollment"    => isset($data['course_enrollment']) ? $data['course_enrollment'] : 0,
+                "course_un_enrollment" => isset($data['course_un_enrollment']) ? $data['course_un_enrollment'] : 0,
+                "user_creation"        => isset($data['user_creation']) ? $data['user_creation'] : 0,
+                "user_deletion"        => isset($data['user_deletion']) ? $data['user_deletion'] : 0,
+                "course_creation"      => isset($data['course_creation']) ? $data['course_creation'] : 0,
+                "course_deletion"      => isset($data['course_deletion']) ? $data['course_deletion'] : 0,
+                "user_updation"        => isset($data['user_updation']) ? $data['user_updation'] : 0,
+            );
+            $sum = array_sum($oldsettings);
+        }
+        else{
+            $oldsettings = array(
+                "course_enrollment"    => 1,
+                "course_un_enrollment" => 1,
+                "user_creation"        => 1,
+                "user_deletion"        => 1,
+                "course_creation"      => 1,
+                "course_deletion"      => 1,
+                "user_updation"        => 1,
+            );
+            $sum = 7;
+            $recomended = 1;
+        }
         
         ?>
         <div class="eb_setup_user_and_course_sync es-p-t-b-30 es-w-80">
@@ -871,7 +906,7 @@ class eb_setup_wizard {
                         <label class='esw-cb-container' >
                             <input type='checkbox' name='eb_setup_sync_all' id='eb_setup_sync_all' <?php echo $sum == 7 ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
-                            <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?> <?php echo isset($recomended) ? get_string( 'user_and_course_sync_recomended', 'local_edwiserbridge' ) : '' ?></span>
                         </label>
 
                     </div>
