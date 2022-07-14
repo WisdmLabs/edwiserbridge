@@ -627,7 +627,7 @@ define("local_edwiserbridge/eb_settings", [
                 window.history.replaceState( null, null, url );
             }
 
-            function handle_step_progress( current_step, next_step ) {
+            function handle_step_progress( current_step, next_step, is_next_sub_step, parent_step ) {
                 /**
                  * 1. Mark current step as active and 
                  * 2. Mark previous step as completed.
@@ -776,10 +776,25 @@ define("local_edwiserbridge/eb_settings", [
 
                     change_url( next_step );
 
-                    handle_step_progress( current_step, next_step );
+
+                    // Dummy value.
+                    var parent_step = 1;
+
+                    handle_step_progress( current_step, next_step, is_next_sub_step, parent_step );
 
                     $('.eb-setup-header-title').html(response.title);
                     $('.eb-setup-content').html(response.html_data);
+
+
+                    if ( 'complete_details' == next_step ) {
+                        $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
+
+
+                        setTimeout(function(){
+                            $('.eb_setup_popup').remove();
+                        }, 2000);
+                    }
+
 
                     return response;
                 }).fail(function(response) {
@@ -790,6 +805,22 @@ define("local_edwiserbridge/eb_settings", [
 
 
             });
+
+
+
+            // Adding for refresh page condition
+            if ( $(".eb_setup_wp_completion_success_popup").length) {
+                // if ( 'complete_details' == next_step ) {
+                    $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
+
+
+                    setTimeout(function(){
+                        $('.eb_setup_popup').remove();
+                    }, 2000);
+                // }
+            }
+
+
 
 
 
@@ -1014,7 +1045,7 @@ define("local_edwiserbridge/eb_settings", [
                 })[0].click()
             });
 
-            /**
+        /**
          * Close setup.
          */
         $('.eb-setup-close-icon').click(function(){
@@ -1048,7 +1079,7 @@ define("local_edwiserbridge/eb_settings", [
 
 
 
-            /***************************/
+        /***************************/
 
 
         });

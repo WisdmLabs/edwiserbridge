@@ -55,52 +55,60 @@ class eb_setup_wizard {
          */
         $steps = array(
             'installation_guide' => array(
-                'name'     => 'Edwiser Bridge FREE plugin installation guide',
-                'title'    => 'Edwiser Bridge FREE plugin installation guide',
-                'function' => 'eb_setup_installation_guide',
-                'sub_step' => 0,
+                'name'        => 'Edwiser Bridge FREE plugin installation guide',
+                'title'       => 'Edwiser Bridge FREE plugin installation guide',
+                'function'    => 'eb_setup_installation_guide',
+                'parent_step' => 'installation_guide',
+                'sub_step'    => 0,
             ),
             'mdl_plugin_config' => array(
-                'name'     => 'Edwiser Bridge Moodle Plugin configuration',
-                'title'    => 'Edwiser Bridge - Moodle Plugin configuration',
-                'function' => 'eb_setup_plugin_configuration',
-                'sub_step' => 0,
+                'name'        => 'Edwiser Bridge Moodle Plugin configuration',
+                'title'       => 'Edwiser Bridge - Moodle Plugin configuration',
+                'function'    => 'eb_setup_plugin_configuration',
+                'parent_step' => 'mdl_plugin_config',
+                'sub_step'    => 0,
             ),
             'web_service' => array(
-                'name'     => 'Setting up Web service',
-                'title'    => 'Setting up Web service',
-                'function' => 'eb_setup_web_service',
-                'sub_step' => 0,
+                'name'        => 'Setting up Web service',
+                'title'       => 'Setting up Web service',
+                'function'    => 'eb_setup_web_service',
+                'parent_step' => 'web_service',
+                'sub_step'    => 0,
             ),
             'wordpress_site_details' => array(
-                'name'     => 'Setting up Web service',
-                'title'    => 'WordPress site details',
-                'function' => 'eb_setup_wordpress_site_details',
-                'sub_step' => 1,
+                'name'        => 'WordPress site details',
+                'title'       => 'WordPress site details',
+                'function'    => 'eb_setup_wordpress_site_details',
+                'parent_step' => 'wordpress_site_details',
+                'sub_step'    => 0,
             ),
             'check_permalink' => array(
-                'name'     => 'Setting up Web service',
-                'title'    => 'Check permalink structure',
-                'function' => 'eb_setup_check_permalink',
-                'sub_step' => 1,
+                'name'        => 'Check permalink structure',
+                'title'       => 'Check permalink structure',
+                'function'    => 'eb_setup_check_permalink',
+                'parent_step' => 'wordpress_site_details',
+                'sub_step'    => 1,
             ),
             'test_connection' => array(
-                'name'     => 'Setting up Web service',
-                'title'    => 'Test connection between Moodle and WordPress',
-                'function' => 'eb_setup_test_connection',
-                'sub_step' => 1,
+                'name'        => 'Test connection between Moodle and WordPress',
+                'title'       => 'Test connection between Moodle and WordPress',
+                'function'    => 'eb_setup_test_connection',
+                'parent_step' => 'wordpress_site_details',
+                'sub_step'    => 0,
             ),
             'user_and_course_sync' => array(
-                'name'     => 'Setting up User and course sync',
-                'title'     => 'Set data synchronization events',
-                'function' => 'eb_setup_user_and_course_sync',
-                'sub_step' => 0,
+                'name'        => 'Setting up User and course sync',
+                'title'       => 'Set data synchronization events',
+                'function'    => 'eb_setup_user_and_course_sync',
+                'parent_step' => 'user_and_course_sync',
+                'sub_step'    => 0,
             ),
             'complete_details' => array(
-                'name'     => 'Setting up User and course sync',
-                'title'     => 'Edwiser Bridge FREE Moodle plugin setup complete',
-                'function' => 'eb_setup_complete_details',
-                'sub_step' => 1,
+                'name'        => 'Edwiser Bridge FREE Moodle plugin setup complete',
+                'title'       => 'Edwiser Bridge FREE Moodle plugin setup complete',
+                'function'    => 'eb_setup_complete_details',
+                'parent_step' => 'user_and_course_sync',
+                'sub_step'    => 0,
             )
         );
 
@@ -142,11 +150,9 @@ class eb_setup_wizard {
                         if ( 1 === $completed ) {
                             $class = 'eb-setup-step-completed';
                             $html  = '<i class="fa-solid fa-circle-check eb_setup_sidebar_progress_icons"></i>';
-                            // $html  = '<span class="dashicons dashicons-arrow-right-alt2"></span>';
                         } elseif ( $current_step === $key ) {
                             $class = 'eb-setup-step-active';
                             $html  = '</i><i class="fa-solid fa-circle-chevron-right eb_setup_sidebar_progress_icons"></i>';
-                            // $html  = '<i class="fa-solid fa-circle-chevron-right eb_setup_sidebar_progress_icons"></i>';
                         }
 
                         if ( $key === $progress ) {
@@ -550,7 +556,7 @@ class eb_setup_wizard {
         }
 
         $step = 'web_service';
-        $is_next_sub_step  = 1;
+        $is_next_sub_step  = 0;
 
         $next_step = $this->get_next_step( $step );
 
@@ -1100,6 +1106,13 @@ class eb_setup_wizard {
                     </div>
 
 
+                    <div class="eb_setup_separator">
+                        <div class="eb_setup_hr"><hr></div>
+                        <div> <span> <?php echo get_string( 'or', 'local_edwiserbridge'); ?> </span> </div>
+                        <div class="eb_setup_hr"><hr></div>
+                    </div>
+
+
                     <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note3', 'local_edwiserbridge'); ?> </p>
 
                     <button class="eb_setup_sec_btn eb_setup_download_creds"> <?php echo get_string( 'mdl_edwiser_bridge_txt_download', 'local_edwiserbridge' ); ?> </button>
@@ -1116,7 +1129,7 @@ class eb_setup_wizard {
 
                         <!-- <form method='POST'> -->
                         <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
-                        <a class='eb_setup_btn eb_redirect_to_wp' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
+                        <a class='eb_setup_btn eb_redirect_to_wp' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'continue_wp_wizard_btn', 'local_edwiserbridge' ); ?> </a>
                         <a style='display: none;' class='eb_setup_btn eb_redirect_to_wp_btn' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
                     </div>
 
@@ -1125,6 +1138,7 @@ class eb_setup_wizard {
             </div>
 
             <div> <?php echo $this->eb_setup_redirection_popup(); ?> </div>
+            <div> <?php echo $this->eb_setup_completion_popup(); ?> </div>
 
 
         </div>
@@ -1225,6 +1239,35 @@ class eb_setup_wizard {
         <?php
         return ob_get_clean();
     }
+
+
+
+
+    /**
+     * Setup Wizard close setup.
+     */
+    public function eb_setup_completion_popup() {
+        global $CFG;
+        ob_start();
+        ?>
+        <div class='eb_setup_wp_completion_success_popup' style='display: none;'>
+            <div class='eb_setup_popup_content'>
+
+                <div class=''>
+                    <p><i class="fa-solid fa-circle-check eb_setup_pupup_success_icon"></i> </p>
+
+                    <p class="eb-completion-succ-h"> <?php echo get_string( 'setup_completion_note5', 'local_edwiserbridge' ); ?></p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
+
 
 
 }

@@ -291,6 +291,7 @@ $string['setup_wp_plugin'] = 'WordPress Plugin';
 $string['setup_mdl_plugin'] = 'Moodle Plugin';
 $string['setup_free'] = 'Free';
 $string['setup_continue_btn'] = 'Continue the setup';
+$string['continue_wp_wizard_btn'] = 'Continue Setup on WordPress';
 
 
 $string['setup_installation_faq'] = 'What to do if I have not installed Wordpress Plugin ';
@@ -366,6 +367,10 @@ $string['setup_completion_note1'] = 'You need to add Moodle credentials to Edwis
 $string['setup_completion_note2'] = 'Copy and Save the following moodle credential to add details on Edwiser Bridge FREE WordPress plugin setup ';
 $string['setup_completion_note3'] = 'Alternately, you can download the Edwiser Bridge Moodle ‘Credentials file’ from here. ';
 $string['setup_completion_note4'] = 'Once you have saved the details please continue with the Edwiser Bridge FREE WordPress setup by clicking on “Continue the setup”. ';
+
+$string['setup_completion_note5'] = 'Edwiser Bridge FREE plugin Setup is Completed.';
+
+
 
 $string['wp_site_details_note'] = 'Click on ‘Test connection’ once you have added the details.';
 

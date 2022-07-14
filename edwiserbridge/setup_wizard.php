@@ -34,28 +34,22 @@ require_once(dirname(__FILE__) . '/lib.php');
 global $CFG, $COURSE, $PAGE;
 
 
-// if ( isset( $_POST['eb_setup_completed'] ) ) {
+$setupwizard = new eb_setup_wizard();
 
-//     $sitename =  $CFG->eb_setup_wp_site_name;
+// Check progress and redirect accordingly.
+$progress  = isset( $CFG->eb_setup_progress ) ? $CFG->eb_setup_progress : '';
+if ( ! empty( $progress ) ) {
 
-//     $sites = get_connection_settings();
-//     $sites = $sites['eb_connection_settings'];
+    $nextstep = $setupwizard->get_next_step( $progress );
 
-//     $url   = '';
-//     if (isset($sites[$sitename])) {
-//         $url   = $sites[$sitename]['wp_url'];
-//     }
+    if ( ! isset( $_GET['current_step'] ) /*|| ( isset( $_GET['current_step'] ) && $_GET['current_step'] != $nextstep )*/ ) {
+        $redirecturl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $nextstep;
+        redirect ($redirecturl);
+    }
+}
 
-//     if(substr($url , -1)=='/') {
-//         redirect( $url . 'wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
-//     } else {
-//         redirect( $url . '/wp-admin/admin.php?page=eb-setup-wizard&current_step=test_connection' );
-//     }
 
-//     // redirect('http://localhost/wp/wp-admin/admin.php?page=eb-setup-wizard');
-//     die();
-//     // header($url . '/wp-admin/admin.php?page=eb-setup-wizard');
-// }
+// Check if the get parameter have same progress.
 
 
 
@@ -75,7 +69,7 @@ $PAGE->requires->strings_for_js(array_keys($strings), 'local_edwiserbridge');
 // Require Login.
 require_login();
 $context = context_system::instance();
-$baseurl = $CFG->wwwroot . '/local/edwiserbridge/edwiserbridge.php?tab=connection';
+$baseurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php';
 
 
 
@@ -108,28 +102,6 @@ $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 echo $OUTPUT->header();
 echo $OUTPUT->container_start();
 
-$setupwizard = new eb_setup_wizard();
-
-
-/*$setupwizard->setup_wizard_header();
-
-?>
-<div class="eb-setup-content-area">
-    <div class="eb-setup-sidebar">
-        <?php
-        $setupwizard->eb_setup_steps_html();
-        ?>
-    </div>
-
-    <div class="eb-setup-content">
-        <?php
-        $setupwizard->eb_setup_installation_guide( 0 );
-        ?>
-    </div>
-</div>
-
-<?php
-$setupwizard->setup_wizard_footer();*/
 
 
 $setupwizard->eb_setup_wizard_template();

@@ -368,19 +368,35 @@
     /* display: block; */
 }
 
+.eb_setup_pupup_success_icon{
+    font-size: 40px;
+    color: #1AB900;
+}
 
+
+.eb-completion-succ-h{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #444444;
+}
 
 .eb-setup-header-title-wrap{
     width: 73%;
     display: flex;
     text-align: center;
-    background: linear-gradient(0deg, #133F3F, #133F3F), #F7F7F7;
+    background: white;
+
+    /*background: linear-gradient(0deg, #133F3F, #133F3F), #F7F7F7;*/
 }
 
 .eb-setup-header-title{
     width: 95%;
     padding: 22px 30px;
-    color: white;
+    /*color: white;*/
+    color: #00a1a8;
     padding: 30px;
     font-weight: 400;
     font-size: 30px;
@@ -390,6 +406,17 @@
     /* flex: none; */
     order: 0;
     flex-grow: 0;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 41px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #00A1A8;
+
     /* margin: 0px 10px;*/
 
 }
