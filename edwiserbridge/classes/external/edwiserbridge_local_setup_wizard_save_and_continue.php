@@ -61,6 +61,10 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
     public static function edwiserbridge_local_setup_wizard_save_and_continue( $data ) {
         global $DB,$CFG;
 
+        $response = array(
+            'html_data' => '',
+            'title'     => ''
+        );
 
         $data = json_decode( $data );
 
@@ -74,6 +78,8 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
         // Check if there are any sub steps available. 
         $function = $steps[$next_step]['function'];
 
+        // Save progress data.
+        set_config('eb_setup_progress', $current_step);
 
        switch ( $current_step ) {
            case 'web_service':
@@ -124,7 +130,6 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
 
             case 'user_and_course_sync':
-                global $CFG;
 
                 // Update Moodle Wordpress site details.
                 $existingsynchsettings = isset($CFG->eb_synch_settings) ? unserialize($CFG->eb_synch_settings) : array();
@@ -145,14 +150,24 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
 
                break;
 
+
+
+
+
+            case 'complete_details':
+
+                set_config('eb_setup_progress', '');
+                
+
+               break;
+
            default:
 
                break;
        }
 
 
-       // Save progress data.
-        set_config('eb_setup_progress', $current_step);
+       
 
 
         // get next step.
@@ -167,14 +182,21 @@ trait edwiserbridge_local_setup_wizard_save_and_continue {
         *    a. User and course sync
         *    b. success screens
         */
-        $next_step_html = $setup_wizard_handler->$function( 1 );
-        $title          = $setup_wizard_handler->eb_get_step_title( $next_step );
+        if ( 'complete_details' != $current_step ) {
+
+            $next_step_html = $setup_wizard_handler->$function( 1 );
+            $title          = $setup_wizard_handler->eb_get_step_title( $next_step );
 
 
-        $response = array(
-            'html_data' => $next_step_html,
-            'title'     => $title
-        );
+
+
+
+
+            $response = array(
+                'html_data' => $next_step_html,
+                'title'     => $title
+            );
+        }
 
         return $response;
 
