@@ -810,14 +810,11 @@ define("local_edwiserbridge/eb_settings", [
 
             // Adding for refresh page condition
             if ( $(".eb_setup_wp_completion_success_popup").length) {
-                // if ( 'complete_details' == next_step ) {
-                    $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
+                $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
 
-
-                    setTimeout(function(){
-                        $('.eb_setup_popup').remove();
-                    }, 2000);
-                // }
+                setTimeout(function(){
+                    $('.eb_setup_popup').remove();
+                }, 2000);
             }
 
 
@@ -1063,6 +1060,43 @@ define("local_edwiserbridge/eb_settings", [
         $(document).on('click', '.eb_redirect_to_wp', function (event) {
 
             event.preventDefault();
+
+
+            // Sending one js request to unset the progress.
+            var current = $(this);
+            var current_step = $(this).data('step');
+            var next_step = $(this).data('next-step');
+            var is_next_sub_step = $(this).data('is-next-sub-step');
+
+
+            var data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+            data = JSON.stringify(data);
+
+
+            var promises = ajax.call([{
+                methodname: "edwiserbridge_local_setup_wizard_save_and_continue",
+                args: { data : data },
+            }, ]);
+
+            promises[0].done(function(response) {
+
+                return response;
+            }).fail(function(response) {
+                return 0;
+            }); //promise end
+
+
+
+
+
+
+
+
+
+
+
+
             // Create loader.
             $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_redirection_popup').html() + ' </div>');
 

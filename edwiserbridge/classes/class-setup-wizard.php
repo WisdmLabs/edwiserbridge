@@ -344,7 +344,7 @@ class eb_setup_wizard {
         $found_step = 0;
 
         foreach ($steps as $key => $value) {
-            if ( $found_step ) { 
+            if ( $found_step ) {
                 $step = $key;
                 break;
             }
@@ -1129,7 +1129,8 @@ class eb_setup_wizard {
 
                         <!-- <form method='POST'> -->
                         <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
-                        <a class='eb_setup_btn eb_redirect_to_wp' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'continue_wp_wizard_btn', 'local_edwiserbridge' ); ?> </a>
+                        <a class='eb_setup_btn eb_redirect_to_wp' target='_blank' href="<?php echo $wp_url; ?>" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>'> <?php echo get_string( 'continue_wp_wizard_btn', 'local_edwiserbridge' ); ?> </a>
+
                         <a style='display: none;' class='eb_setup_btn eb_redirect_to_wp_btn' target='_blank' href="<?php echo $wp_url; ?>"> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </a>
                     </div>
 
