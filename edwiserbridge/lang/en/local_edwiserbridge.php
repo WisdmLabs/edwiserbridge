@@ -353,6 +353,7 @@ $string['skip'] = 'Skip';
 
 $string['setup_sync_note1'] = 'Set your Moodle to WordPress data synchronization preferences';
 $string['select_all'] = 'Select all';
+$string['recommended'] = '(Recommended)';
 $string['user_enrollment'] = 'User enrollment';
 $string['user_unenrollment'] = 'User unenrollment';
 $string['user_creation'] = 'User Creation';

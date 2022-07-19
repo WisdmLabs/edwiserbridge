@@ -87,7 +87,7 @@ class eb_setup_wizard {
                 'title'       => 'Check permalink structure',
                 'function'    => 'eb_setup_check_permalink',
                 'parent_step' => 'wordpress_site_details',
-                'sub_step'    => 1,
+                'sub_step'    => 0,
             ),
             'test_connection' => array(
                 'name'        => 'Test connection between Moodle and WordPress',
@@ -912,7 +912,7 @@ class eb_setup_wizard {
                         <label class='esw-cb-container' >
                             <input type='checkbox' name='eb_setup_sync_all' id='eb_setup_sync_all' <?php echo $sum == 7 ? 'checked' : '' ?>>
                             <span class='esw-cb-checkmark'></span>
-                            <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?> <?php echo isset($recomended) ? get_string( 'user_and_course_sync_recomended', 'local_edwiserbridge' ) : '' ?></span>
+                            <span class="eb_setup_h2"> <?php echo get_string( 'select_all', 'local_edwiserbridge' ); ?> <?php echo get_string( 'recommended', 'local_edwiserbridge' ); ?></span>
                         </label>
 
                     </div>
