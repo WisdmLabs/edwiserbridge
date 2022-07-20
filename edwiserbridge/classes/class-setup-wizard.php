@@ -147,15 +147,17 @@ class eb_setup_wizard {
                         $class = '';
                         $html  = '<span class="eb-setup-step-circle eb_setup_sidebar_progress_icons" > </span>';
 
-                        if ( 1 === $completed ) {
-                            $class = 'eb-setup-step-completed';
-                            $html  = '<i class="fa-solid fa-circle-check eb_setup_sidebar_progress_icons"></i>';
-                        } elseif ( $current_step === $key ) {
+                        if ( $current_step === $key ) {
                             $class = 'eb-setup-step-active';
                             $html  = '</i><i class="fa-solid fa-circle-chevron-right eb_setup_sidebar_progress_icons"></i>';
+                            $completed = 0;
+                            
+                        } elseif ( 1 === $completed ) {
+                            $class = 'eb-setup-step-completed';
+                            $html  = '<i class="fa-solid fa-circle-check eb_setup_sidebar_progress_icons"></i>';
                         }
 
-                        if ( $key === $progress ) {
+                        if ( empty( $current_step ) && $key === $progress ) {
                             $completed = 0;
                         }
 

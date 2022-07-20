@@ -990,6 +990,28 @@ define("local_edwiserbridge/eb_settings", [
                 }
             });
 
+            $(document).on('click', '.eb_setup_sync_cb', function (event) {
+                if(this.checked){
+                    var all_checked = 1;
+                    $(".eb_setup_sync_cb").each(function() {
+
+                        if( ! this.checked ){
+                            all_checked = 0;
+                        }
+
+                    });
+
+                    if ( all_checked ) {
+                        $('#eb_setup_sync_all').prop('checked', true);
+                    }
+
+                } else{
+                    $('#eb_setup_sync_all').prop('checked', false);
+                }
+            });
+
+            
+
 
 
             /**
