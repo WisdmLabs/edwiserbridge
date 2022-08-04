@@ -106,7 +106,6 @@ $setupwizard->eb_setup_wizard_template();
 
 // End page container
 echo $OUTPUT->container_end();
-echo $OUTPUT->footer();
 
 // Output footer.
 echo $OUTPUT->footer();

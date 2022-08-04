@@ -59,6 +59,7 @@ class eb_setup_wizard {
                 'title'       => 'Edwiser Bridge FREE plugin installation guide',
                 'function'    => 'eb_setup_installation_guide',
                 'parent_step' => 'installation_guide',
+                'priority'    => 10,
                 'sub_step'    => 0,
             ),
             'mdl_plugin_config' => array(
@@ -66,6 +67,7 @@ class eb_setup_wizard {
                 'title'       => 'Edwiser Bridge - Moodle Plugin configuration',
                 'function'    => 'eb_setup_plugin_configuration',
                 'parent_step' => 'mdl_plugin_config',
+                'priority'    => 20,
                 'sub_step'    => 0,
             ),
             'web_service' => array(
@@ -73,6 +75,7 @@ class eb_setup_wizard {
                 'title'       => 'Setting up Web service',
                 'function'    => 'eb_setup_web_service',
                 'parent_step' => 'web_service',
+                'priority'    => 30,
                 'sub_step'    => 0,
             ),
             'wordpress_site_details' => array(
@@ -80,6 +83,7 @@ class eb_setup_wizard {
                 'title'       => 'WordPress site details',
                 'function'    => 'eb_setup_wordpress_site_details',
                 'parent_step' => 'wordpress_site_details',
+                'priority'    => 40,
                 'sub_step'    => 0,
             ),
             'check_permalink' => array(
@@ -87,6 +91,7 @@ class eb_setup_wizard {
                 'title'       => 'Check permalink structure',
                 'function'    => 'eb_setup_check_permalink',
                 'parent_step' => 'wordpress_site_details',
+                'priority'    => 50,
                 'sub_step'    => 0,
             ),
             'test_connection' => array(
@@ -94,6 +99,7 @@ class eb_setup_wizard {
                 'title'       => 'Test connection between Moodle and WordPress',
                 'function'    => 'eb_setup_test_connection',
                 'parent_step' => 'wordpress_site_details',
+                'priority'    => 60,
                 'sub_step'    => 0,
             ),
             'user_and_course_sync' => array(
@@ -101,6 +107,7 @@ class eb_setup_wizard {
                 'title'       => 'Setting up User and course sync',
                 'function'    => 'eb_setup_user_and_course_sync',
                 'parent_step' => 'user_and_course_sync',
+                'priority'    => 70,
                 'sub_step'    => 0,
             ),
             'complete_details' => array(
@@ -108,6 +115,7 @@ class eb_setup_wizard {
                 'title'       => 'Edwiser Bridge FREE Moodle plugin setup complete',
                 'function'    => 'eb_setup_complete_details',
                 'parent_step' => 'user_and_course_sync',
+                'priority'    => 80,
                 'sub_step'    => 0,
             )
         );
@@ -647,6 +655,7 @@ class eb_setup_wizard {
             ob_start();
         }
         $step     = 'wordpress_site_details';
+        $class    = 'eb_setup_wp_site_details_wrap';
         $is_next_sub_step  = 1;
         $sites = get_site_list();
         // $sites1 = get_connection_settings();
@@ -656,6 +665,20 @@ class eb_setup_wizard {
         $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
 
         $sitename =  isset( $CFG->eb_setup_wp_site_name ) ? $CFG->eb_setup_wp_site_name : '';
+
+        if ( ! empty( $sitename ) ) {
+            $wpsites = get_connection_settings();
+            $wpsites = $wpsites['eb_connection_settings'];
+
+            $name = '';
+            $url = '';
+            if ( isset( $wpsites[$sitename] )) {
+                $name = $sitename;
+                $url = $wpsites[$sitename]['wp_url'];
+                $class = '';
+            }
+        }
+        
 
 
         ?>
@@ -692,22 +715,22 @@ class eb_setup_wizard {
 
                     </div>
 
-                    <div class=" eb_setup_conn_url_inp_wrap eb_setup_wp_site_details_wrap">
+                    <div class=" eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
                         <span> <?php echo get_string( 'setup_wp_site_note2', 'local_edwiserbridge' ); ?> </span>
 
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" >
+                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value='<?php echo $name; ?>' >
                     </div>
 
-                    <div class="eb_setup_conn_url_inp_wrap eb_setup_wp_site_details_wrap">
+                    <div class="eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" >
+                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" value='<?php echo $url; ?>' >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
