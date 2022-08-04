@@ -98,7 +98,7 @@ class eb_setup_wizard {
             ),
             'user_and_course_sync' => array(
                 'name'        => 'Setting up User and course sync',
-                'title'       => 'Set data synchronization events',
+                'title'       => 'Setting up User and course sync',
                 'function'    => 'eb_setup_user_and_course_sync',
                 'parent_step' => 'user_and_course_sync',
                 'sub_step'    => 0,
@@ -147,17 +147,19 @@ class eb_setup_wizard {
                         $class = '';
                         $html  = '<span class="eb-setup-step-circle eb_setup_sidebar_progress_icons" > </span>';
 
-                        if ( $current_step === $key ) {
-                            $class = 'eb-setup-step-active';
-                            $html  = '</i><i class="fa-solid fa-circle-chevron-right eb_setup_sidebar_progress_icons"></i>';
-                            $completed = 0;
-                            
-                        } elseif ( 1 === $completed ) {
+                        if ( 1 === $completed ) {
                             $class = 'eb-setup-step-completed';
                             $html  = '<i class="fa-solid fa-circle-check eb_setup_sidebar_progress_icons"></i>';
                         }
 
-                        if ( empty( $current_step ) && $key === $progress ) {
+                        if ( $current_step === $key ) {
+                            $class = 'eb-setup-step-active';
+                            $html  = '</i><i class="fa-solid fa-circle-chevron-right eb_setup_sidebar_progress_icons"></i>';
+                            // $completed = 0;
+                            
+                        } 
+
+                        if ( /*empty( $current_step ) &&*/ $key === $progress ) {
                             $completed = 0;
                         }
 
@@ -409,7 +411,7 @@ class eb_setup_wizard {
                 </div>
 
 
-                <p class="eb_setup_p"> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </p>
+                <span class="eb_setup_p"> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
 
                 <div class="eb_setup_btn_wrap">
                     <button class="eb_setup_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>'> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
@@ -418,8 +420,8 @@ class eb_setup_wizard {
             </div>
 
             <div>
-                <div>
-                    <div class="accordion"> <i class="fa-solid fa-circle-question"></i> <!-- <span class="dashicons dashicons-editor-help"></span> --> <?php echo get_string( 'setup_installation_faq', 'local_edwiserbridge' ); ?> <i class="fa-solid fa-chevron-down"></i> <i class="fa-solid fa-chevron-up"></i> <!-- <span class="dashicons dashicons-arrow-down-alt2"></span><span class="dashicons dashicons-arrow-up-alt2"></span> --></div>
+                <div class='es-p-t-10'>
+                    <div class='accordion'> <i class="fa-solid fa-circle-question"></i> <!-- <span class="dashicons dashicons-editor-help"></span> --> <?php echo get_string( 'setup_installation_faq', 'local_edwiserbridge' ); ?> <i class="fa-solid fa-chevron-down"></i> <i class="fa-solid fa-chevron-up"></i> <!-- <span class="dashicons dashicons-arrow-down-alt2"></span><span class="dashicons dashicons-arrow-up-alt2"></span> --></div>
 
                     <div class="panel">
 
@@ -498,25 +500,25 @@ class eb_setup_wizard {
 
                 <div class="eb_plugin_configuration_checks">
 
-                    <p class="eb_setup_h3">
+                    <div class="eb_setup_h3 es-p-b-10">
                         <i class="fa-solid fa-circle-check eb_enable_rest_protocol" <?php echo $protocols === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_1', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check1', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_rest_tip', 'local_edwiserbridge'); ?></span></i> 
-                     </p>
+                     </div>
 
-                    <p class="eb_setup_h3">
+                    <div class="eb_setup_h3 es-p-b-10">
                         <i class="fa-solid fa-circle-check eb_enable_web_service" <?php echo $webservice === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_2', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check2', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'enabling_service_tip', 'local_edwiserbridge'); ?></span></i> 
-                    </p>
+                    </div>
 
-                    <p class="eb_setup_h3">
+                    <div class="eb_setup_h3 es-p-b-10">
                         <i class="fa-solid fa-circle-check eb_disable_pwd_policy" <?php echo $password_policy === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_3', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check3', 'local_edwiserbridge'); ?>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'disable_passw_policy_tip', 'local_edwiserbridge'); ?></span></i>
-                    </p>
+                    </div>
 
-                    <p class="eb_setup_h3">
+                    <div class="eb_setup_h3">
                         <i class="fa-solid fa-circle-check eb_allow_extended_char" <?php echo $extended_char === 1 ? $setting_enabled : '' ?> ></i> <?php echo get_string( 'no_4', 'local_edwiserbridge' ) . ". " . get_string( 'setup_mdl_plugin_check4', 'local_edwiserbridge'); ?> 
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'allow_exte_char_tip', 'local_edwiserbridge'); ?></span></i>
-                    </p>
+                    </div>
 
                     <div class="eb_setup_settings_success_msg"> <i class="fa-solid fa-circle-check"></i> <?php echo get_string( 'setup_mdl_settings_success_msg', 'local_edwiserbridge' ); ?> </div>
 
@@ -552,6 +554,7 @@ class eb_setup_wizard {
 
 
     public function eb_setup_web_service( $ajax = 1 ){
+        global $CFG;
 
         if ( $ajax ) {
             ob_start();
@@ -563,7 +566,8 @@ class eb_setup_wizard {
         $next_step = $this->get_next_step( $step );
 
         $existingservices = eb_get_existing_services();
-
+        $selectedservice =  isset( $CFG->ebexistingserviceselect ) ? $CFG->ebexistingserviceselect : '';
+ 
 
         ?>
         <div class="eb_setup_web_service es-w-80">
@@ -595,8 +599,12 @@ class eb_setup_wizard {
                         <select name="eb_setup_web_service_list" class="eb_setup_inp eb_setup_web_service_list" >
                             <?php
                             foreach ( $existingservices as $key => $value ) {
+                                $selected = '';
+                                if ( $key == $selectedservice ) {
+                                    $selected = 'selected';
+                                }
                             ?>
-                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                                <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $value; ?></option>
                             <?php
                             }
                             ?>
@@ -647,6 +655,9 @@ class eb_setup_wizard {
         $prevstep = $this->get_prev_step( $step );
         $prevurl = $CFG->wwwroot . '/local/edwiserbridge/setup_wizard.php?current_step=' . $prevstep;
 
+        $sitename =  isset( $CFG->eb_setup_wp_site_name ) ? $CFG->eb_setup_wp_site_name : '';
+
+
         ?>
         <div class="eb_setup_wordpress_site_details es-w-80">
             <div>
@@ -666,8 +677,13 @@ class eb_setup_wizard {
                             <option value="create"><?php echo get_string( 'create_wp_site', 'local_edwiserbridge' ); ?></option>
                             <?php
                             foreach ( $sites as $key => $value ) {
+                                $selected = '';
+                                if ( $key == $sitename ) {
+                                    $selected = 'selected';
+                                }
+
                             ?>
-                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                                <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $value; ?></option>
                             <?php
                             }
                             ?>
@@ -677,7 +693,7 @@ class eb_setup_wizard {
                     </div>
 
                     <div class=" eb_setup_conn_url_inp_wrap eb_setup_wp_site_details_wrap">
-                        <span> <?php echo get_string( 'setup_installation_note2', 'local_edwiserbridge' ); ?> </span>
+                        <span> <?php echo get_string( 'setup_wp_site_note2', 'local_edwiserbridge' ); ?> </span>
 
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
@@ -754,7 +770,7 @@ class eb_setup_wizard {
                     <p class=""> <?php echo get_string( 'setup_permalink_note1', 'local_edwiserbridge') . '<b>' . get_string( 'es_postname', 'local_edwiserbridge') . '</b>' ; ?> </p>
                     <p class="">
                     <?php echo get_string( 'setup_permalink_click', 'local_edwiserbridge') . '  <a class="es_text_links" target="_blank" href="' . $url . '">' . $url . '</a>  ' . get_string( 'setup_permalink_note2', 'local_edwiserbridge') ; ?> </p>
-                    <p class=""> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </p>
+                    <div class=""> <?php echo get_string( 'setup_permalink_note3', 'local_edwiserbridge'); ?> </div>
                 </div>
 
 
@@ -1068,14 +1084,14 @@ class eb_setup_wizard {
                 <div>
 
                     <span class='eb_setup_h2' > <?php echo get_string( 'what_next', 'local_edwiserbridge'); ?> </span>
-                    <p class='' > <?php echo get_string( 'setup_completion_note1', 'local_edwiserbridge'); ?> </p>
+                    <div class='' > <?php echo get_string( 'setup_completion_note1', 'local_edwiserbridge'); ?> </div>
 
                 </div>
 
 
                 <div class="eb_setup_complete_card_wrap">
 
-                    <p class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note2', 'local_edwiserbridge'); ?> </p>
+                    <div class="eb_setup_h2"> <i class="fa-solid fa-circle-chevron-right"></i> <?php echo get_string( 'setup_completion_note2', 'local_edwiserbridge'); ?> </div>
 
                     <div class="eb_setup_complete_cards" >
 

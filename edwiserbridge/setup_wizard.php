@@ -89,28 +89,24 @@ $PAGE->requires->css('/local/edwiserbridge/styles/style.css');
 $PAGE->requires->css('/local/edwiserbridge/styles/setup-wizard.css');
 $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_settings.js'));
 
-// $PAGE->requires->js(new moodle_url('/local/edwiserbridge/js/eb_setup_wizard.js'));
-// $PAGE->requires->js_call_amd('local_edwiserbridge/eb_settings', 'init');
 
 
+// Actual page template output starts here. 
 
-// $PAGE->requires->js_call_amd("local_edwiserbridge/edwiser_bridge", "init");
-
-
-/*----------*/
-
+// Output page header.
 echo $OUTPUT->header();
+
+// Start page container
 echo $OUTPUT->container_start();
 
-
-
+// This outputs setup wizard template.
+// This will use classes/class-setup-wizard.php file.
 $setupwizard->eb_setup_wizard_template();
 
 
+// End page container
 echo $OUTPUT->container_end();
 echo $OUTPUT->footer();
 
-
-
-
-
+// Output footer.
+echo $OUTPUT->footer();
