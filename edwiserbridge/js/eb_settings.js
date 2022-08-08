@@ -725,7 +725,7 @@ define("local_edwiserbridge/eb_settings", [
                         var site_name = $('.eb_setup_wp_sites').val();
                         var url       = '';
 
-                        if ( 'create' == site_name ) {
+                        if ( '' != site_name ) {
                             site_name = $('.eb_setup_site_name').val();
                             url       = $('.eb_setup_site_url').val();
                         }
@@ -920,15 +920,15 @@ define("local_edwiserbridge/eb_settings", [
                     $('.eb_setup_wp_details_btn').addClass('disabled');
                 }
 
-
-                if('create' == $(".eb_setup_wp_sites").val()){
-                    $('.eb_setup_wp_site_details_wrap').css('display', 'block');
-                    // var name = $(this).data('name');
-                    // $('.eb_setup_site_name').val(name);
-                    // var token = $(this).data('url');
-                    // $('.eb_setup_site_name').val(token);
+                if('' == $(".eb_setup_wp_sites").val()){
+                    $('.eb_setup_wp_site_details_inp').addClass('eb_setup_wp_site_details_wrap');
                 } else {
-                    $('.eb_setup_wp_site_details_wrap').css('display', 'none');
+                    $('.eb_setup_wp_site_details_inp').removeClass('eb_setup_wp_site_details_wrap');
+
+                    var option = $(this).find(":selected");
+
+                    $('.eb_setup_site_name').val(option.data('name'));
+                    $('.eb_setup_site_url').val(option.data('url'));    
                 }
             });
 
@@ -1077,6 +1077,18 @@ define("local_edwiserbridge/eb_settings", [
         $(document).on('click', '.eb_setup_do_not_close', function (event) {
             $('.eb_setup_popup').remove();
         });
+
+
+        $(document).on('change', '.eb_setup_wp_sites', function (event) {
+            var option = $(this).find(":selected");
+
+            $('.eb_setup_site_name').val(option.data('name'));
+            $('.eb_setup_site_url').val(option.data('url'));
+
+        });
+
+
+
 
 
         $(document).on('click', '.eb_redirect_to_wp', function (event) {

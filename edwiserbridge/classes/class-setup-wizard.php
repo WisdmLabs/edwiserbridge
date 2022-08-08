@@ -560,7 +560,9 @@ class eb_setup_wizard {
 
 
 
-
+    /**
+     *
+     */
     public function eb_setup_web_service( $ajax = 1 ){
         global $CFG;
 
@@ -569,6 +571,7 @@ class eb_setup_wizard {
         }
 
         $step = 'web_service';
+        $disable = 'disabled';
         $is_next_sub_step  = 0;
 
         $next_step = $this->get_next_step( $step );
@@ -610,6 +613,7 @@ class eb_setup_wizard {
                                 $selected = '';
                                 if ( $key == $selectedservice ) {
                                     $selected = 'selected';
+                                    $disable  = '';
                                 }
                             ?>
                                 <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $value; ?></option>
@@ -630,7 +634,7 @@ class eb_setup_wizard {
                     </div>
 
                     <div class="eb_setup_btn_wrap">
-                        <button class="eb_setup_btn disabled eb_setup_web_service_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' disabled> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn eb_setup_web_service_btn eb_setup_save_and_continue <?php echo $disable; ?>" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' <?php echo $disable; ?>> <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
@@ -656,6 +660,7 @@ class eb_setup_wizard {
         }
         $step     = 'wordpress_site_details';
         $class    = 'eb_setup_wp_site_details_wrap';
+        $btnclass = 'disabled';
         $is_next_sub_step  = 1;
         $sites = get_site_list();
         // $sites1 = get_connection_settings();
@@ -666,17 +671,40 @@ class eb_setup_wizard {
 
         $sitename =  isset( $CFG->eb_setup_wp_site_name ) ? $CFG->eb_setup_wp_site_name : '';
 
+        $wpsites = get_connection_settings();
+        $wpsites = $wpsites['eb_connection_settings'];
+
         if ( ! empty( $sitename ) ) {
-            $wpsites = get_connection_settings();
-            $wpsites = $wpsites['eb_connection_settings'];
+            $slectedname = '';
+            $selectedurl = '';
+
+            if ( isset( $wpsites[$sitename] ) ) {
+                $slectedname = $sitename;
+                $selectedurl = $wpsites[$sitename]['wp_url'];
+                $class       = '';
+                $disabled    = '';
+            }
+        }
+
+        $options = '';
+        foreach ( $sites as $key => $value ) {
+            $selected = '';
+            if ( $key == $sitename ) {
+                $selected = 'selected';
+            }
 
             $name = '';
-            $url = '';
-            if ( isset( $wpsites[$sitename] )) {
-                $name = $sitename;
-                $url = $wpsites[$sitename]['wp_url'];
+            $url  = '';
+            if ( isset( $wpsites[$key] ) ) {
+                $name  = $value;
+                $url   = $wpsites[$key]['wp_url'];
                 $class = '';
             }
+
+
+
+
+            $options .=  '<option data-name="'. $value .'" data-url="'. $url .'" value="' . $key . '" '. $selected . '>'. $value .'</option>';
         }
         
 
@@ -689,7 +717,6 @@ class eb_setup_wizard {
 
                     <div class="eb_setup_conn_url_inp_wrap">
                         <p> <?php echo get_string( 'setup_wp_site_note1', 'local_edwiserbridge' ); ?> </p>
-        
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'setup_wp_site_dropdown', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_tip', 'local_edwiserbridge'); ?></span></i>
@@ -698,44 +725,33 @@ class eb_setup_wizard {
                         <select name="eb_setup_wp_sites" class="eb_setup_inp eb_setup_wp_sites" >
                             <option value=""><?php echo get_string( 'select', 'local_edwiserbridge' ); ?></option>
                             <option value="create"><?php echo get_string( 'create_wp_site', 'local_edwiserbridge' ); ?></option>
-                            <?php
-                            foreach ( $sites as $key => $value ) {
-                                $selected = '';
-                                if ( $key == $sitename ) {
-                                    $selected = 'selected';
-                                }
-
-                            ?>
-                                <option value="<?php echo $key; ?>" <?php echo $selected; ?>><?php echo $value; ?></option>
-                            <?php
-                            }
-                            ?>
+                            <?php echo $options; ?>
                         </select>
                         
 
                     </div>
 
-                    <div class=" eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
+                    <div class="eb_setup_wp_site_details_inp eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
                         <span> <?php echo get_string( 'setup_wp_site_note2', 'local_edwiserbridge' ); ?> </span>
 
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value='<?php echo $name; ?>' >
+                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value='<?php echo $slectedname; ?>' >
                     </div>
 
-                    <div class="eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
+                    <div class="eb_setup_wp_site_details_inp eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
                         <p>
                             <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" value='<?php echo $url; ?>' >
+                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" value='<?php echo $selectedurl; ?>' >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
                         <a class="eb_setup_sec_btn" href="<?php echo $prevurl; ?>"> <?php echo get_string( 'back', 'local_edwiserbridge' ); ?> </a>
-                        <button class="eb_setup_btn disabled eb_setup_wp_details_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
+                        <button class="eb_setup_btn  eb_setup_wp_details_btn eb_setup_save_and_continue" data-step='<?php echo $step ?>' data-next-step='<?php echo $next_step ?>' data-is-next-sub-step='<?php echo $is_next_sub_step ?>' > <?php echo get_string( 'setup_continue_btn', 'local_edwiserbridge' ); ?> </button>
                     </div>
 
                 </div>
