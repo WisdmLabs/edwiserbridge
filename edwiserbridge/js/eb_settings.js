@@ -679,7 +679,6 @@ define("local_edwiserbridge/eb_settings", [
                 var next_step = $(this).data('next-step');
                 var is_next_sub_step = $(this).data('is-next-sub-step');
 
-                $("#eb-lading-parent").show();
 
 
                 // get current step.
@@ -690,54 +689,85 @@ define("local_edwiserbridge/eb_settings", [
 
                 switch ( current_step ) {
                     case 'installtion_guide':
+                        $("#eb-lading-parent").show();
+
                         // Get required data and create array
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
 
                         break;
 
                     case 'mdl_plugin_config':
+                        $("#eb-lading-parent").show();
 
                         data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
                         
                         break;
                 
                     case 'web_service':
+                        var service_name = $('.eb_setup_web_service_list').val();
+
                         // Course sync process.
                         // Call course sync callback and after completing the process, call this callback.
-                        var service_name = $('.eb_setup_web_service_list').val();
-                        var existing_service = 1;
+                        if( service_name == 'create' && '' == $('#eb_setup_web_service_name').val() ){
+                            event.preventDefault();
+                            $('#eb_setup_web_service_name').css('border-color', 'red');
+                            return;
 
-                        if ( service_name == 'create' && service_name != '' ) {
-                            service_name = $('.eb_setup_web_service_name').val();
-                            existing_service = 0;
+                        } else {
+                            $("#eb-lading-parent").show();
+
+                            var existing_service = 1;
+
+                            if ( service_name == 'create' && service_name != '' ) {
+                                service_name = $('.eb_setup_web_service_name').val();
+                                existing_service = 0;
+                            }
+
+                            data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
                         }
-
-
-                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
-
                         break;
 
 
                     case 'wordpress_site_details':
-                        // Course sync process.
-                        // Call course sync callback and after completing the process, call this callback.
 
-                        var site_name = $('.eb_setup_wp_sites').val();
-                        var url       = '';
+                        if( '' != site_name && ( '' == $('#eb_setup_site_name').val() || '' == $('#eb_setup_site_url').val() ) ){
+                            event.preventDefault();
 
-                        if ( '' != site_name ) {
-                            site_name = $('.eb_setup_site_name').val();
-                            url       = $('.eb_setup_site_url').val();
+                            if ( '' == $('#eb_setup_site_name').val() ) {
+                                $('#eb_setup_site_name').css('border-color', 'red');
+                            } else {
+                                $('#eb_setup_site_name').css('border-color', '#E5E5E5');
+                            }
+
+                            if ( '' == $('#eb_setup_site_url').val() ) {
+                                $('#eb_setup_site_url').css('border-color', 'red');
+                            } else {
+                                $('#eb_setup_site_url').css('border-color', '#E5E5E5');
+                            }
+
+                            return;
+                        } else {
+                            $("#eb-lading-parent").show();
+
+                            // Course sync process.
+                            // Call course sync callback and after completing the process, call this callback.
+
+                            var site_name = $('.eb_setup_wp_sites').val();
+                            var url       = '';
+
+                            if ( '' != site_name ) {
+                                site_name = $('.eb_setup_site_name').val();
+                                url       = $('.eb_setup_site_url').val();
+                            }
+
+                            data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, site_name : site_name, url : url /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
                         }
-
-
-                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, site_name : site_name, url : url /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
 
                         break;
 
 
-
                     case 'user_and_course_sync':
+                        $("#eb-lading-parent").show();
 
                         var user_enrollment   = $('#eb_setup_sync_user_enrollment').prop('checked') ? 1 : 0;
                         var user_unenrollment = $('#eb_setup_sync_user_unenrollment').prop('checked') ? 1 : 0;
@@ -756,6 +786,7 @@ define("local_edwiserbridge/eb_settings", [
 
 
                     default:
+                        $("#eb-lading-parent").show();
 
                         break;
                 }

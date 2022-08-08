@@ -630,7 +630,7 @@ class eb_setup_wizard {
                             <label class="eb_setup_h2"> <?php echo get_string( 'new_service_inp_lbl', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'name_web_service_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_web_service_name" name="eb_setup_web_service_name" type="text" >
+                        <input class="eb_setup_inp eb_setup_web_service_name" id="eb_setup_web_service_name" name="eb_setup_web_service_name" type="text" >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
@@ -738,7 +738,7 @@ class eb_setup_wizard {
                             <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value='<?php echo $slectedname; ?>' >
+                        <input class="eb_setup_inp eb_setup_site_name" id="eb_setup_site_name" name="eb_setup_site_name" type="text" value='<?php echo $slectedname; ?>' >
                     </div>
 
                     <div class="eb_setup_wp_site_details_inp eb_setup_conn_url_inp_wrap <?php echo $class; ?>">
@@ -746,7 +746,7 @@ class eb_setup_wizard {
                             <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
                             <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                         </p>
-                        <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="text" value='<?php echo $selectedurl; ?>' >
+                        <input class="eb_setup_inp eb_setup_site_url" id="eb_setup_site_url" name="eb_setup_site_url" type="text" value='<?php echo $selectedurl; ?>' >
                     </div>
 
                     <div class="eb_setup_btn_wrap">
@@ -873,7 +873,7 @@ class eb_setup_wizard {
                         <label class="eb_setup_h2"> <?php echo get_string( 'name', 'local_edwiserbridge' ); ?></label>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_name_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
-                    <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value="<?php echo $name; ?>" >
+                    <input class="eb_setup_inp eb_setup_site_name" name="eb_setup_site_name" type="text" value="<?php echo $name; ?>" readonly>
                 </div>
 
                 <div class="eb_setup_conn_url_inp_wrap">
@@ -881,7 +881,7 @@ class eb_setup_wizard {
                         <label class="eb_setup_h2"> <?php echo get_string( 'url', 'local_edwiserbridge' ); ?></label>
                         <i class="fa-solid fa-info eb-tooltip es-info-icon"><span class='eb-tooltiptext'><?php echo get_string( 'wp_site_url_tip', 'local_edwiserbridge'); ?></span></i>
                     </p>
-                    <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="url" value="<?php echo $url; ?>">
+                    <input class="eb_setup_inp eb_setup_site_url" name="eb_setup_site_url" type="url" value="<?php echo $url; ?>" readonly>
 
                     <div class="eb_setup_test_conn_resp_msg"></div>
 
