@@ -669,7 +669,8 @@ a.es_text_links{
 
 
  .eb_setup_installation_guide, .eb_setup_conn_url, .eb_setup_test_connection, .eb_setup_user_sync{
-    padding: 30px;
+    /*padding: 30px;*/
+    padding: 25px 30px 30px 30px;
 }
 
 .eb_setup_conn_url{
@@ -712,7 +713,7 @@ a.es_text_links{
     width: 50%;
     text-align: left;
     margin: auto;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
 .eb_setup_user_and_course_sync{
