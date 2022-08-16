@@ -231,7 +231,7 @@
     padding: 0.5em;
     background: none repeat scroll 0% 0% #3C3C3C;
     border-radius: 3px;
-    text-align: center;
+    text-align: left;
     max-width: 200px;
     line-height: normal;
 }
@@ -1107,6 +1107,12 @@ a.es_text_links{
     flex: none;
     z-index: 10;
 }
+
+
+.eb_setup_site_name, .eb_setup_site_url{
+    background: #eeeeee;
+}
+
 
 .eb-setup-step-completed-wrap .eb_setup_sidebar_progress_icons{
     color: #1AB900;
