@@ -39,3 +39,9 @@ Feature
 Version 2.1.5
 Feature
 * Added functionality to enable Manual Enrollment method for course when it is disabled.
+
+Version 2.1.9
+Feature
+* Added setup wizard functionality.
+* Added setup wizard reueun link in plugins -> Edwiser Bridge section.  
+
