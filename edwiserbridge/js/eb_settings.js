@@ -205,7 +205,7 @@ define("local_edwiserbridge/eb_settings", [
                     M.util.get_string("eb_settings_msg", "local_edwiserbridge") +
                     ' <a target="_blank" style="border-radius: 4px;margin-left: 5px;padding: 7px 18px;" class="eb_settings_btn btn btn-primary" href="' +
                     M.cfg.wwwroot +
-                    '/local/edwiserbridge/edwiserbridge.php?tab=service"> ' +
+                    '/local/edwiserbridge/setup_wizard.php"> ' +
                     M.util.get_string("click_here", "local_edwiserbridge") +
                     " </a></div>"
                 );
@@ -608,7 +608,579 @@ define("local_edwiserbridge/eb_settings", [
                 }
             }
 
-            /************************  FUnctions END  ****************************/
+            /************************  Functions END  ****************************/
+
+
+
+
+
+            /******************    SETUP wizard   *****************/
+
+            var loader = '<div id="eb-lading-parent" class="eb-lading-parent-wrap"><div class="eb-loader-progsessing-anim"></div></div>';
+            $("body").append(loader);
+
+
+
+            function change_url( step ) {
+                var url = new URL(document.location);
+                url.searchParams.set('current_step', step);
+                window.history.replaceState( null, null, url );
+            }
+
+            function handle_step_progress( current_step, next_step, is_next_sub_step, parent_step ) {
+                /**
+                 * 1. Mark current step as active and 
+                 * 2. Mark previous step as completed.
+                 */
+                // Add completed class to the sidebar steps
+                var temp1 = $('.eb-setup-step-' + current_step).addClass('eb-setup-step-completed-wrap');
+                if( $('.eb-setup-step-' + current_step).hasClass('eb-setup-step-active-wrap') ) {
+                    $('.eb-setup-step-' + current_step).removeClass('eb-setup-step-active-wrap');
+                }
+
+                // Chnage step names class
+                var step_title = $('.eb-setup-step-' + current_step).children('.eb-setup-steps-title');
+                step_title.addClass('eb-setup-step-completed');
+                if(step_title.hasClass('eb-setup-step-active')){
+                    step_title.removeClass('eb-setup-step-active');
+                }
+
+                // Change icons class
+                var icon = $('.eb-setup-step-' + current_step).children('.eb_setup_sidebar_progress_icons');
+                icon.addClass('fa-circle-check');
+
+                if( icon.hasClass('fa-circle-chevron-right') ) {
+                    icon.removeClass('fa-circle-chevron-right');
+                }
+
+
+                var temp2 = $('.eb-setup-step-' + next_step).addClass('eb-setup-step-active-wrap');
+                
+                var step_title1 = $('.eb-setup-step-' + next_step).children('.eb-setup-steps-title');
+                step_title1.addClass('eb-setup-step-active');
+
+                var icon = $('.eb-setup-step-' + next_step).children('.eb_setup_sidebar_progress_icons');
+                icon.addClass('fa-solid fa-circle-chevron-right');
+
+                if(icon.hasClass('eb-setup-step-circle')){
+                    icon.removeClass('eb-setup-step-circle');
+                }
+
+            }
+
+            // ajax xall to save data and get new tab at the same time.
+        
+            // Clicking save continue
+            // 
+            $(document).on('click', '.eb_setup_save_and_continue', function (event) {
+                // Create loader.
+                var current = $(this);
+                var current_step = $(this).data('step');
+                var next_step = $(this).data('next-step');
+                var is_next_sub_step = $(this).data('is-next-sub-step');
+
+
+
+                // get current step.
+                // get next step.
+                // get data which will be saved.
+                // Creating swicth case.
+                var data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+                switch ( current_step ) {
+                    case 'installtion_guide':
+                        $("#eb-lading-parent").show();
+
+                        // Get required data and create array
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+                        break;
+
+                    case 'mdl_plugin_config':
+                        $("#eb-lading-parent").show();
+
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+                        
+                        break;
+                
+                    case 'web_service':
+                        var service_name = $('.eb_setup_web_service_list').val();
+
+                        // Course sync process.
+                        // Call course sync callback and after completing the process, call this callback.
+                        if( service_name == 'create' && '' == $('#eb_setup_web_service_name').val() ){
+                            event.preventDefault();
+                            $('#eb_setup_web_service_name').css('border-color', 'red');
+                            return;
+
+                        } else {
+                            $("#eb-lading-parent").show();
+
+                            var existing_service = 1;
+
+                            if ( service_name == 'create' && service_name != '' ) {
+                                service_name = $('.eb_setup_web_service_name').val();
+                                existing_service = 0;
+                            }
+
+                            data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, service_name : service_name, existing_service : existing_service /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
+                        }
+                        break;
+
+
+                    case 'wordpress_site_details':
+
+                        if( '' != site_name && ( '' == $('#eb_setup_site_name').val() || '' == $('#eb_setup_site_url').val() ) ){
+                            event.preventDefault();
+
+                            if ( '' == $('#eb_setup_site_name').val() ) {
+                                $('#eb_setup_site_name').css('border-color', 'red');
+                            } else {
+                                $('#eb_setup_site_name').css('border-color', '#E5E5E5');
+                            }
+
+                            if ( '' == $('#eb_setup_site_url').val() ) {
+                                $('#eb_setup_site_url').css('border-color', 'red');
+                            } else {
+                                $('#eb_setup_site_url').css('border-color', '#E5E5E5');
+                            }
+
+                            return;
+                        } else {
+                            $("#eb-lading-parent").show();
+
+                            // Course sync process.
+                            // Call course sync callback and after completing the process, call this callback.
+
+                            var site_name = $('.eb_setup_wp_sites').val();
+                            var url       = '';
+
+                            if ( '' != site_name ) {
+                                site_name = $('.eb_setup_site_name').val();
+                                url       = $('.eb_setup_site_url').val();
+                            }
+
+                            data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, site_name : site_name, url : url /*mdl_url : mdl_url, mdl_token : mdl_token, mdl_lng_code : mdl_lng_code*/ };
+                        }
+
+                        break;
+
+
+                    case 'user_and_course_sync':
+                        $("#eb-lading-parent").show();
+
+                        var user_enrollment   = $('#eb_setup_sync_user_enrollment').prop('checked') ? 1 : 0;
+                        var user_unenrollment = $('#eb_setup_sync_user_unenrollment').prop('checked') ? 1 : 0;
+                        var user_creation     = $('#eb_setup_sync_user_creation').prop('checked') ? 1 : 0;
+                        var user_deletion     = $('#eb_setup_sync_user_deletion').prop('checked') ? 1 : 0;
+                        var user_update       = $('#eb_setup_sync_user_update').prop('checked') ? 1 : 0;
+                        var course_creation   = $('#eb_setup_sync_course_creation').prop('checked') ? 1 : 0;
+                        var course_deletion   = $('#eb_setup_sync_course_deletion').prop('checked') ? 1 : 0;
+
+
+
+                        // If user checkbox is clicked start user sync otherwise just procedd to next screen.
+                        data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step, user_enrollment: user_enrollment, user_unenrollment: user_unenrollment, user_creation: user_creation, user_deletion: user_deletion, user_update: user_update, course_creation: course_creation, course_deletion: course_deletion };
+
+                        break;
+
+
+                    default:
+                        $("#eb-lading-parent").show();
+
+                        break;
+                }
+
+
+
+            
+                data = JSON.stringify(data);
+
+
+                var promises = ajax.call([{
+                    methodname: "edwiserbridge_local_setup_wizard_save_and_continue",
+                    args: { data : data },
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("#eb-lading-parent").hide();
+
+                    change_url( next_step );
+
+
+                    // Dummy value.
+                    var parent_step = 1;
+
+                    handle_step_progress( current_step, next_step, is_next_sub_step, parent_step );
+
+                    $('.eb-setup-header-title').html(response.title);
+                    $('.eb-setup-content').html(response.html_data);
+
+
+                    if ( 'complete_details' == next_step ) {
+                        $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
+
+
+                        setTimeout(function(){
+                            $('.eb_setup_popup').remove();
+                        }, 2000);
+                    }
+
+
+                    return response;
+                }).fail(function(response) {
+                    $("#eb-lading-parent").hide();
+                    $("body").css("cursor", "default");
+                    return 0;
+                }); //promise end
+
+
+            });
+
+
+
+            // Adding for refresh page condition
+            if ( $(".eb_setup_wp_completion_success_popup").length) {
+                $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_completion_success_popup').html() + ' </div>');
+
+                setTimeout(function(){
+                    $('.eb_setup_popup').remove();
+                }, 2000);
+            }
+
+
+
+
+
+            /*
+            * Ajax call to enable settings. 
+            */
+            $(document).on('click', '.eb_enable_plugin_settings', function (event) {
+                // start loader
+                $("#eb-lading-parent").show();
+
+                var promises = ajax.call([{
+                    methodname: 'edwiserbridge_local_enable_plugin_settings',
+                    args: {},
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("body").css("cursor", "default");
+                    $("#eb-lading-parent").hide();
+
+                    // stop loader.
+                    // change icon colors
+                    $('.eb_enable_rest_protocol').css( 'color', '#1AB900' );
+                    $('.eb_enable_web_service').css( 'color', '#1AB900' );
+                    $('.eb_disable_pwd_policy').css( 'color', '#1AB900' );
+                    $('.eb_allow_extended_char').css( 'color', '#1AB900' );
+
+                    // show success message.
+                    $('.eb_setup_settings_success_msg').css( 'display', 'block' );
+
+
+                    // Hide current button and show save and continue button
+                    $('.eb_enable_plugin_settings').css( 'display', 'none' );
+                    $('.eb_enable_plugin_settings_label').css( 'display', 'none' );
+                    $('.eb_setup_save_and_continue').css( 'display', 'initial' );
+
+                    return response;
+                }).fail(function(response) {
+                    $("#eb-lading-parent").hide();
+
+                    $("body").css("cursor", "default");
+                    return 0;
+                }); //promise end
+
+
+            });
+
+
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                /* Toggle between adding and removing the "active" class,
+                to highlight the button that controls the panel */
+                this.classList.toggle("active");
+
+                /* Toggle between hiding and showing the active panel */
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                  panel.style.display = "none";
+                } else {
+                  panel.style.display = "block";
+                }
+              });
+            }
+
+
+
+            // Handle Setup web service dropdown.
+            // $(".eb_setup_web_service_list").change(function() {
+            $(document).on('change', '.eb_setup_web_service_list', function (event) {
+
+                if('' != $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_web_service_btn').removeClass('disabled');
+                    $('.eb_setup_web_service_btn').removeAttr("disabled");
+                } else {
+                    $('.eb_setup_web_service_btn').attr("disabled", "disabled");
+                    $('.eb_setup_web_service_btn').addClass('disabled');
+                }
+
+
+                if('create' == $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_web_service_name_wrap').css('display', 'block');
+                } else {
+                    $('.eb_setup_web_service_name_wrap').css('display', 'none');
+                }
+            });
+
+
+            // Handle Wp site drop down
+            // $(".eb_setup_wp_sites").change(function() {
+            $(document).on('change', '.eb_setup_wp_sites', function (event) {
+
+                if('' != $(".eb_setup_web_service_list").val()){
+                    $('.eb_setup_wp_details_btn').removeClass('disabled');
+                    $('.eb_setup_wp_details_btn').removeAttr("disabled");
+                } else {
+                    $('.eb_setup_wp_details_btn').attr("disabled", "disabled");
+                    $('.eb_setup_wp_details_btn').addClass('disabled');
+                }
+
+                if('' == $(".eb_setup_wp_sites").val()){
+                    $('.eb_setup_wp_site_details_inp').addClass('eb_setup_wp_site_details_wrap');
+                } else {
+                    $('.eb_setup_wp_site_details_inp').removeClass('eb_setup_wp_site_details_wrap');
+
+                    var option = $(this).find(":selected");
+
+                    $('.eb_setup_site_name').val(option.data('name'));
+                    $('.eb_setup_site_url').val(option.data('url'));    
+                }
+            });
+
+
+
+
+            $(document).on('click', '.eb_setup_test_connection_btn', function (event) {
+
+                var url = $('.eb_setup_site_url').val();
+                $("body").css("cursor", "wait");
+
+                $("#eb-lading-parent").show();
+
+
+                var promises = ajax.call([{
+                    methodname: 'edwiserbridge_local_setup_test_connection',
+                    args: { wp_url: url },
+                }, ]);
+
+                promises[0].done(function(response) {
+                    $("#eb-lading-parent").hide();
+                    $("body").css("cursor", "default");
+
+
+                    $('.eb_setup_test_conn_resp_msg').css('display', 'block');
+
+                    // Parse response.
+                    if(response.status == 1){
+                        $('.eb_setup_test_connection_continue_btn').css('display', 'inline-block');
+                        $('.eb_setup_test_connection_btn').css('display', 'none');
+
+                        $('.eb_setup_test_conn_resp_msg').addClass('eb_setup_settings_success_msg');
+                        $('.eb_setup_test_conn_resp_msg').html('<i class="fa-solid fa-circle-check"></i> ' + response.msg);
+                        $('.eb_setup_test_conn_resp_msg').removeClass('eb_setup_error_msg_box');
+                    }else{
+                        $('.eb_setup_test_conn_resp_msg').addClass('eb_setup_error_msg_box');
+                        $('.eb_setup_test_conn_resp_msg').html('<i class="fa-solid fa-circle-check"></i> ' + response.msg);
+                        $('.eb_setup_test_conn_resp_msg').removeClass('eb_setup_settings_success_msg');
+                    }
+
+                    return response;
+                }).fail(function(response) {
+                    $("body").css("cursor", "default");
+                    $("#eb-lading-parent").hide();
+
+                    return 0;
+                });
+
+
+            });
+
+
+            
+            $(document).on('click', '#eb_setup_sync_all', function (event) {
+                if(this.checked){
+                    $('.eb_setup_sync_cb').prop('checked', true);
+                } else{
+                    $('.eb_setup_sync_cb').prop('checked', false);
+                }
+            });
+
+            $(document).on('click', '.eb_setup_sync_cb', function (event) {
+                if(this.checked){
+                    var all_checked = 1;
+                    $(".eb_setup_sync_cb").each(function() {
+
+                        if( ! this.checked ){
+                            all_checked = 0;
+                        }
+
+                    });
+
+                    if ( all_checked ) {
+                        $('#eb_setup_sync_all').prop('checked', true);
+                    }
+
+                } else{
+                    $('#eb_setup_sync_all').prop('checked', false);
+                }
+            });
+
+            
+
+
+
+            /**
+             * Copy to clipboard functionality.
+             */
+            $(document).on("click", ".eb_setup_copy", function(event) {
+                event.preventDefault();
+
+                var copyText = $(this).data('copy');
+                var temp = document.createElement("textarea");
+                temp.textContent = copyText;
+
+                document.body.appendChild(temp);
+                var selection = document.getSelection();
+                var range = document.createRange();
+                //  range.selectNodeContents(textarea);
+                range.selectNode(temp);
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                document.execCommand("copy");
+                temp.remove();
+                // toaster("Title", 400);
+                // var parent = $(this).parent();
+                var copy_success = '<p class="eb_setup_copy_success"><i class="fa fa-check" aria-hidden="true"></i>Copied !!</p>';
+                $(this).append(copy_success);
+                setTimeout(function(){
+                    $('.eb_setup_copy_success').remove();
+                }, 2000);
+            });
+
+
+
+            // Code to create json file and download it.
+            // $(".").click(function() {
+            $(document).on("click", ".eb_setup_download_creds", function(event) {
+
+                var obj = {
+                    url: $('.eb_setup_copy_url').html(),
+                    token: $('.eb_setup_copy_token').html(),
+                    lang_code: $('.eb_setup_copy_lang').html(),
+                };
+
+
+                $("<a />", {
+                    "download": "creds.json",
+                    "href" : "data:application/json," + encodeURIComponent(JSON.stringify( obj ) )
+                }).appendTo("body").click(function() {
+                    $(this).remove();
+                })[0].click()
+            });
+
+        /**
+         * Close setup.
+         */
+        $('.eb-setup-close-icon').click(function(){
+            // Create loader.
+            $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_popup_content_wrap').html() + ' </div>');
+
+        });
+
+
+        $(document).on('click', '.eb_setup_do_not_close', function (event) {
+            $('.eb_setup_popup').remove();
+        });
+
+
+        $(document).on('change', '.eb_setup_wp_sites', function (event) {
+            var option = $(this).find(":selected");
+
+            $('.eb_setup_site_name').val(option.data('name'));
+            $('.eb_setup_site_url').val(option.data('url'));
+
+        });
+
+
+
+
+
+        $(document).on('click', '.eb_redirect_to_wp', function (event) {
+
+            event.preventDefault();
+
+
+            // Sending one js request to unset the progress.
+            var current = $(this);
+            var current_step = $(this).data('step');
+            var next_step = $(this).data('next-step');
+            var is_next_sub_step = $(this).data('is-next-sub-step');
+
+
+            var data = { current_step : current_step, next_step : next_step, is_next_sub_step : is_next_sub_step };
+
+            data = JSON.stringify(data);
+
+
+            var promises = ajax.call([{
+                methodname: "edwiserbridge_local_setup_wizard_save_and_continue",
+                args: { data : data },
+            }, ]);
+
+            promises[0].done(function(response) {
+
+                return response;
+            }).fail(function(response) {
+                return 0;
+            }); //promise end
+
+
+
+
+
+
+
+
+
+
+
+
+            // Create loader.
+            $('.eb-setup-content').append('<div class="eb_setup_popup"> ' + $('.eb_setup_wp_redirection_popup').html() + ' </div>');
+
+            setTimeout( function(){
+                $('.eb_setup_popup').remove();
+                // window.location.replace($(this).attr('href'));
+                $('.eb_redirect_to_wp_btn').trigger('click');
+
+                var redirect = window.open($('.eb_redirect_to_wp').attr('href'), "_blank");
+                redirect.focus();
+            }, 2000 );
+
+        });
+
+
+
+        /***************************/
+
+
         });
     }
     return { init: load_settings };
