@@ -88,7 +88,7 @@ $string['next'] = 'Next';
 $string['save'] = 'Save';
 $string['save_cont'] = 'Save and Continue';
 
-$string["token_help"] = "Please enter access token used in Wordpress in connection setting";
+$string["token_help"] = "Please enter the access token generated while creating the web service.";
 $string["wordpress_site_name_help"] = "Please enter unique site name.";
 $string["wordpress_url_help"] = "Please enter Wordpress site URL.";
 
