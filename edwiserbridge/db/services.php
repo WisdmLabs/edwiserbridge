@@ -120,5 +120,11 @@ $functions = array(
         'type'          => 'read',
         'ajax'          => true,
     ),
-
+    'edwiserbridge_local_get_mandatory_settings' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'edwiserbridge_local_get_mandatory_settings',
+        'description'   => 'Gets all mandatory settings for edwiser bridge.',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
 );

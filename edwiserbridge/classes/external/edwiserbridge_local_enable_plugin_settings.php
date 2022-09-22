@@ -83,12 +83,13 @@ trait edwiserbridge_local_enable_plugin_settings {
      * @return external_description
      */
     public static function edwiserbridge_local_enable_plugin_settings_returns() {
-        new external_single_structure(
+
+        return new external_single_structure(
             array(
-                'rest_protocol'       => new external_value(PARAM_RAW, 'id of course'),
-                'web_service'         => new external_value(PARAM_RAW, 'id of course'),
-                'disable_password'    => new external_value(PARAM_RAW, 'id of course'),
-                'allow_extended_char' => new external_value(PARAM_RAW, 'id of course'),
+                'rest_protocol'       => new external_value(PARAM_TEXT, get_string('web_service_rest_protocol', 'local_edwiserbridge')),
+                'web_service'         => new external_value(PARAM_RAW, get_string('web_service_web_service', 'local_edwiserbridge')),
+                'disable_password'    => new external_value(PARAM_RAW, get_string('web_service_password_policy', 'local_edwiserbridge')),
+                'allow_extended_char' => new external_value(PARAM_RAW, get_string('web_service_extended_char', 'local_edwiserbridge')),
             )
         );
     }

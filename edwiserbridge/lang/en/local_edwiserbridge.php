@@ -187,6 +187,11 @@ $string["web_service_lastname"] = "Lastname of the user.";
 $string["web_service_email"] = "Email of the user.";
 $string['eb_plugin_name'] = "Plugin Name";
 $string['eb_plugin_version'] = "Plugin Version";
+$string['web_service_rest_protocol'] = "Check if rest protocol is enabled.";
+$string['web_service_web_service'] = "Check if web services setting is enabled.";
+$string['web_service_extended_char'] = "Check if extended characters are allowed in username.";
+$string['web_service_password_policy'] = "Check if password policy is enabled.";
+$string['web_service_lang_code'] = "check what is the default lnguage code for the site.";
 /******/
 
 /****  error handling  ***/
