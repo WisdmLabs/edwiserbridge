@@ -71,6 +71,7 @@ trait edwiserbridge_local_enable_plugin_settings {
             'web_service' => 1,
             'disable_password' => 1,
             'allow_extended_char' => 1,
+            'lang_code' => $CFG->lang,
         );
 
         return $response;
@@ -90,6 +91,7 @@ trait edwiserbridge_local_enable_plugin_settings {
                 'web_service'         => new external_value(PARAM_RAW, get_string('web_service_web_service', 'local_edwiserbridge')),
                 'disable_password'    => new external_value(PARAM_RAW, get_string('web_service_password_policy', 'local_edwiserbridge')),
                 'allow_extended_char' => new external_value(PARAM_RAW, get_string('web_service_extended_char', 'local_edwiserbridge')),
+                'lang_code'           => new external_value(PARAM_RAW, get_string('web_service_lang_code', 'local_edwiserbridge')),
             )
         );
     }
