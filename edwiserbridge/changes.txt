@@ -45,3 +45,6 @@ Feature
 * Added setup wizard functionality.
 * Added setup wizard reueun link in plugins -> Edwiser Bridge section.  
 
+Version 2.2.0
+Feature
+* Added webservice to check and enable mandatory settings for test enrollment.
