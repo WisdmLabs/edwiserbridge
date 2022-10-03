@@ -309,7 +309,7 @@ $string['setup_faq_steps'] = 'After download please follow the steps below;';
 $string['setup_faq_step1'] = 'Login to your WordPress site with Adminstrative access';
 $string['setup_faq_step2'] = 'Navigate to Admin dashboard > Plugins > Install plugins ';
 $string['setup_faq_step3'] = 'Upload the Edwiser Bridge FREE WordPress plugin here';
-$string['setup_faq_step4'] = 'We will assist you with the rest of the setup from there 🙂';
+$string['setup_faq_step4'] = 'We will assist you with the rest of the setup from there';
 
 
 $string['no_1'] = '1';

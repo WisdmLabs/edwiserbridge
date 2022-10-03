@@ -445,7 +445,7 @@ class eb_setup_wizard {
                                 <li class='es-p-b-10'> <?php echo get_string( 'setup_faq_step1', 'local_edwiserbridge' ); ?></li>
                                 <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step2', 'local_edwiserbridge' ); ?></li>
                                 <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step3', 'local_edwiserbridge' ); ?></li>
-                                <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step4', 'local_edwiserbridge' ); ?></li>
+                                <li class='es-p-b-10'><?php echo get_string( 'setup_faq_step4', 'local_edwiserbridge' ); ?> 🙂</li>
                             </ol>
 
                         </p>
