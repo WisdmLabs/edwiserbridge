@@ -156,6 +156,7 @@ class local_edwiserbridge_observer {
                         'password'    => $password,
                         'enc_iv'      => $enciv,
                         'secret_key' => $value['wp_token'], // Adding Token for verification in WP from Moodle.
+                        'custom_fields' => json_encode(profile_user_record($event->relateduserid, false)), // adding custom fields data.
                     );
 
                     $apihandler->connect_to_wp_with_args($value["wp_url"], $requestdata);
@@ -203,17 +204,18 @@ class local_edwiserbridge_observer {
                     }
 
                     $requestdata = array(
-                        'action'     => 'user_updated',
-                        'user_id'    => $event->relateduserid,
-                        'first_name' => $userdata[$event->relateduserid]->firstname,
-                        'last_name'  => $userdata[$event->relateduserid]->lastname,
-                        'email'      => $userdata[$event->relateduserid]->email,
-                        'country'    => $userdata[$event->relateduserid]->country,
-                        'city'       => $userdata[$event->relateduserid]->city,
-                        'phone'      => $userdata[$event->relateduserid]->phone1,
-                        'password'   => $password,
-                        'enc_iv'     => $enciv,
-                        'secret_key' => $value['wp_token'], // Adding Token for verification in WP from Moodle.
+                        'action'        => 'user_updated',
+                        'user_id'       => $event->relateduserid,
+                        'first_name'    => $userdata[$event->relateduserid]->firstname,
+                        'last_name'     => $userdata[$event->relateduserid]->lastname,
+                        'email'         => $userdata[$event->relateduserid]->email,
+                        'country'       => $userdata[$event->relateduserid]->country,
+                        'city'          => $userdata[$event->relateduserid]->city,
+                        'phone'         => $userdata[$event->relateduserid]->phone1,
+                        'password'      => $password,
+                        'enc_iv'        => $enciv,
+                        'secret_key'    => $value['wp_token'], // Adding Token for verification in WP from Moodle.
+                        'custom_fields' => json_encode(profile_user_record($event->relateduserid, false)), // adding custom fields data.
                     );
 
                     $apihandler->connect_to_wp_with_args($value["wp_url"], $requestdata);
