@@ -75,7 +75,6 @@ class api_handler {
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestdata);
         $response = curl_exec($curl);
-
         $statuscode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (curl_error($curl)) {
