@@ -43,6 +43,7 @@ class api extends external_api {
     use eb_get_service_info;
     use eb_get_site_data;
     use eb_get_users;
+    use eb_get_courses;
     use eb_link_service;
     use eb_test_connection;
     use edwiserbridge_local_get_course_enrollment_method;

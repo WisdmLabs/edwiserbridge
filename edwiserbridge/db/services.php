@@ -127,4 +127,11 @@ $functions = array(
         'type'          => 'read',
         'ajax'          => true,
     ),
+    'eb_get_courses' => array(
+        'classname'     => 'local_edwiserbridge\external\api',
+        'methodname'    => 'eb_get_courses',
+        'description'   => 'Get Courses',
+        'type'          => 'read',
+        'ajax'          => true,
+    ),
 );

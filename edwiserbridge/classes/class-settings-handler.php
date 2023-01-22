@@ -204,6 +204,7 @@ class eb_settings_handler {
 
         $selsyncfunctions = array(
             array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_users'),
+            array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_courses'),
         );
 
         $bulkpurchase = array(
