@@ -45,11 +45,32 @@ trait eb_get_edwiser_plugins_info {
      * @return array
      */
     public static function eb_get_edwiser_plugins_info() {
-        $response                = array();
-        $response['plugin_name'] = 'edwiser_bridge';
-        $response['version']     = '';
-        $response['plugin_name'] = 'edwiser_bridge';
-        $response['version']     = '2.0.7';
+        $response    = array();
+        $pluginman   = \core_plugin_manager::instance();
+        $localplugin = $pluginman->get_plugins_of_type('local');
+        $eb_version  = $localplugin['edwiserbridge']->release;
+        $plugins[]   = array(
+            'plugin_name' => 'moodle_edwiser_bridge',
+            'version'     => $eb_version,
+        );
+
+        if (isset($localplugin['wdmgroupregistration'])) {
+            $plugins[] = array(
+                'plugin_name' => 'moodle_edwiser_bridge_bp',
+                'version'     => $localplugin['wdmgroupregistration']->release,
+            );
+        }
+
+        $authplugin = $pluginman->get_plugins_of_type('auth');
+
+        if (isset($authplugin['wdmwpmoodle'])) {
+            $plugins[] = array(
+                'plugin_name' => 'moodle_edwiser_bridge_sso',
+                'version'     => $authplugin['wdmwpmoodle']->release,
+            );
+        }
+
+        $response['plugins'] = $plugins;
 
         return $response;
     }
@@ -67,8 +88,14 @@ trait eb_get_edwiser_plugins_info {
     public static function eb_get_edwiser_plugins_info_returns() {
         return new external_single_structure(
             array(
-                'plugin_name'  => new external_value(PARAM_TEXT, get_string('eb_plugin_name', 'local_edwiserbridge')),
-                'version'  => new external_value(PARAM_TEXT, get_string('eb_plugin_version', 'local_edwiserbridge'))
+                'plugins' => new external_multiple_structure(
+                    new external_single_structure(
+                        array(
+                            'plugin_name' => new external_value(PARAM_TEXT, get_string('eb_plugin_name', 'local_edwiserbridge')),
+                            'version' => new external_value(PARAM_TEXT, get_string('eb_plugin_version', 'local_edwiserbridge')),
+                        )
+                    )
+                ),
             )
         );
     }
