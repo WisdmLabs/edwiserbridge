@@ -69,8 +69,8 @@ class api_handler {
         );
 
         curl_setopt($curl, CURLOPT_POST, 1);
-
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
+        global $CFG;
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Moodle/' . $CFG->version . ' (' . $CFG->wwwroot . ') Edwiser Bridge Moodle Server');
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Skip SSL Verification.
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestdata);
