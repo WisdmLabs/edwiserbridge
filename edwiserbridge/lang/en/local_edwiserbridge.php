@@ -192,6 +192,12 @@ $string['web_service_web_service'] = "Check if web services setting is enabled."
 $string['web_service_extended_char'] = "Check if extended characters are allowed in username.";
 $string['web_service_password_policy'] = "Check if password policy is enabled.";
 $string['web_service_lang_code'] = "check what is the default lnguage code for the site.";
+
+$string["web_service_courseid"] = "Course ID.";
+$string["web_service_fullname"] = "Course Name.";
+$string["web_service_categoryid"] = "Category Id of the course.";
+$string["web_service_total_courses"] = "Total number of courses present in Moodle.";
+
 /******/
 
 /****  error handling  ***/
