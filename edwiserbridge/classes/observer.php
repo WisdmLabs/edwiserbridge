@@ -146,6 +146,8 @@ class local_edwiserbridge_observer {
                         $password = openssl_encrypt($newpassword, $encmethod, $enckey, 0, $enciv);
                     }
 
+                    require_once("$CFG->dirroot/user/profile/lib.php");
+
                     $requestdata = array(
                         'action' => 'user_creation',
                         'user_id'     => $event->relateduserid,
@@ -202,6 +204,8 @@ class local_edwiserbridge_observer {
                         $enciv = substr(hash('sha256', $value["wp_token"]), 0, 16);
                         $password = openssl_encrypt($newpassword, $encmethod, $enckey, 0, $enciv);
                     }
+
+                    require_once("$CFG->dirroot/user/profile/lib.php");
 
                     $requestdata = array(
                         'action'        => 'user_updated',
