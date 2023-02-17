@@ -48,62 +48,101 @@ trait eb_test_connection {
      *
      * @return array
      */
-    public static function eb_test_connection($wpurl, $wptoken) {
+    public static function eb_test_connection($wpurl, $wptoken, $test_connection = "moodle") {
         $params = self::validate_parameters(
             self::eb_test_connection_parameters(),
             array(
                 'wp_url' => $wpurl,
-                "wp_token" => $wptoken
+                "wp_token" => $wptoken,
+                "test_connection" => $test_connection
             )
         );
 
-        $requestdata = array(
-            'action'     => "test_connection",
-            'secret_key' => $params["wp_token"]
-        );
+        if ($params["test_connection"] == "wordpress") {
+            $msg = "Connection Successful";
+            $warnings = array();
+            
+            $defaultvalues = get_connection_settings();
 
-        $apihandler = api_handler_instance();
-        $response   = $apihandler->connect_to_wp_with_args($params["wp_url"], $requestdata);
-
-        $status = 0;
-        $msg    = isset($response["msg"]) ? $response["msg"] : 'Please check WordPress site configuration.';
-
-        if (!$response["error"] && isset($response["data"]->msg) && isset($response["data"]->status)) {
-            $status = $response["data"]->status;
-            $msg = $response["data"]->msg;
-            if (!$status) {
-                $msg = $response["data"]->msg . get_string('wp_test_connection_failed', 'local_edwiserbridge');
+            $site_match = false;
+            $token_match = false;
+            foreach ($defaultvalues['eb_connection_settings'] as $site => $value) {
+                if ($value['wp_url'] == $params["wp_url"]) {
+                    $site_match = true;
+                }
+                if ($value['wp_token'] == $params["wp_token"]) {
+                    $token_match = true;
+                }
             }
+            if (!$site_match) {
+                $warnings[] = "Site URL does not match with the existing moodle connection settings. it may cause test connection issue on moodle end.";
+            }
+            if (!$token_match) {
+                $warnings[] = "Token does not match with the existing moodle connection settings. it may cause test connection issue on moodle end.";
+            }
+            // get webservice id by token 
+            global $DB;
+            $serviceid = $DB->get_field('external_tokens', 'externalserviceid', array('token' => $params["wp_token"]));
+            $count = eb_get_service_list($serviceid);
+            if ($count == 1) {
+                $status = 0;
+                $msg = $count . " Web service functions is missing.";
+            } else if ($count > 1) {
+                $status = 0;
+                $msg = $count . " Web service functions are missing.";
+            } else {
+                $status = 1;
+            }
+            return array("status" => $status, "msg" => $msg, "warnings" => $warnings);
         } else {
-            /**
-             * Test connection error messages.
-             * 1. Wrong token don't show detailed message.
-             * 2. Redirection or other isues will show detailed error message.
-             */
-            $server_msg = isset( $response["data"]->msg ) ? $response["data"]->msg : 'Please check WordPress Site configuration.';
+            $requestdata = array(
+                'action'     => "test_connection",
+                'secret_key' => $params["wp_token"]
+            );
 
-            $msg = '<div>
-                        <div class="eb_connection_short_msg">
-                            Test Connection failed, To check more information about issue click <span class="eb_test_connection_log_open"> here </span>.
-                        </div>
-                        <div class="eb_test_connection_log">
-                            <div style="display:flex;">
+            $apihandler = api_handler_instance();
+            $response   = $apihandler->connect_to_wp_with_args($params["wp_url"], $requestdata);
+            error_log(print_r($response, true));
+            $status = 0;
+            $msg    = isset($response["msg"]) ? $response["msg"] : 'Please check WordPress site configuration.';
 
-                                <div class="eb_connection_err_response">
-                                    <h4> An issue was detected. </h4>
-                                    <div>Status : Connection  Failed </div>
-                                    <div>Url : '. $params['wp_url'] .'/wp-json/edwiser-bridge/wisdmlabs/ </div>
-                                    <div>Response : '. $server_msg .'</div>
-                                </div>
-				<div class="eb_admin_templ_dismiss_notice_message">
-                                    <span class="eb_test_connection_log_close " style="color:red;"> X </span> 
+            if (!$response["error"] && isset($response["data"]->msg) && isset($response["data"]->status) && $response["data"]->status) {
+                $status = $response["data"]->status;
+                $msg = $response["data"]->msg;
+                if (!$status) {
+                    $msg = $response["data"]->msg . get_string('wp_test_connection_failed', 'local_edwiserbridge');
+                }
+            } else {
+                /**
+                 * Test connection error messages.
+                 * 1. Wrong token don't show detailed message.
+                 * 2. Redirection or other isues will show detailed error message.
+                 */
+                $server_msg = isset( $response["data"]->msg ) ? $response["data"]->msg : 'Please check WordPress Site configuration.';
+
+                $msg = '<div>
+                            <div class="eb_connection_short_msg">
+                                Test Connection failed, To check more information about issue click <span class="eb_test_connection_log_open"> here </span>.
+                            </div>
+                            <div class="eb_test_connection_log">
+                                <div style="display:flex;">
+
+                                    <div class="eb_connection_err_response">
+                                        <h4> An issue was detected. </h4>
+                                        <div>Status : Connection  Failed </div>
+                                        <div>Url : '. $params['wp_url'] .'/wp-json/edwiser-bridge/wisdmlabs/</div>
+                                        <div>Response : '. $server_msg .'</div>
+                                    </div>
+                    <div class="eb_admin_templ_dismiss_notice_message">
+                                        <span class="eb_test_connection_log_close " style="color:red;"> X </span> 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>';
-        }
+                        </div>';
+            }
 
-        return array("status" => $status, "msg" => $msg);
+            return array("status" => $status, "msg" => $msg);
+        }
     }
 
     /**
@@ -113,7 +152,8 @@ trait eb_test_connection {
         return new external_function_parameters(
             array(
                 'wp_url'   => new external_value(PARAM_TEXT, get_string('web_service_wp_url', 'local_edwiserbridge')),
-                'wp_token' => new external_value(PARAM_TEXT, get_string('web_service_wp_token', 'local_edwiserbridge'))
+                'wp_token' => new external_value(PARAM_TEXT, get_string('web_service_wp_token', 'local_edwiserbridge')),
+                'test_connection' => new external_value(PARAM_TEXT, get_string('web_service_test_conn', 'local_edwiserbridge'), VALUE_DEFAULT, "moodle")
             )
         );
     }
@@ -125,7 +165,12 @@ trait eb_test_connection {
         return new external_single_structure(
             array(
                 'status' => new external_value(PARAM_TEXT, get_string('web_service_test_conn_status', 'local_edwiserbridge')),
-                'msg'    => new external_value(PARAM_RAW, get_string('web_service_test_conn_msg', 'local_edwiserbridge'))
+                'msg'    => new external_value(PARAM_RAW, get_string('web_service_test_conn_msg', 'local_edwiserbridge')),
+                // return warnings as array of strings.
+                'warnings' => new external_multiple_structure(
+                    new external_value(PARAM_TEXT, 'warning'),
+                    'warnings', VALUE_OPTIONAL
+                ) 
             )
         );
     }

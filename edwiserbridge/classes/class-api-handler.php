@@ -88,6 +88,19 @@ class api_handler {
                 return array("error" => 0, "data" => json_decode($response));
             } else {
                 $msg = get_string("default_error", "local_edwiserbridge");
+                // check if response is html.
+                if ($response != strip_tags($response)) {
+                   $msg = "Html response received from WordPress. Please make sure the WordPress site is up and running.";
+                }
+                if (strpos($response, "BitNinja") !== false || strpos($response, "Security check by BitNinja.IO") !== false) {
+                    $msg = "Request blocked by BitNinja. Please whitelist the IP address of your Moodle server.";
+                }
+                if (strpos($response, "Cloudflare Ray ID") !== false) {
+                    $msg = "Request blocked by Cloudflare. Please whitelist the IP address of your Moodle server.";
+                }
+                if (strpos($response, "Mod_Security") !== false) {
+                    $msg = "Request blocked by Mod Security. Please whitelist the IP address of your Moodle server.";
+                }
                 return array("error" => 1, "msg" => $msg);
             }
         }

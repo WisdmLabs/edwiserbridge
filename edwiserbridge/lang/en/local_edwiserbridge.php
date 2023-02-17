@@ -161,6 +161,7 @@ $string['url-duplicate-value'] = " - Wordpress Url already exists, Please provid
 /*****  web service  *******/
 $string["web_service_wp_url"] = "Wordpress site URL.";
 $string["web_service_wp_token"] = "Web service token.";
+$string["web_service_test_conn"] = "Web service test connection type.";
 
 $string["web_service_test_conn_status"] = '1 if successful connection and 0 on failure.';
 $string["web_service_test_conn_msg"] = 'Success or error message.';
