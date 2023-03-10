@@ -358,6 +358,19 @@ function eb_get_service_list($serviceid) {
         array('externalserviceid' => $serviceid, 'functionname' => 'edwiserbridge_local_update_course_enrollment_method'),
         array('externalserviceid' => $serviceid, 'functionname' => 'edwiserbridge_local_get_mandatory_settings'),
         array('externalserviceid' => $serviceid, 'functionname' => 'edwiserbridge_local_enable_plugin_settings'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'wdm_sso_verify_token'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_users'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_get_courses'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_add_cohort_members'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_create_cohorts'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_role_assign_roles'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_role_unassign_roles'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_delete_cohort_members'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_get_cohorts'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_cohort_enrollment'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_delete_cohort'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'wdm_manage_cohort_enrollment'),
+        array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_user_cohort_enrollment'),
     );
 
     $count = 0;
