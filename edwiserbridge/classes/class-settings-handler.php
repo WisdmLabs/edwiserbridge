@@ -168,6 +168,7 @@ class eb_settings_handler {
             array('externalserviceid' => $serviceid, 'functionname' => 'core_user_get_users_by_field'),
             array('externalserviceid' => $serviceid, 'functionname' => 'core_user_update_users'),
             array('externalserviceid' => $serviceid, 'functionname' => 'core_course_get_courses'),
+            array('externalserviceid' => $serviceid, 'functionname' => 'core_course_get_courses_by_field'),
             array('externalserviceid' => $serviceid, 'functionname' => 'core_course_get_categories'),
             array('externalserviceid' => $serviceid, 'functionname' => 'enrol_manual_enrol_users'),
             array('externalserviceid' => $serviceid, 'functionname' => 'enrol_manual_unenrol_users'),

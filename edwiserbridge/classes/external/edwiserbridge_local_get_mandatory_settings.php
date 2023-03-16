@@ -49,7 +49,7 @@ trait edwiserbridge_local_get_mandatory_settings {
      * @return array
      */
     public static function edwiserbridge_local_get_mandatory_settings() {
-        global $CFG;
+        global $CFG, $DB;
 
         $settings_array = array();
         // get all settings and form array.
@@ -71,6 +71,10 @@ trait edwiserbridge_local_get_mandatory_settings {
     
         // Get allow_extended_char settings.
         $settings_array['allow_extended_char'] = $CFG->extendedusernamechars;
+
+        $studentroleid = $DB->get_record('role', array('shortname' => 'student'))->id;
+
+        $settings_array['student_role_id'] = $studentroleid;
 
         // Get lang_code settings.
         $settings_array['lang_code'] = $CFG->lang;
@@ -94,9 +98,10 @@ trait edwiserbridge_local_get_mandatory_settings {
             array(
                 'rest_protocol'             => new external_value(PARAM_TEXT, get_string('web_service_rest_protocol', 'local_edwiserbridge')),
                 'web_service'               => new external_value(PARAM_RAW, get_string('web_service_web_service', 'local_edwiserbridge')),
-                'allow_extended_char' => new external_value(PARAM_RAW, get_string('web_service_extended_char', 'local_edwiserbridge')),
-                'password_policy'                 => new external_value(PARAM_RAW, get_string('web_service_password_policy', 'local_edwiserbridge')),
-                'lang_code'                 => new external_value(PARAM_RAW, get_string('web_service_lang_code', 'local_edwiserbridge'))
+                'allow_extended_char'       => new external_value(PARAM_RAW, get_string('web_service_extended_char', 'local_edwiserbridge')),
+                'password_policy'           => new external_value(PARAM_RAW, get_string('web_service_password_policy', 'local_edwiserbridge')),
+                'lang_code'                 => new external_value(PARAM_RAW, get_string('web_service_lang_code', 'local_edwiserbridge')),
+                'student_role_id'           => new external_value(PARAM_RAW, get_string('web_service_student_role_id', 'local_edwiserbridge')),
             )
         );
     }

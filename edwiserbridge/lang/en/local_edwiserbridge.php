@@ -193,6 +193,7 @@ $string['web_service_web_service'] = "Check if web services setting is enabled."
 $string['web_service_extended_char'] = "Check if extended characters are allowed in username.";
 $string['web_service_password_policy'] = "Check if password policy is enabled.";
 $string['web_service_lang_code'] = "check what is the default lnguage code for the site.";
+$string['web_service_student_role_id'] = "Default role id of student role.";
 
 $string["web_service_courseid"] = "Course ID.";
 $string["web_service_fullname"] = "Course Name.";
