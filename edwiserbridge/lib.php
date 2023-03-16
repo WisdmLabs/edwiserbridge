@@ -369,7 +369,6 @@ function eb_get_service_list($serviceid) {
         array('externalserviceid' => $serviceid, 'functionname' => 'core_cohort_get_cohorts'),
         array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_cohort_enrollment'),
         array('externalserviceid' => $serviceid, 'functionname' => 'eb_delete_cohort'),
-        array('externalserviceid' => $serviceid, 'functionname' => 'wdm_manage_cohort_enrollment'),
         array('externalserviceid' => $serviceid, 'functionname' => 'eb_manage_user_cohort_enrollment'),
     );
 
