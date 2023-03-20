@@ -236,7 +236,12 @@ class local_edwiserbridge_observer {
     public static function user_password_updated(core\event\user_password_updated $event) {
         global $CFG;
 
-        $userdata = user_get_users_by_id(array($event->userid));
+        $user_id = $event->userid;
+        if($event->relateduserid) {
+            $user_id = $event->relateduserid;
+        }
+
+        $userdata = user_get_users_by_id(array($user_id));
 
         // User password should be encrypted. Using Openssl for it.
         // We will use token as the key as it is present on both sites.
@@ -258,6 +263,9 @@ class local_edwiserbridge_observer {
                     $password    = '';
                     $enciv       = '';
                     $newpassword = optional_param('newpassword1', '', PARAM_TEXT);
+                    if(empty($newpassword)) {
+                        $newpassword = optional_param('password', '', PARAM_TEXT);
+                    }
 
                     // If new password in not empty.
                     if ($newpassword && !empty($newpassword)) {
@@ -269,8 +277,8 @@ class local_edwiserbridge_observer {
 
                     $requestdata = array(
                         'action'     => 'user_updated',
-                        'user_id'    => $event->userid,
-                        'email'      => $userdata[$event->userid]->email,
+                        'user_id'    => $user_id,
+                        'email'      => $userdata[$user_id]->email,
                         'password'   => $password,
                         'enc_iv'     => $enciv,
                         'secret_key' => $value['wp_token'], // Adding Token for verification in WP from Moodle.
