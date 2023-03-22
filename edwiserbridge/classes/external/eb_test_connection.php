@@ -67,15 +67,9 @@ trait eb_test_connection {
             $site_match = false;
             $token_match = false;
             foreach ($defaultvalues['eb_connection_settings'] as $site => $value) {
-                if ($value['wp_url'] == $params["wp_url"]) {
-                    $site_match = true;
-                }
                 if ($value['wp_token'] == $params["wp_token"]) {
                     $token_match = true;
                 }
-            }
-            if (!$site_match) {
-                $warnings[] = "Site URL does not match with the existing moodle connection settings. it may cause test connection issue on moodle end.";
             }
             if (!$token_match) {
                 $warnings[] = "Token does not match with the existing moodle connection settings. it may cause test connection issue on moodle end.";
